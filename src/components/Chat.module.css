@@ -101,6 +101,20 @@
 }
 
 
+.gptOption{
+  width: 800px;
+  display: flex;
+  margin-left: 1500px;
+}
+
+.gptOption select{
+  outline: none;
+  margin-bottom: 10px;
+  width: 6rem;
+}
+
+
+
 
 /*답변이 나올곳*/
 .result{

@@ -64,6 +64,12 @@ export default function Chat() {
         <h2>안녕 AI</h2>
         <h3>에이 하이</h3>
       </div>
+      <div className={styles.gptOption}>
+        <select>
+          <option>GPT-3.5</option>
+          <option>GPT-4</option>
+        </select>
+      </div>
       <div className={styles.result}>
         <ul id="msgList">
           <li className={styles.response}>안녕하세요 ChatGPT 입니다.</li>
