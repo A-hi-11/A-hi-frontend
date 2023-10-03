@@ -101,15 +101,16 @@
 }
 
 
-.gptOption{
+.gptMenu{
   width: 800px;
   display: flex;
   margin-left: 1500px;
 }
 
-.gptOption select{
+.gptMenu select, .gptMenu button{
   outline: none;
   margin-bottom: 10px;
+  margin-right: 10px;
   width: 6rem;
 }
 

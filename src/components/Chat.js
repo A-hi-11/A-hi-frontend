@@ -2,8 +2,8 @@ import { Helmet } from "react-helmet";
 import { useState } from "react";
 import styles from "./Chat.module.css";
 import { BiSolidConversation } from "react-icons/bi";
-import { useEffect } from "react";
 import { useRef } from "react";
+import Sidebar from "./ChatSidebar";
 
 export default function Chat() {
   const [colorInput, setColorInput] = useState("");
@@ -64,13 +64,14 @@ export default function Chat() {
         <h2>안녕 AI</h2>
         <h3>에이 하이</h3>
       </div>
-      <div className={styles.gptOption}>
+      <div className={styles.gptMenu}>
         <select>
           <option>GPT-3.5</option>
           <option>GPT-4</option>
         </select>
       </div>
       <div className={styles.result}>
+        <Sidebar />
         <ul id="msgList">
           <li className={styles.response}>안녕하세요 ChatGPT 입니다.</li>
           <li className={styles.quest}>
