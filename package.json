@@ -6,9 +6,15 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "axios": "^1.5.0",
+    "axios": "^1.5.1",
+    "concurrently": "^8.2.1",
+    "dotenv": "^16.3.1",
+    "json-server": "^0.17.4",
+    "openai": "^4.12.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-helmet": "^6.1.0",
+    "react-icons": "^4.11.0",
     "react-router-dom": "^6.16.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
@@ -17,7 +23,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "json-server": "json-server --watch db.json --port 5000",
+    "dev": "concurrently \"yarn start\" \"yarn json-server\""
   },
   "eslintConfig": {
     "extends": [

@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbit&display=swap');
+
+@font-face {
+  font-family: "ColfaxAI";
+  src: url(https://cdn.openai.com/API/fonts/ColfaxAIRegular.woff2)
+      format("woff2"),
+    url(https://cdn.openai.com/API/fonts/ColfaxAIRegular.woff) format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "ColfaxAI";
+  src: url(https://cdn.openai.com/API/fonts/ColfaxAIBold.woff2) format("woff2"),
+    url(https://cdn.openai.com/API/fonts/ColfaxAIBold.woff) format("woff");
+  font-weight: bold;
+  font-style: normal;
+}
+
+*{
+  font-family: 'Orbit', sans-serif;
+}
+
+.main{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 15%;
+}
+.title,
+.under input, .under textarea{
+  font-size: 16px;
+  line-height: 24px;
+  color: #353740;
+}
+.title, .under{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 30px;
+}
+
+.title h3 {
+  font-size: 50px;
+  line-height: 40px;
+  font-weight: bold;
+  color: #10a37f;
+  margin: 2px 0 40px;
+}
+
+.title h2 {
+  font-size: 20px;
+  line-height: 40px;
+  font-weight: bold;
+  color: #10a37f;
+  margin: 16px 0 2px;
+}
+
+/* 입력창, 전송 버튼이 있는 하단 부분*/
+
+.under form {
+  display: flex;
+  flex-direction: row;
+}
+
+.under textarea[type="text"] {
+  padding: 12px 16px;
+  width: 550px;
+  resize: none;
+  border: 1px solid #10a37f;
+  border-radius: 4px;
+  margin-bottom: 24px;
+  height: 80px;
+  outline: none;
+}
+.under ::placeholder {
+  color: #8e8ea0;
+  opacity: 1;
+}
+.under input[type="submit"] {
+  height: 80px;
+  width: 80px;
+  border-radius: 160px;
+  color: #fff;
+  margin: 6px 10px 10px 40px;
+  background-color: #10a37f;
+  border: none;
+  text-align: center;
+  cursor: pointer;
+}
+
+
+@keyframes typing {
+  from {
+    width: 0
+  }
+}
+    
+@keyframes blink {
+  50% {
+    border-color: transparent
+  }
+}
+
+
+.gptMenu{
+  width: 800px;
+  display: flex;
+  margin-left: 135%;
+}
+
+.gptMenu select, .gptMenu button{
+  outline: none;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  width: 6rem;
+}
+
+
+
+
+/*답변이 나올곳*/
+.result{
+  width: 800px;
+  height: 350px;
+  border-radius: 10px;
+  overflow: auto;
+  background-color:#bebec2;
+}
+
+.result ul{
+  height: 300px;
+    margin: 0;
+    padding: 2rem; 
+}
+
+.result li{
+  position: relative;
+    list-style-type: none;
+    width: 38%;
+    min-height: 40px;
+    height: fit-content;
+    margin: 0 0 10px;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #3b82f6;
+    color: #fff;
+    
+}
+.result li ::after{
+  content: "";
+    position: absolute;
+    top: 10px;
+    right: -10px;
+    width: 0;
+    height: 0;
+    border-bottom: 16px solid transparent;
+    border-left: 16px solid #3b82f6;
+}
+
+.result .response{
+  margin-right: auto;
+}
+.result .quest{
+  margin-left: auto;
+  background-color: #10a37f;
+}
+
