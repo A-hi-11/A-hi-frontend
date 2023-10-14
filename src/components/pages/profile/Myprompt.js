@@ -17,7 +17,7 @@ function Myprompt({ title, id, date, description }) {
         <div className="myPrompts__data">
           <h2>{id}</h2>
           <h2>{title}</h2>
-          <h3 className="myPrompt__title">{description}</h3>
+          <h3 className="myPrompt__">{description}</h3>
           <h5 className="myPrompt__date">{date}</h5>
         </div>
       </Link>

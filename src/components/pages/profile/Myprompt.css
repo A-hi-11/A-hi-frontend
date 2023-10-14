@@ -1,5 +1,40 @@
 .myprompt{
-    background-color:#4997B0;
-    border-radius: 20px;
-    padding: 10px;
+    padding: 1rem;
+    width: fit-content;
+    height: fit-content;
+
+    flex-shrink: 0;
+    border-radius: 1rem;
+    border: 1px solid #04364A;
+    background: #FFF;
+}
+
+.myPrompts__data h2{
+    display: flex;
+    width: 13.0625rem;
+    height: 2rem;
+    flex-direction: column;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #000;
+    font-family: 'Spoqa Han Sans Neo';
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.75rem; /* 175% */
+}
+
+.myPrompt__des{
+    display: flex;
+    width: 15.3125rem;
+    height: 5.75rem;
+    flex-direction: column;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #000;
+    font-family: 'Spoqa Han Sans Neo';
+    font-size: 0.8125rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.75rem; /* 215.385% */
 }

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbit&display=swap');
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
 
 @font-face {
   font-family: "ColfaxAI";
@@ -16,9 +16,7 @@
   font-style: normal;
 }
 
-*{
-  font-family: 'Orbit', sans-serif;
-}
+* { font-family: 'Spoqa Han Sans Neo', 'sans-serif'; }
 
 .main{
   display: flex;

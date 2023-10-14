@@ -1,8 +1,141 @@
 .prompts{
     display: grid;
     grid-template-columns: repeat(2,minmax(400px, 1fr));
-    grid-gap: 100px;
+    grid-gap: 1rem;
     padding: 50px;
     width: 80%;
     padding-top: 70px;
 }
+
+.container{
+    display: flex;
+    position: relative;
+width: 1512px;
+height: 982px;
+
+background: #FFFFFF;
+}
+
+
+
+.info{
+    margin: 4.19rem 3rem 4.12rem 15.4rem;
+    width: 28.1875rem;
+    height: 18rem;
+    flex-shrink: 0;
+    border-radius: 1.875rem;
+    background: #04364A;
+    border: 1.8rem;
+}
+
+.innerInfo{
+    display: inline-flex;
+}
+
+.info h2 {
+    flex-shrink: 0;
+    color: #ffffff;
+    margin: 0;
+    text-align: center;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.info h4{
+    margin-top: 0.8rem;
+    flex-shrink: 0;
+    color: #ffffff;
+    text-align: center;
+    font-family: Spoqa Han Sans Neo;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+}
+
+.nameEmail{
+    width: 13.5rem;
+height: 4.875rem;
+margin-top: 4.19rem;
+margin-bottom: 4.25rem;
+flex-shrink: 0;
+}
+
+.editBtn{
+    margin-left: 9.345rem;
+    width: 9.5rem;
+    height: 2.5rem;
+    flex-shrink: 0;
+    background: #FFFFFF;
+    border-radius: 17px;
+    font-style: #000;
+    text-align: center;
+    font-family: Spoqa Han Sans Neo;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+
+}
+
+.profilePic {
+    width: 7.3125rem;
+    height: 7.1875rem;
+    flex-shrink: 0;
+    margin: 3.06rem 1.94rem 2.87rem 3.12rem;
+    border-radius: 10rem;
+}
+
+.editInfo{
+    padding-top: 4rem;
+    margin-left: 15.4rem;
+    width: 28.1875rem;
+    height: 28.0625rem;
+    flex-shrink: 0;
+    border-radius: 1.875rem;
+    border: 2px solid #04364A;
+    background: #FFF;
+}
+
+.editInfo p{
+    margin-left: 2.81rem;
+    margin-right: 1.44rem;
+    color: #000;
+    text-align: center;
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.editInfo input{
+    background-color: rgba(4, 54, 74, 0.17);
+    border-radius: rem;
+    height: 2.5rem;
+}
+
+.content{
+    display: inline-flex;
+}
+
+.menu{
+    display: inline-flex;
+}
+
+.menu p{
+    margin-top: 4.69rem;
+    margin-left: 3rem;
+    margin-right: 2rem;
+    color: #000;
+    text-align: center;
+    font-family: Spoqa Han Sans Neo;
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+
+
+

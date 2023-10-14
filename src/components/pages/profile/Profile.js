@@ -58,37 +58,73 @@ function Profile() {
   const toggleEditing = () => setEditing((prev) => !prev);
   return (
     <div className="container">
-      <img src="img/profile_exm.png" width="100px" />
-      <h2>{name}</h2>
-      <button onClick={toggleEditing}>회원 정보 수정</button>
-      {editing ? (
-        <>
-          <form className="container nweetEdit" onSubmit={onSubmit}>
-            <input
-              onChange={onChange}
-              value={nameEdit}
-              required
-              placeholder="변경할 닉네임을 입력하세요"
-              autoFocus
-              className="formInput"
+      <div display="inline-flex">
+        <div className="info">
+          <span className="innerInfo">
+            <img
+              className="profilePic"
+              src="img/profile_exm.png"
+              width="100px"
             />
-            <input type="submit" value="변경" className="formBtn" />
-          </form>
-        </>
-      ) : (
-        <div />
-      )}
-      <h2>등록한 프롬프트 모아보기</h2>
-      <div className="prompts">
-        {myPrompts.map((myPrompt) => (
-          <Myprompt
-            title={myPrompt.title}
-            key={myPrompt.id}
-            id={myPrompt.id}
-            date={myPrompt.date}
-            description={myPrompt.description}
-          />
-        ))}
+            <span className="nameEmail">
+              <h2>{name}</h2>
+              <h4>mail@gmail.com</h4>
+            </span>
+          </span>
+          <button className="editBtn" onClick={toggleEditing}>
+            정보 수정
+          </button>
+        </div>
+        {editing ? (
+          <>
+            <form className="editInfo" onSubmit={onSubmit}>
+              <span className="content">
+                <p>닉네임</p>
+                <input
+                  onChange={onChange}
+                  value={nameEdit}
+                  required
+                  placeholder="변경할 닉네임을 입력하세요"
+                  autoFocus
+                  className="formInput"
+                />
+              </span>
+              <span className="content">
+                <p>비밀번호</p>
+                <input
+                  onChange={onChange}
+                  value={nameEdit}
+                  required
+                  placeholder="변경할 비밀번호를 입력하세요"
+                  autoFocus
+                  className="formInput"
+                />
+              </span>
+              <input type="submit" value="변경" className="formBtn" />
+            </form>
+          </>
+        ) : (
+          <div />
+        )}
+      </div>
+      <div className="rightSide">
+        <span className="menu">
+          <p>나의 프롬프트</p>
+          <p>좋아요</p>
+          <p>채팅 내역</p>
+        </span>
+
+        <div className="prompts">
+          {myPrompts.map((myPrompt) => (
+            <Myprompt
+              title={myPrompt.title}
+              key={myPrompt.id}
+              id={myPrompt.id}
+              date={myPrompt.date}
+              description={myPrompt.description}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
