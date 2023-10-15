@@ -4,7 +4,9 @@ import Home from "./components/pages/main/Home";
 import Detail from "./components/pages/detail/Detail";
 import BoardWrite from "./components/pages/boards/BoardWrite";
 import BoardUpdate from "./components/pages/boards/BoardUpdate";
-import Chat from "./components/Chat";
+import Chat from "./components/pages/chat/Chat";
+import Profile from "./components/pages/profile/Profile";
+
 function App() {
   return (
     <div>
@@ -15,6 +17,7 @@ function App() {
         <Route path="*" element={<Home />} />
         <Route path="/update/:idx" element={<BoardUpdate />} />
         <Route path="/chatgpt" element={<Chat />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </div>
   );
