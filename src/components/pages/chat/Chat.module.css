@@ -1,23 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbit&display=swap');
 
-@font-face {
-  font-family: "ColfaxAI";
-  src: url(https://cdn.openai.com/API/fonts/ColfaxAIRegular.woff2)
-      format("woff2"),
-    url(https://cdn.openai.com/API/fonts/ColfaxAIRegular.woff) format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: "ColfaxAI";
-  src: url(https://cdn.openai.com/API/fonts/ColfaxAIBold.woff2) format("woff2"),
-    url(https://cdn.openai.com/API/fonts/ColfaxAIBold.woff) format("woff");
-  font-weight: bold;
-  font-style: normal;
-}
+* { font-family: 'Spoqa Han Sans Neo', 'sans-serif'; }
 
-*{
-  font-family: 'Orbit', sans-serif;
+.chatContainer{
+  display: inline-flex;
+  height: max-content;
 }
 
 .main{
@@ -43,7 +29,7 @@
   font-size: 50px;
   line-height: 40px;
   font-weight: bold;
-  color: #10a37f;
+  color: #04364A;
   margin: 2px 0 40px;
 }
 
@@ -51,7 +37,7 @@
   font-size: 20px;
   line-height: 40px;
   font-weight: bold;
-  color: #10a37f;
+  color: #04364A;
   margin: 16px 0 2px;
 }
 
@@ -66,7 +52,7 @@
   padding: 12px 16px;
   width: 550px;
   resize: none;
-  border: 1px solid #10a37f;
+  border: 1px solid #4997B0;
   border-radius: 4px;
   margin-bottom: 24px;
   height: 80px;
@@ -82,7 +68,7 @@
   border-radius: 160px;
   color: #fff;
   margin: 6px 10px 10px 40px;
-  background-color: #10a37f;
+  background-color: #4997B0;
   border: none;
   text-align: center;
   cursor: pointer;
@@ -142,7 +128,7 @@
     margin: 0 0 10px;
     padding: 10px;
     border-radius: 8px;
-    background-color: #3b82f6;
+    background-color: #4997B0;
     color: #fff;
     
 }
