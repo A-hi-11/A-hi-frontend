@@ -2,25 +2,62 @@ import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Myprompt from "./Myprompt";
 import "./Profile.css";
+import Navigation from "../../Navigation";
 
 function Profile() {
   const [myPrompts, setMyprompts] = useState([]);
-  const userId = 2; //임시 사용자 id
+  const userId = 9; //임시 사용자 id
   const [name, setName] = useState();
   const [editing, setEditing] = useState(false);
   const [nameEdit, setNameEdit] = useState("");
+  const [passEdit, setPassEdit] = useState("");
   const [isPending, setIsPending] = useState(false);
+
+  const [isMine, setMine] = useState(true);
+  const [isLike, setLike] = useState(false);
+  const [isHistory, setHistory] = useState(false);
+
+  function onClickMine(e) {
+    setLike(false);
+    setHistory(false);
+    setMine(true);
+    document.getElementById("mine").style.borderBottom = "3px solid #04364A";
+    document.getElementById("like").style.borderBottom = "none";
+    document.getElementById("chatHistory").style.borderBottom = "none";
+  }
+  function onClickLike(e) {
+    setLike(true);
+    setHistory(false);
+    setMine(false);
+    document.getElementById("like").style.borderBottom = "3px solid #04364A";
+    document.getElementById("chatHistory").style.borderBottom = "none";
+    document.getElementById("mine").style.borderBottom = "none";
+  }
+
+  function onClickHistory(e) {
+    setLike(false);
+    setHistory(true);
+    setMine(false);
+    document.getElementById("chatHistory").style.borderBottom =
+      "3px solid #04364A";
+    document.getElementById("mine").style.borderBottom = "none";
+    document.getElementById("like").style.borderBottom = "none";
+  }
 
   useEffect(() => {
     const getName = async () => {
       await axios
         .get(`http://localhost:3001/User/${userId}`)
-        .then((res) => setName(res.data.name));
+        .then((res) => setName(res.data.last_name));
     };
 
     const getMyPrompts = async () => {
       await axios
-        .get("http://localhost:3001/MyPrompts")
+        .get("http://localhost:3001/MyPrompts", {
+          params: {
+            user_id: userId,
+          },
+        })
         .then((res) => setMyprompts(res.data));
     };
 
@@ -32,7 +69,7 @@ function Profile() {
     event.preventDefault();
     setIsPending(true);
 
-    let newName = { name: nameEdit };
+    let newName = { last_name: nameEdit };
 
     fetch(`http://localhost:3001/User/${userId}`, {
       method: "PATCH",
@@ -58,7 +95,8 @@ function Profile() {
   const toggleEditing = () => setEditing((prev) => !prev);
   return (
     <div className="container">
-      <div display="inline-flex">
+      <Navigation />
+      <div className="leftSide">
         <div className="info">
           <span className="innerInfo">
             <img
@@ -78,12 +116,16 @@ function Profile() {
         {editing ? (
           <>
             <form className="editInfo" onSubmit={onSubmit}>
+              <img
+                className="profilePic"
+                src="img/profile_exm.png"
+                width="100px"
+              />
               <span className="content">
                 <p>닉네임</p>
                 <input
                   onChange={onChange}
                   value={nameEdit}
-                  required
                   placeholder="변경할 닉네임을 입력하세요"
                   autoFocus
                   className="formInput"
@@ -92,9 +134,7 @@ function Profile() {
               <span className="content">
                 <p>비밀번호</p>
                 <input
-                  onChange={onChange}
-                  value={nameEdit}
-                  required
+                  value={passEdit}
                   placeholder="변경할 비밀번호를 입력하세요"
                   autoFocus
                   className="formInput"
@@ -109,21 +149,32 @@ function Profile() {
       </div>
       <div className="rightSide">
         <span className="menu">
-          <p>나의 프롬프트</p>
-          <p>좋아요</p>
-          <p>채팅 내역</p>
+          <button id="mine" onClick={onClickMine}>
+            나의 프롬프트
+          </button>
+          <button id="like" onClick={onClickLike}>
+            좋아요
+          </button>
+          <button id="chatHistory" onClick={onClickHistory}>
+            채팅 내역
+          </button>
         </span>
 
         <div className="prompts">
-          {myPrompts.map((myPrompt) => (
-            <Myprompt
-              title={myPrompt.title}
-              key={myPrompt.id}
-              id={myPrompt.id}
-              date={myPrompt.date}
-              description={myPrompt.description}
-            />
-          ))}
+          {isMine ? (
+            <>
+              {myPrompts.map((myPrompt) => (
+                <Myprompt
+                  title={myPrompt.title}
+                  key={myPrompt.id}
+                  id={myPrompt.id}
+                  date={myPrompt.date}
+                  description={myPrompt.description}
+                  userName={myPrompt.user_id}
+                />
+              ))}
+            </>
+          ) : null}
         </div>
       </div>
     </div>

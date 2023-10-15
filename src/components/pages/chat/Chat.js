@@ -4,6 +4,7 @@ import styles from "./Chat.module.css";
 import { BiSolidConversation } from "react-icons/bi";
 import { useRef } from "react";
 import Sidebar from "./ChatSidebar";
+import Navigation from "../../Navigation";
 
 export default function Chat() {
   const [colorInput, setColorInput] = useState("");
@@ -54,45 +55,48 @@ export default function Chat() {
   }
 
   return (
-    <div className={styles.main}>
-      <Helmet>
+    <div className={styles.chatContainer}>
+      <Navigation />
+      <div className={styles.main}>
         <title>에이 하이</title>
         <link rel="icon" href="forum.png" />
-      </Helmet>
-      <div className={styles.title}>
-        <BiSolidConversation size="40px" color="#10a37f" />
-        <h2>안녕 AI</h2>
-        <h3>에이 하이</h3>
-      </div>
-      <div className={styles.gptMenu}>
-        <select>
-          <option>GPT-3.5</option>
-          <option>GPT-4</option>
-        </select>
-      </div>
-      <div className={styles.result}>
-        <Sidebar />
-        <ul id="msgList">
-          <li className={styles.response}>안녕하세요 ChatGPT 입니다.</li>
-          <li className={styles.quest}>
-            응 그래 잘지내? 난 잘지내.응 그래 잘지내? 난 잘지내.응 그래 잘지내?
-            난 잘지내.응 그래 잘지내? 난 잘지내.응 그래 잘지내? 난 잘지내.
-          </li>
-        </ul>
-        <div ref={messageEndRef}></div>
-      </div>
 
-      <div className={styles.under} margin-top="200px">
-        <form onSubmit={onSendMsg}>
-          <textarea
-            type="text"
-            name="color"
-            placeholder="에이 하이에게 무엇이든 물어보세요"
-            value={colorInput}
-            onChange={(e) => setColorInput(e.target.value)}
-          />
-          <input type="submit" value="전송" />
-        </form>
+        <div className={styles.title}>
+          <BiSolidConversation size="40px" color="#4997B0" />
+          <h2>안녕 AI</h2>
+          <h3>에이-하이</h3>
+        </div>
+        <div className={styles.gptMenu}>
+          <select>
+            <option>GPT-3.5</option>
+            <option>GPT-4</option>
+          </select>
+        </div>
+        <div className={styles.result}>
+          <Sidebar />
+          <ul id="msgList">
+            <li className={styles.response}>안녕하세요 ChatGPT 입니다.</li>
+            <li className={styles.quest}>
+              응 그래 잘지내? 난 잘지내.응 그래 잘지내? 난 잘지내.응 그래
+              잘지내? 난 잘지내.응 그래 잘지내? 난 잘지내.응 그래 잘지내? 난
+              잘지내.
+            </li>
+          </ul>
+          <div ref={messageEndRef}></div>
+        </div>
+
+        <div className={styles.under} margin-top="200px">
+          <form onSubmit={onSendMsg}>
+            <textarea
+              type="text"
+              name="color"
+              placeholder="에이 하이에게 무엇이든 물어보세요"
+              value={colorInput}
+              onChange={(e) => setColorInput(e.target.value)}
+            />
+            <input type="submit" value="전송" />
+          </form>
+        </div>
       </div>
     </div>
   );
