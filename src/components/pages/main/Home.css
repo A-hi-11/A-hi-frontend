@@ -1,0 +1,23 @@
+.contContent{
+    border:solid 1px;
+}
+.contContainer{
+    margin-left:8.625rem;
+    
+}
+.contTitle{
+    font-size:20px;
+    color:black;
+}
+.contExplain{
+    font-size:17px;
+    color:black;
+}
+.contDate{
+    font-size:12px;
+    color : gray;
+
+}
+a {
+    text-decoration: none;
+  }

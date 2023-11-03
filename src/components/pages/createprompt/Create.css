@@ -1,0 +1,60 @@
+.submitform{text-align:center;
+    margin-left:8.625rem;
+}
+.name{width: 300px;
+    height: 30px;
+    border-radius:5px 5px 5px 5px;
+
+}
+.contents{width: 600px;
+    height: 300px;
+    font-size: 15px;
+    background-color: #8b8b8b1c;
+    resize: none;
+    color: black;
+    border: none;
+    outline: none;
+    border-radius:15px 15px 15px 15px;
+}
+
+.explain{width: 600px;
+    height: 300px;
+    font-size: 15px;
+    background-color: #8b8b8b1c;
+    resize: none;
+    color: black;
+    border: none;
+    outline: none;
+    border-radius:15px 15px 15px 15px;}
+
+.btn{
+    border:solid 1px #04364A;
+    background-color:white;
+    color:#04364A;
+    width:35px;
+    height:35px;
+    border-radius: 5px 5px 5px 5px;
+}
+.btn:hover{
+    background-color:#04364A;
+    color:white;
+}
+.subbtn{
+    border:solid 1px #04364A;
+    background-color:white;
+    color:#04364A;
+    width:60px;
+    height:40px;
+    border-radius: 5px 5px 5px 5px;
+}
+.subbtn:hover{
+    background-color:#04364A;
+    color:white;
+}
+.chat{
+    margin-left:-14rem;
+}
+
+textarea {
+    padding:10px;
+}
