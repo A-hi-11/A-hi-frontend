@@ -51,7 +51,9 @@ const PromptDetail = () => {
     <div className='detailMain' style={{ display: 'flex' }}>
       <Navigation />
       <div style={{ justifyContent: 'center', display: 'inline-flex' }}>
-        <div style={{ width: '500px', marginTop: '30px', paddingLeft: '10px' }}>
+        <div
+          style={{ width: '500px', marginTop: '30px', paddingLeft: '10rem' }}
+        >
           <h1>{detail.title}</h1>
           <p>2023.10.25</p>
           <h3>프롬프트 설명</h3>
@@ -73,7 +75,7 @@ const PromptDetail = () => {
       <span className='innerInfo'>
         <img className='profilePic' src='img/profile_exm.png' width='100px' />
         <span className='nameEmail'>
-          <h2>{name}</h2>
+          <h2>name</h2>
           <h4>mail@gmail.com</h4>
         </span>
       </span>

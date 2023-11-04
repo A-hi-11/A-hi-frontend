@@ -18,7 +18,12 @@ const Login = () => {
       <Navigation />
       <div
         className='this'
-        style={{ minWidth: '1080px', height: '100vh', alignItems: 'center' }}
+        style={{
+          minWidth: '1080px',
+          height: '100vh',
+          alignItems: 'center',
+          marginLeft: '5rem',
+        }}
       >
         <h2>안녕 AI</h2>
         <h1>에이 하이</h1>

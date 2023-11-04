@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Myprompt from './Myprompt';
 import MyChats from './MyChats';
@@ -118,6 +118,7 @@ function Profile() {
               className='profilePic'
               src='img/profile_exm.png'
               width='100px'
+              alt='my profile'
             />
             <span className='nameEmail'>
               <h2>{name}</h2>
@@ -135,6 +136,7 @@ function Profile() {
                 className='profilePic'
                 src='img/profile_exm.png'
                 width='100px'
+                alt='my profile'
               />
               <span className='content'>
                 <p>닉네임</p>
