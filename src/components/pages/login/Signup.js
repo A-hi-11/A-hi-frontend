@@ -25,6 +25,7 @@ const Signup = () => {
           minWidth: '1080px',
           height: '100vh',
           alignItems: 'center',
+          marginLeft: '5rem',
         }}
       >
         <h2>안녕 AI</h2>

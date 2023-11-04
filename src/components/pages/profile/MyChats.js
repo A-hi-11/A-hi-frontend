@@ -5,7 +5,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Navigation from '../../Navigation';
-import Pagination from 'react-js-pagination';
+//import Pagination from 'react-js-pagination';
 
 import './Myprompt.css';
 
