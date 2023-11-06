@@ -163,6 +163,14 @@ flex-shrink: 0;
     border: none;
 }
 
+.formBtn {
+    background-color: rgba(4, 54, 74, 0.17);
+    outline: none;
+    border-color: #04364A;
+    justify-self: center;
+    width: 150px;
+    }
+
 .content{
     width: 70%;
     margin-top: 2rem;
