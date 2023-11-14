@@ -1,51 +1,57 @@
 /** @format */
 
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import Myprompt from './Myprompt';
-import MyChats from './MyChats';
-import './Profile.css';
-import Navigation from '../../Navigation';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Myprompt from "./Myprompt";
+import MyChats from "./MyChats";
+import ChatHistory from "./ChatHistory";
+import EditInfo from "./Editinfo";
+import "./Profile.css";
+import Navigation from "../../Navigation";
+import PassCheck from "./PassCheck";
 
-function Profile() {
+const Profile = (props) => {
   const [myPrompts, setMyprompts] = useState([]);
   const userId = 9; //임시 사용자 id
   const [name, setName] = useState();
   const [editing, setEditing] = useState(false);
-  const [nameEdit, setNameEdit] = useState('');
-  const [passEdit, setPassEdit] = useState('');
-  const [myChats, setMyChats] = useState('');
-  const [isPending, setIsPending] = useState(false);
-
+  const [myChats, setMyChats] = useState("");
+  const [nameEdit, setNameEdit] = useState("");
+  const [passEdit, setPassEdit] = useState("");
+  const [chatHistorys, setChatHistorys] = useState("");
+  const [isPassCheck, setPassCheck] = useState(false);
+  const [editName, setEditName] = useState("");
   const [isMine, setMine] = useState(true);
   const [isLike, setLike] = useState(false);
+  const [isPending, setIsPending] = useState(false);
   const [isHistory, setHistory] = useState(false);
+  const [uploadedImage, setUploadedImage] = useState(null);
 
   function onClickMine(e) {
     setLike(false);
     setHistory(false);
     setMine(true);
-    document.getElementById('mine').style.borderBottom = '3px solid #04364A';
-    document.getElementById('like').style.borderBottom = 'none';
-    document.getElementById('chatHistory').style.borderBottom = 'none';
+    document.getElementById("mine").style.borderBottom = "3px solid #04364A";
+    document.getElementById("like").style.borderBottom = "none";
+    document.getElementById("chatHistory").style.borderBottom = "none";
   }
   function onClickLike(e) {
     setLike(true);
     setHistory(false);
     setMine(false);
-    document.getElementById('like').style.borderBottom = '3px solid #04364A';
-    document.getElementById('chatHistory').style.borderBottom = 'none';
-    document.getElementById('mine').style.borderBottom = 'none';
+    document.getElementById("like").style.borderBottom = "3px solid #04364A";
+    document.getElementById("chatHistory").style.borderBottom = "none";
+    document.getElementById("mine").style.borderBottom = "none";
   }
 
   function onClickHistory(e) {
     setLike(false);
     setHistory(true);
     setMine(false);
-    document.getElementById('chatHistory').style.borderBottom =
-      '3px solid #04364A';
-    document.getElementById('mine').style.borderBottom = 'none';
-    document.getElementById('like').style.borderBottom = 'none';
+    document.getElementById("chatHistory").style.borderBottom =
+      "3px solid #04364A";
+    document.getElementById("mine").style.borderBottom = "none";
+    document.getElementById("like").style.borderBottom = "none";
   }
 
   useEffect(() => {
@@ -57,7 +63,7 @@ function Profile() {
 
     const getMyPrompts = async () => {
       await axios
-        .get('http://localhost:3001/MyPrompts', {
+        .get("http://localhost:3001/MyPrompts", {
           params: {
             user_id: userId,
           },
@@ -75,37 +81,21 @@ function Profile() {
         .then((res) => setMyChats(res.data));
     };
 
+    const getChatHistory = async () => {
+      await axios
+        .get(`http://localhost:3001/CHAT_ROOM`, {
+          params: {
+            Member_id: userId,
+          },
+        })
+        .then((res) => setChatHistorys(res.data));
+    };
+
     getName();
     getMyPrompts();
     getMyChats();
+    getChatHistory();
   }, []);
-
-  const onSubmit = async (event) => {
-    event.preventDefault();
-    setIsPending(true);
-
-    let newName = { last_name: nameEdit };
-
-    fetch(`http://localhost:3001/User/${userId}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newName),
-    })
-      .then(() => {
-        alert('닉네임 변경이 완료되었습니다.');
-        setIsPending(false);
-      })
-      .catch((error) => console.error('Error :', error));
-    setEditing(false);
-    setName(nameEdit);
-  };
-
-  const onChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setNameEdit(value);
-  };
 
   const toggleEditing = () => setEditing((prev) => !prev);
   return (
@@ -130,46 +120,34 @@ function Profile() {
           </button>
         </div>
         {editing ? (
-          <>
-            <div className='editInfo'>
-              <img
-                className='profilePic'
-                src='img/profile_exm.png'
-                width='100px'
-                alt='my profile'
+          isPassCheck ? (
+            <PassCheck password={1234} /> // 확인용 임시 부여 비밀번호
+          ) : (
+            <>
+              <EditInfo
+                setEditing={setEditing}
+                setPassEdit={setPassEdit}
+                setNameEdit={setNameEdit}
+                setName={setName}
+                nameEdit={nameEdit}
+                passEdit={passEdit}
+                userId={userId}
+                uploadedImage={uploadedImage}
+                setUploadedImage={setUploadedImage}
               />
-              <span className='content'>
-                <p>닉네임</p>
-                <form onSubmit={onSubmit}>
-                  <input
-                    onChange={onChange}
-                    value={nameEdit}
-                    placeholder='변경할 닉네임을 입력하세요'
-                    autoFocus
-                    className='formInput'
-                    required
-                  />
-                  <input type='submit' value='변경' className='formBtn' />
-                </form>
-              </span>
-              <span className='content'>
-                <p>비밀번호</p>
-                <input
-                  value={passEdit}
-                  placeholder='변경할 비밀번호를 입력하세요'
-                  autoFocus
-                  className='formInput'
-                />
-              </span>
-            </div>
-          </>
+            </>
+          )
         ) : (
           <div />
         )}
       </div>
       <div className='rightSide'>
         <span className='menu'>
-          <button id='mine' onClick={onClickMine}>
+          <button
+            id='mine'
+            onClick={onClickMine}
+            style={{ borderBottom: "3px solid #04364A" }}
+          >
             나의 프롬프트
           </button>
           <button id='like' onClick={onClickLike}>
@@ -188,20 +166,23 @@ function Profile() {
                   title={myPrompt.title}
                   key={myPrompt.id}
                   id={myPrompt.id}
-                  date={myPrompt.date}
+                  date={myPrompt.created_date}
                   description={myPrompt.description}
                   userName={myPrompt.user_id}
+                  likes={myPrompt.likes}
+                  comments={myPrompt.comments}
                 />
               ))}
             </>
           ) : null}
           {isHistory ? (
             <>
-              {myChats.map((myChat) => (
-                <MyChats
-                  title={myChat.Chat_room_id}
-                  key={myChat.Chat_room_id}
-                  date={myChat.Time}
+              {chatHistorys.map((chatHistory) => (
+                <ChatHistory
+                  title={chatHistory.Chat_room_name}
+                  key={chatHistory.Chat_room_id}
+                  date={chatHistory.Time}
+                  lastchat='마지막 대화가 표시됩니다.'
                 />
               ))}
             </>
@@ -210,6 +191,6 @@ function Profile() {
       </div>
     </div>
   );
-}
+};
 
 export default Profile;
