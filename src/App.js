@@ -14,6 +14,7 @@ import Login from './components/pages/login/Login';
 import Signup from './components/pages/login/Signup';
 import PromptDetail from './components/pages/detail/PromptDetail';
 import ScrollToTop from './components/ScrollToTop';
+import ChatHistory from './components/pages/profile/ChatHistory';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/promptdetail/:id' element={<PromptDetail />} />
+        <Route path='/chathistory/:id' element={<ChatHistory />} />
       </Routes>
     </div>
   );
