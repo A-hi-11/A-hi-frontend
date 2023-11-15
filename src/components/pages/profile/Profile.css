@@ -1,3 +1,7 @@
+* {
+    font-family: Spoqa Han Sans Neo;
+}
+
 .prompts{
     display: grid;
     width: 78%;
@@ -5,6 +9,10 @@
     grid-gap: 1.3rem;
     padding: 50px;
     padding-top: 70px;
+}
+
+@media (max-width:1020px){
+    .prompts {grid-template-columns: repeat(1,minmax(200px, 1fr));}
 }
 
 .container{
@@ -16,7 +24,7 @@
 }
 
 .leftSide{
-    padding-left: 5rem;
+    padding-left: 10rem;
 }
 
 
@@ -32,14 +40,11 @@
 }
 
 @media (max-width: 800px){
-    .leftSide{
-        padding-left: 10%;
-    }
     .info{
         width: 90%;
     }
     .editInfo{
-        margin-left: 10%;
+        width: 90%;
     }
 
 .rightSide{
@@ -158,6 +163,14 @@ flex-shrink: 0;
     border: none;
 }
 
+.formBtn {
+    background-color: rgba(4, 54, 74, 0.17);
+    outline: none;
+    border-color: #04364A;
+    justify-self: center;
+    width: 150px;
+    }
+
 .content{
     width: 70%;
     margin-top: 2rem;
@@ -187,3 +200,7 @@ flex-shrink: 0;
     font-weight: 500;
     line-height: normal;
 }
+
+
+
+

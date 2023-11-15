@@ -1,0 +1,53 @@
+{
+    "promPt" : [{
+        "title" : "심장에 해로운 이미지를 만들어 줘",
+        "explain" : "ex1",
+        "date" : "date1",
+        "like" : "1",
+        "comment" : "1",
+        "tag" : "tag1",
+        "category" : "cate1",
+        "uid" : "uid1",
+        "url" : "half"
+    },{
+        "title" : "귀여운 생명체가 빵 먹는 이미지",
+        "explain" : "ex2",
+        "date" : "date2",
+        "like" : "2",
+        "comment" : "2",
+        "tag" : "tag2",
+        "category" : "cate2",
+        "uid" : "uid2",
+        "url" : "marmot"
+    },{
+        "title" : "신을 형상화 해서 만들어 줘",
+        "explain" : "ex3",
+        "date" : "date3",
+        "like" : "3",
+        "comment" : "3",
+        "tag" : "tag3",
+        "category" : "cate3",
+        "uid" : "uid3",
+        "url" : "parkhyogod"
+    },{
+        "title" : "우주 최강 최고 존엄 감히 범접할 수 없는 고양이 사진을 만들어 줘",
+        "explain" : "ex4",
+        "date" : "date4",
+        "like" : "3",
+        "comment" : "4",
+        "tag" : "tag4",
+        "category" : "cate4",
+        "uid" : "uid4",
+        "url" : "cat"
+    },{
+        "title" : "이상형 사진을 만들어 줘",
+        "explain" : "ex5",
+        "date" : "date5",
+        "like" : "5",
+        "comment" : "5",
+        "tag" : "tag5",
+        "category" : "cate5",
+        "uid" : "uid5",
+        "url" : "tayeon"
+    }]
+}

@@ -1,30 +1,73 @@
 {
     "promPt" : [{
+        "profile" : "base_profile.png",
         "title" : "test1",
         "explain" : "ex1",
         "date" : "date1",
-        "like" : "like1",
-        "comment" : "comment1",
+        "like" : "1",
+        "comment" : "1",
         "tag" : "tag1",
         "category" : "cate1",
         "uid" : "uid1"
     },{
-        "title" : "test2",
-        "explain" : "ex2",
+        "profile" : "half.jpg",
+        "title" : "test2 두줄이 넘어가는 경우에 말줄임 표시 되는 것을 확인하기 위해 아무 말이나 적기 제발 되라",
+        "explain" : "ex2 세줄이 넘어가는 경우에 말줄임 표시로 표시 되는 것을 확인하기 위해 아무 말이나 적기 올해도 벌써 거의 끝났구나 나이 먹는게 무섭다ㅠㅠ 나도 새내기였을 때가 있었는데",
         "date" : "date2",
-        "like" : "like2",
-        "comment" : "comment2",
+        "like" : "2",
+        "comment" : "2",
         "tag" : "tag2",
         "category" : "cate2",
         "uid" : "uid2"
     },{
+        "profile" : "base_profile.png",
         "title" : "test3",
         "explain" : "ex3",
         "date" : "date3",
-        "like" : "like3",
-        "comment" : "comment3",
+        "like" : "3",
+        "comment" : "3",
         "tag" : "tag3",
         "category" : "cate3",
         "uid" : "uid3"
+    },{
+        "profile" : "tayeon.jpg",
+        "title" : "test4",
+        "explain" : "ex4",
+        "date" : "date4",
+        "like" : "3",
+        "comment" : "4",
+        "tag" : "tag4",
+        "category" : "cate4",
+        "uid" : "uid4"
+    },{
+        "profile" : "base_profile.png",
+        "title" : "test5",
+        "explain" : "ex5",
+        "date" : "date5",
+        "like" : "5",
+        "comment" : "5",
+        "tag" : "tag5",
+        "category" : "cate5",
+        "uid" : "uid5"
+    },{
+        "profile" : "profile_exm.png",
+        "title" : "test6",
+        "explain" : "ex6",
+        "date" : "date6",
+        "like" : "6",
+        "comment" : "6",
+        "tag" : "tag6",
+        "category" : "cate6",
+        "uid" : "uid6"
+    },{
+        "profile" : "parkhyogod.jpg",
+        "title" : "test7",
+        "explain" : "ex7",
+        "date" : "date7",
+        "like" : "7",
+        "comment" : "7",
+        "tag" : "tag7",
+        "category" : "cate7",
+        "uid" : "uid7"
     }]
 }
