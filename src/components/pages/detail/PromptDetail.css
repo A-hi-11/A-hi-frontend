@@ -1,8 +1,46 @@
 .detailMain h1{
-    color: #04364A;
+    color: #FFF;
     font-family: Spoqa Han Sans Neo;
     font-size: 36px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 600;
     line-height: normal;
+}
+
+.detailDiv {
+    margin-left: 190px;
+    margin-top: 30px;
+    border-radius: 32px;
+    background: #04364A;
+    color: #FFF;
+    font-family: Spoqa Han Sans Neo;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal; 
+    width: 550px;  
+}
+
+.detailMenu{
+    display: inline-flex;
+}
+
+.detailMenu button{
+    background:transparent;
+    border: none;
+    margin-top: 10px;
+    margin-left: 3rem;
+    margin-right: 1rem;
+    margin-bottom: 30px;
+    color: #000;
+    text-align: center;
+    font-family: Spoqa Han Sans Neo;
+    font-size: 1.1rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.DetailChat{
+    width: 60%;
 }

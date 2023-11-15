@@ -106,7 +106,7 @@ const Profile = (props) => {
           <span className='innerInfo'>
             <img
               className='profilePic'
-              src='img/profile_exm.png'
+              src={process.env.PUBLIC_URL + "/img/profile_exm.png"}
               width='100px'
               alt='my profile'
             />

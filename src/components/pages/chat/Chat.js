@@ -1,34 +1,34 @@
 /** @format */
 
-import { useState } from 'react';
-import styles from './Chat.module.css';
-import { BiSolidConversation } from 'react-icons/bi';
-import { useRef } from 'react';
-import Navigation from '../../Navigation';
+import { useState } from "react";
+import styles from "./Chat.module.css";
+import { BiSolidConversation } from "react-icons/bi";
+import { useRef } from "react";
+import Navigation from "../../Navigation";
 
 export default function Chat() {
-  const [msg, setMsg] = useState('');
+  const [msg, setMsg] = useState("");
   const [result, setResult] = useState();
 
   const messageEndRef = useRef();
 
   const scrollToBottom = () => {
-    messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   function onSendMsg(event) {
     event.preventDefault();
-    const ul = document.getElementById('msgList');
-    const li = document.createElement('li');
+    const ul = document.getElementById("msgList");
+    const li = document.createElement("li");
     li.className = styles.quest;
     li.innerText = msg;
     ul.appendChild(li);
     scrollToBottom(messageEndRef);
-    setMsg('');
+    setMsg("");
   }
 
   const handleOnKeyPress = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       onSendMsg(e); // Enter 입력이 되면 클릭 이벤트 실행
     }
   };
@@ -36,10 +36,10 @@ export default function Chat() {
   async function onSubmit(event) {
     event.preventDefault();
     try {
-      const response = await fetch('/api/generate', {
-        method: 'POST',
+      const response = await fetch("/api/generate", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ color: msg }),
       });
@@ -53,7 +53,7 @@ export default function Chat() {
       }
 
       setResult(data.result);
-      setMsg('');
+      setMsg("");
     } catch (error) {
       // Consider implementing your own error handling logic here
       console.error(error);
@@ -62,7 +62,7 @@ export default function Chat() {
   }
 
   return (
-    <div className={styles.chatContainer}>
+    <div style={{ display: "inline-flex", height: "max-content" }}>
       <Navigation />
       <div className={styles.main}>
         <title>에이 하이</title>
@@ -74,7 +74,7 @@ export default function Chat() {
           <h3>에이-하이</h3>
         </div>
         <div className={styles.gptMenu}>
-          <select>
+          <select className={styles.list}>
             <option>GPT-3.5</option>
             <option>GPT-4</option>
           </select>
@@ -99,6 +99,7 @@ export default function Chat() {
               placeholder='에이 하이에게 무엇이든 물어보세요'
               value={msg}
               onChange={(e) => setMsg(e.target.value)}
+              required
             />
             <input type='submit' value='전송' />
           </form>

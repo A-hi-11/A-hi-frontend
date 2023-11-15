@@ -1,16 +1,12 @@
 
 * { font-family: 'Spoqa Han Sans Neo', 'sans-serif'; }
 
-.chatContainer{
-  display: inline-flex;
-  height: max-content;
-}
 
 .main{
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-left: 10rem;
+  margin-left: 20rem;
 }
 .title,
 .under input, .under textarea{
@@ -91,7 +87,7 @@
 .gptMenu{
   width: 800px;
   display: flex;
-  margin-left: 135%;
+  margin-left: 170%;
 }
 
 .gptMenu select, .gptMenu button{
@@ -149,4 +145,16 @@
 .result .quest{
   margin-left: auto;
   background-color: #10a37f;
+}
+
+.list{
+  width: 200px;
+  padding: .8em .5em;
+  border: 1px solid #999;
+  font-family: inherit;
+  background: url('arrow.jpg') no-repeat 95% 50%;
+  border-radius: 0px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }

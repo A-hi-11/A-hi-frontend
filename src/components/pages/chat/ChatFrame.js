@@ -1,26 +1,23 @@
 /** @format */
+// ChatGPT 대화창 재사용 컴포넌트
+import { useState } from "react";
+import styles from "./Chat.module.css";
+import { useRef } from "react";
 
-import { Helmet } from 'react-helmet';
-import { useState } from 'react';
-import styles from './Chat.module.css';
-import { BiSolidConversation } from 'react-icons/bi';
-import { useRef } from 'react';
-import Navigation from '../../Navigation';
-
-export default function Chat() {
-  const [colorInput, setColorInput] = useState('');
+const Chat = ({ width, margin, fontSize }) => {
+  const [colorInput, setColorInput] = useState("");
   const [result, setResult] = useState();
 
   const messageEndRef = useRef();
 
   const scrollToBottom = () => {
-    messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   function onSendMsg(event) {
     event.preventDefault();
-    const ul = document.getElementById('msgList');
-    const li = document.createElement('li');
+    const ul = document.getElementById("msgList");
+    const li = document.createElement("li");
     li.className = styles.quest;
     li.innerText = colorInput;
     ul.appendChild(li);
@@ -30,10 +27,10 @@ export default function Chat() {
   async function onSubmit(event) {
     event.preventDefault();
     try {
-      const response = await fetch('/api/generate', {
-        method: 'POST',
+      const response = await fetch("/api/generate", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ color: colorInput }),
       });
@@ -47,7 +44,7 @@ export default function Chat() {
       }
 
       setResult(data.result);
-      setColorInput('');
+      setColorInput("");
     } catch (error) {
       // Consider implementing your own error handling logic here
       console.error(error);
@@ -56,9 +53,12 @@ export default function Chat() {
   }
 
   return (
-    <div className={styles.chatContainer}>
-      <div className={styles.main}>
-        <div className={styles.result}>
+    <div>
+      <div className={styles.main} style={{ margin }}>
+        <div
+          className={styles.result}
+          style={{ width: width, fontSize: fontSize }}
+        >
           <ul id='msgList'>
             <li className={styles.response}>안녕하세요 ChatGPT 입니다.</li>
             <li className={styles.quest}>
@@ -71,7 +71,7 @@ export default function Chat() {
         </div>
 
         <div className={styles.under} margin-top='200px'>
-          <form onSubmit={onSendMsg}>
+          <form onSubmit={onSendMsg} style={{ width: width }}>
             <textarea
               type='text'
               name='color'
@@ -85,4 +85,6 @@ export default function Chat() {
       </div>
     </div>
   );
-}
+};
+
+export default Chat;
