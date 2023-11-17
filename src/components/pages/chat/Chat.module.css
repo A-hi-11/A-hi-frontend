@@ -141,6 +141,7 @@
 
 .result .response{
   margin-right: auto;
+  height: min-content;
 }
 .result .quest{
   margin-left: auto;

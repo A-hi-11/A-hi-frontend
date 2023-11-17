@@ -4,7 +4,7 @@ import { useState } from "react";
 import styles from "./Chat.module.css";
 import { useRef } from "react";
 
-const Chat = ({ width, margin, fontSize }) => {
+const Chat = ({ width, margin, fontSize, welcomeMsg }) => {
   const [colorInput, setColorInput] = useState("");
   const [result, setResult] = useState();
 
@@ -16,6 +16,15 @@ const Chat = ({ width, margin, fontSize }) => {
 
   function onSendMsg(event) {
     event.preventDefault();
+    const ul = document.getElementById("msgList");
+    const li = document.createElement("li");
+    li.className = styles.quest;
+    li.innerText = colorInput;
+    ul.appendChild(li);
+    scrollToBottom(messageEndRef);
+  }
+
+  function onUploadEx() {
     const ul = document.getElementById("msgList");
     const li = document.createElement("li");
     li.className = styles.quest;
@@ -60,12 +69,7 @@ const Chat = ({ width, margin, fontSize }) => {
           style={{ width: width, fontSize: fontSize }}
         >
           <ul id='msgList'>
-            <li className={styles.response}>안녕하세요 ChatGPT 입니다.</li>
-            <li className={styles.quest}>
-              응 그래 잘지내? 난 잘지내.응 그래 잘지내? 난 잘지내.응 그래
-              잘지내? 난 잘지내.응 그래 잘지내? 난 잘지내.응 그래 잘지내? 난
-              잘지내.
-            </li>
+            <li className={styles.response}>{welcomeMsg}</li>
           </ul>
           <div ref={messageEndRef}></div>
         </div>

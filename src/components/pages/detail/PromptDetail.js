@@ -5,19 +5,21 @@ import { useRef, useState } from "react";
 import Navigation from "../../Navigation";
 import "./PromptDetail.css";
 import axios from "axios";
-import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faComment } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import Chat from "../chat/ChatFrame";
+import { useParams } from "react-router-dom";
 
 const PromptDetail = () => {
-  const { id } = useParams();
+  const { prompt_id } = useParams();
   const [detail, setDetail] = useState([]);
   const [user, setUser] = useState([]);
   const [isUse, setUse] = useState(true);
   const [isPending, setIsPending] = useState(false);
   const [isPrompt, setPrompt] = useState(false);
   const [isHowto, setHowto] = useState(false);
+  const [loading, setLoading] = useState(true); // axios에서 정보를 받아오고 랜더링하기 위한 상태 state
+  const [error, setError] = useState(null); // 에러발생시 에러를 저장할 수 있는 state
 
   const messageEndRef = useRef();
   const [Input, setInput] = useState("");
@@ -49,22 +51,22 @@ const PromptDetail = () => {
   }
 
   useEffect(() => {
-    getMyPrompts().then(getUser());
+    setLoading(true);
+    try {
+      axios
+        .get(`http://43.201.240.250:8080/prompt/view/${prompt_id}`)
+        .then((res) => {
+          setLoading(false);
+          if (res.data) {
+            setDetail(res.data);
+          }
+          console.log(res.data);
+        });
+    } catch (error) {
+      setError(error);
+      console.error("Error fetching prompt details:", error);
+    }
   }, []);
-
-  const getMyPrompts = async () => {
-    await axios
-      .get(`http://localhost:3001/MyPrompts/${id}`)
-      .then((res) => setDetail(res.data));
-  };
-
-  const getUser = async () => {
-    // const userId = detail.user_id;
-    // await axios
-    //   .get(`http://localhost:3001/User/${userId}`)
-    //   .then((res) => setUser(res.data));
-    setUser({ name: "Unknown" });
-  };
 
   const scrollToBottom = () => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -79,6 +81,31 @@ const PromptDetail = () => {
     ul.appendChild(li);
     scrollToBottom(messageEndRef);
   }
+
+  function formatDateTime(inputDate) {
+    const date = new Date(inputDate);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1; // 월은 0부터 시작하므로 1을 더해줍니다.
+    const day = date.getDate();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+
+    const formattedDate = `${year}년 ${month}월 ${day}일 ${hours}시 ${minutes}분`;
+
+    return formattedDate;
+  }
+  if (loading)
+    return (
+      <div style={{ margin: "500px" }}>
+        <FontAwesomeIcon
+          icon={faSpinner}
+          style={{ color: "#04364a", fontSize: "40px" }}
+        />
+      </div>
+    );
+  if (error) return <div>에러 발생..{error}</div>;
+  if (!detail) return null;
+
   return (
     <div className='detailMain' style={{ display: "flex" }}>
       <Navigation />
@@ -92,14 +119,18 @@ const PromptDetail = () => {
             padding: "25px",
           }}
         >
-          <h2 color='FFF'>title</h2>
+          <h2 color='FFF'>{detail.title}</h2>
           <h3>프롬프트 설명</h3>
           <p style={{ fontWeight: "lighter" }}>{detail.description}</p>
           <p style={{ marginLeft: "7px", marginRight: "7px" }}>
             <FontAwesomeIcon icon={faHeart} style={{ color: "#e63b7a" }} />{" "}
-            likes
+            {detail.likes} likes
           </p>
-          <p>#tag #tag #tag #tag</p>
+          <div className='tagsContainer' style={{ display: "flex" }}>
+            {detail.tags.map((tag) => (
+              <p style={{ whiteSpace: "nowrap" }}>#{tag}</p>
+            ))}
+          </div>
           <div style={{ display: "inline-flex", marginTop: "40px" }}>
             <img
               className='profilePic'
@@ -113,11 +144,15 @@ const PromptDetail = () => {
                 marginLeft: "10px",
               }}
             >
-              제작자
+              {detail.member_id}
             </p>
           </div>
-          <p textAlign='center'>게시일 : 2023/11/13</p>
-          <p textAlign='center'>최근 수정일 : 2023/11/15</p>
+          <p style={{ textAlign: "end", fontSize: "15px" }}>
+            게시일 : {formatDateTime(detail.create_time)}
+          </p>
+          <p style={{ textAlign: "end", fontSize: "15px" }}>
+            최근 수정일 : {formatDateTime(detail.update_time)}
+          </p>
         </div>
         <div
           className='detailDiv'
@@ -148,20 +183,48 @@ const PromptDetail = () => {
           </span>
           {isUse ? (
             <>
-              <Chat width='530px' margin='10px' fontSize='14px' />
+              <Chat
+                width='530px'
+                margin='10px'
+                fontSize='14px'
+                welcomeMsg={detail.welcome_message}
+              />
             </>
           ) : null}
           {isPrompt ? (
             <>
-              <p>
-                안녕하세요, 당신은 이제부터 영한 번역 서비스를 위한
-                번역로봇입니다. 사용자가 입력하는 영문에 대해 문장마다 끊어
-                영문을 출력하고 한 줄을 띄고 한글로 번역해주세요. 또한 영문은
-                굵음 처리를 하여 출력하고 한글은 소괄호 안에 넣어 출력해주세요.
-              </p>
+              <p style={{ marginLeft: "30px" }}>{detail.content}</p>
               <h1>히히</h1>
             </>
           ) : null}
+          {isHowto && (
+            <>
+              {detail.example.map((chatGroup, groupIndex) => (
+                <div>
+                  <h3 style={{ marginLeft: "25px", marginTop: "25px" }}>
+                    예시 사용 {groupIndex + 1}
+                  </h3>
+
+                  <div
+                    key={groupIndex}
+                    className='result'
+                    style={{ width: "530px", fontSize: "14px" }}
+                  >
+                    <ul id='msgList'>
+                      {chatGroup.map((chat, chatIndex) => (
+                        <li
+                          key={`${groupIndex}-${chatIndex}`}
+                          className={chat.question ? "quest" : "response"}
+                        >
+                          {chat.message}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              ))}
+            </>
+          )}
         </div>
       </div>
     </div>
