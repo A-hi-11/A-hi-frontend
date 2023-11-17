@@ -27,6 +27,8 @@ const Profile = (props) => {
   const [isHistory, setHistory] = useState(false);
   const [uploadedImage, setUploadedImage] = useState(null);
 
+  const user_id = "test@gmail.com";
+
   function onClickMine(e) {
     setLike(false);
     setHistory(false);
@@ -55,47 +57,48 @@ const Profile = (props) => {
   }
 
   useEffect(() => {
-    const getName = async () => {
-      await axios
-        .get(`http://localhost:3001/User/${userId}`)
-        .then((res) => setName(res.data.last_name));
-    };
-
     const getMyPrompts = async () => {
-      await axios
-        .get("http://localhost:3001/MyPrompts", {
-          params: {
-            user_id: userId,
-          },
-        })
-        .then((res) => setMyprompts(res.data));
+      return await axios
+        .get(`http://43.201.240.250:8080/prompt/my-page/${user_id}`)
+        .then((response) => {
+          setMyprompts(response.data);
+        });
     };
 
     const getMyChats = async () => {
-      await axios
-        .get(`http://localhost:3001/CHAT_ROOM`, {
+      try {
+        const response = await axios.get(`http://localhost:3001/CHAT_ROOM`, {
           params: {
             Member_id: userId,
           },
-        })
-        .then((res) => setMyChats(res.data));
+        });
+        setMyChats(response.data);
+      } catch (error) {
+        console.error("Error fetching my chats:", error);
+      }
     };
 
     const getChatHistory = async () => {
-      await axios
-        .get(`http://localhost:3001/CHAT_ROOM`, {
+      try {
+        const response = await axios.get(`http://localhost:3001/CHAT_ROOM`, {
           params: {
             Member_id: userId,
           },
-        })
-        .then((res) => setChatHistorys(res.data));
+        });
+        setChatHistorys(response.data);
+      } catch (error) {
+        console.error("Error fetching chat history:", error);
+      }
     };
 
-    getName();
-    getMyPrompts();
-    getMyChats();
-    getChatHistory();
-  }, []);
+    const fetchData = async () => {
+      await getMyPrompts();
+      await getMyChats();
+      await getChatHistory();
+    };
+
+    fetchData();
+  }, [userId]); // Added userId as a dependency
 
   const toggleEditing = () => setEditing((prev) => !prev);
   return (
@@ -111,7 +114,7 @@ const Profile = (props) => {
               alt='my profile'
             />
             <span className='nameEmail'>
-              <h2>{name}</h2>
+              <h2>이름</h2>
               <h4>mail@gmail.com</h4>
             </span>
           </span>
@@ -162,16 +165,7 @@ const Profile = (props) => {
           {isMine ? (
             <>
               {myPrompts.map((myPrompt) => (
-                <Myprompt
-                  title={myPrompt.title}
-                  key={myPrompt.id}
-                  id={myPrompt.id}
-                  date={myPrompt.created_date}
-                  description={myPrompt.description}
-                  userName={myPrompt.user_id}
-                  likes={myPrompt.likes}
-                  comments={myPrompt.comments}
-                />
+                <Myprompt data={myPrompt} key={myPrompt.prompt_id} />
               ))}
             </>
           ) : null}

@@ -2,6 +2,7 @@
   "name": "ahi",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://43.201.240.250:8080/",
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
     "@fortawesome/react-fontawesome": "^0.2.0",
