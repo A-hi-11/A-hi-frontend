@@ -1,4 +1,11 @@
 .detailMain h1{
+    color: #04364A;
+    font-family: Spoqa Han Sans Neo;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
     color: #FFF;
     font-family: Spoqa Han Sans Neo;
     font-size: 36px;
@@ -107,5 +114,3 @@ li ::after{
     margin-left: auto;
     background-color: #10a37f;
   }
-
-  
