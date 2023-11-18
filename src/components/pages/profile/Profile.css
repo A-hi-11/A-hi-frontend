@@ -158,6 +158,7 @@ flex-shrink: 0;
     width: 64%;
     height:2.1rem;
     flex-shrink: 0;
+    border-radius: 7px;
     background-color: rgba(4, 54, 74, 0.17);
     outline: none;
     border: none;
@@ -167,8 +168,11 @@ flex-shrink: 0;
     background-color: rgba(4, 54, 74, 0.17);
     outline: none;
     border-color: #04364A;
+    border-radius: 7px;
     justify-self: center;
     width: 150px;
+    height: 30px;
+    font-weight:bold;
     }
 
 .content{

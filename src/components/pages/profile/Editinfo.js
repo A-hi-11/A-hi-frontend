@@ -1,6 +1,6 @@
 /** @format */
 
-import React from 'react';
+import React from "react";
 
 function EditInfo({
   setName,
@@ -10,6 +10,8 @@ function EditInfo({
   nameEdit,
   userId,
   passEdit,
+  uploadedImage,
+  setUploadedImage,
 }) {
   const onChange = (event) => {
     const {
@@ -24,26 +26,44 @@ function EditInfo({
     let newName = { last_name: nameEdit };
 
     fetch(`http://localhost:3001/User/${userId}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newName),
     })
       .then(() => {
-        alert('닉네임 변경이 완료되었습니다.');
+        alert("닉네임 변경이 완료되었습니다.");
       })
-      .catch((error) => console.error('Error :', error));
+      .catch((error) => console.error("Error :", error));
     setEditing(false);
     setName(nameEdit);
   };
 
+  const onChangeImage = (e) => {
+    const file = e.target.files[0];
+    const imageUrl = URL.createObjectURL(file);
+    setUploadedImage(imageUrl);
+  };
+
   return (
     <div className='editInfo'>
-      <img
-        className='profilePic'
-        src='img/profile_exm.png'
-        width='100px'
-        alt='my profile'
-      />
+      <div style={{ display: "inline-flex" }}>
+        {uploadedImage ? (
+          <img src={uploadedImage} alt='프로필 없을때' />
+        ) : (
+          <img
+            className='profilePic'
+            src='img/profile_exm.png'
+            width='100px'
+            alt='프로필사진'
+          />
+        )}
+        <input
+          type='file'
+          onChange={onChangeImage}
+          style={{ alignSelf: "center" }}
+          className='formBtn'
+        />
+      </div>
       <form onSubmit={onSubmit}>
         <span className='content'>
           <p>닉네임</p>
@@ -64,7 +84,7 @@ function EditInfo({
             className='formInput'
           />
         </span>
-        <span className='content' style={{ marginLeft: '140px' }}>
+        <span className='content' style={{ marginLeft: "140px" }}>
           <input type='submit' value='변경' className='formBtn' />
         </span>
       </form>

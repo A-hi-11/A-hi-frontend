@@ -1,28 +1,34 @@
 /** @format */
 
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import Myprompt from './Myprompt';
-import MyChats from './MyChats';
-import EditInfo from './Editinfo';
-import './Profile.css';
-import Navigation from '../../Navigation';
-import PassCheck from './PassCheck';
+
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Myprompt from "./Myprompt";
+import MyChats from "./MyChats";
+import ChatHistory from "./ChatHistory";
+import EditInfo from "./Editinfo";
+import "./Profile.css";
+import Navigation from "../../Navigation";
+import PassCheck from "./PassCheck";
 
 const Profile = (props) => {
   const [myPrompts, setMyprompts] = useState([]);
   const userId = 9; //임시 사용자 id
   const [name, setName] = useState();
   const [editing, setEditing] = useState(false);
-  const [myChats, setMyChats] = useState('');
-  const [nameEdit, setNameEdit] = useState('');
-  const [passEdit, setPassEdit] = useState('');
+  const [myChats, setMyChats] = useState("");
+  const [nameEdit, setNameEdit] = useState("");
+  const [passEdit, setPassEdit] = useState("");
+  const [chatHistorys, setChatHistorys] = useState("");
   const [isPassCheck, setPassCheck] = useState(false);
-  const [editName, setEditName] = useState('');
+  const [editName, setEditName] = useState("");
   const [isMine, setMine] = useState(true);
   const [isLike, setLike] = useState(false);
   const [isPending, setIsPending] = useState(false);
   const [isHistory, setHistory] = useState(false);
+  const [uploadedImage, setUploadedImage] = useState(null);
+
+  const user_id = "test@gmail.com";
 
   function onClickMine(e) {
     setLike(false);
@@ -52,37 +58,49 @@ const Profile = (props) => {
   }
 
   useEffect(() => {
-    const getName = async () => {
-      await axios
-        .get(`http://localhost:3001/User/${userId}`)
-        .then((res) => setName(res.data.last_name));
+    const getMyPrompts = async () => {
+      return await axios
+        .get(`http://43.201.240.250:8080/prompt/my-page/${user_id}`)
+        .then((response) => {
+          setMyprompts(response.data);
+        });
     };
 
-    const getMyPrompts = async () => {
-      await axios
-        .get('http://localhost:3001/MyPrompts', {
-          params: {
-            user_id: userId,
-          },
-        })
-        .then((res) => setMyprompts(res.data));
-    };
 
     const getMyChats = async () => {
-      await axios
-        .get(`http://localhost:3001/CHAT_ROOM`, {
+      try {
+        const response = await axios.get(`http://localhost:3001/CHAT_ROOM`, {
           params: {
             Member_id: userId,
           },
-        })
-        .then((res) => setMyChats(res.data));
+        });
+        setMyChats(response.data);
+      } catch (error) {
+        console.error("Error fetching my chats:", error);
+      }
     };
 
-    getName();
-    getMyPrompts();
-    getMyChats();
-  }, []);
+    const getChatHistory = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/CHAT_ROOM`, {
+          params: {
+            Member_id: userId,
+          },
+        });
+        setChatHistorys(response.data);
+      } catch (error) {
+        console.error("Error fetching chat history:", error);
+      }
+    };
 
+    const fetchData = async () => {
+      await getMyPrompts();
+      await getMyChats();
+      await getChatHistory();
+    };
+
+    fetchData();
+  }, [userId]); // Added userId as a dependency
   const toggleEditing = () => setEditing((prev) => !prev);
   return (
     <div className='container'>
@@ -97,7 +115,7 @@ const Profile = (props) => {
               alt='my profile'
             />
             <span className='nameEmail'>
-              <h2>{name}</h2>
+              <h2>이름</h2>
               <h4>mail@gmail.com</h4>
             </span>
           </span>
@@ -118,6 +136,8 @@ const Profile = (props) => {
                 nameEdit={nameEdit}
                 passEdit={passEdit}
                 userId={userId}
+                uploadedImage={uploadedImage}
+                setUploadedImage={setUploadedImage}
               />
             </>
           )
@@ -130,7 +150,7 @@ const Profile = (props) => {
           <button
             id='mine'
             onClick={onClickMine}
-            style={{ borderBottom: '3px solid #04364A' }}
+            style={{ borderBottom: "3px solid #04364A" }}
           >
             나의 프롬프트
           </button>
@@ -146,26 +166,18 @@ const Profile = (props) => {
           {isMine ? (
             <>
               {myPrompts.map((myPrompt) => (
-                <Myprompt
-                  title={myPrompt.title}
-                  key={myPrompt.id}
-                  id={myPrompt.id}
-                  date={myPrompt.created_date}
-                  description={myPrompt.description}
-                  userName={myPrompt.user_id}
-                  likes={myPrompt.likes}
-                  comments={myPrompt.comments}
-                />
+                <Myprompt data={myPrompt} key={myPrompt.prompt_id} />
               ))}
             </>
           ) : null}
           {isHistory ? (
             <>
-              {myChats.map((myChat) => (
-                <MyChats
-                  title={myChat.Chat_room_id}
-                  key={myChat.Chat_room_id}
-                  date={myChat.Time}
+              {chatHistorys.map((chatHistory) => (
+                <ChatHistory
+                  title={chatHistory.Chat_room_name}
+                  key={chatHistory.Chat_room_id}
+                  date={chatHistory.Time}
+                  lastchat='마지막 대화가 표시됩니다.'
                 />
               ))}
             </>

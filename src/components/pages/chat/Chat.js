@@ -1,13 +1,13 @@
-import { Helmet } from "react-helmet";
+/** @format */
+
 import { useState } from "react";
 import styles from "./Chat.module.css";
 import { BiSolidConversation } from "react-icons/bi";
 import { useRef } from "react";
-import Sidebar from "./ChatSidebar";
 import Navigation from "../../Navigation";
 
 export default function Chat() {
-  const [colorInput, setColorInput] = useState("");
+  const [msg, setMsg] = useState("");
   const [result, setResult] = useState();
 
   const messageEndRef = useRef();
@@ -21,10 +21,17 @@ export default function Chat() {
     const ul = document.getElementById("msgList");
     const li = document.createElement("li");
     li.className = styles.quest;
-    li.innerText = colorInput;
+    li.innerText = msg;
     ul.appendChild(li);
     scrollToBottom(messageEndRef);
+    setMsg("");
   }
+
+  const handleOnKeyPress = (e) => {
+    if (e.key === "Enter") {
+      onSendMsg(e); // Enter 입력이 되면 클릭 이벤트 실행
+    }
+  };
 
   async function onSubmit(event) {
     event.preventDefault();
@@ -34,7 +41,7 @@ export default function Chat() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ color: colorInput }),
+        body: JSON.stringify({ color: msg }),
       });
 
       const data = await response.json();
@@ -46,7 +53,7 @@ export default function Chat() {
       }
 
       setResult(data.result);
-      setColorInput("");
+      setMsg("");
     } catch (error) {
       // Consider implementing your own error handling logic here
       console.error(error);
@@ -55,26 +62,25 @@ export default function Chat() {
   }
 
   return (
-    <div className={styles.chatContainer}>
+    <div style={{ display: "inline-flex", height: "max-content" }}>
       <Navigation />
       <div className={styles.main}>
         <title>에이 하이</title>
-        <link rel="icon" href="forum.png" />
+        <link rel='icon' href='forum.png' />
 
         <div className={styles.title}>
-          <BiSolidConversation size="40px" color="#4997B0" />
+          <BiSolidConversation size='40px' color='#4997B0' />
           <h2>안녕 AI</h2>
           <h3>에이-하이</h3>
         </div>
         <div className={styles.gptMenu}>
-          <select>
+          <select className={styles.list}>
             <option>GPT-3.5</option>
             <option>GPT-4</option>
           </select>
         </div>
         <div className={styles.result}>
-          <Sidebar />
-          <ul id="msgList">
+          <ul id='msgList'>
             <li className={styles.response}>안녕하세요 ChatGPT 입니다.</li>
             <li className={styles.quest}>
               응 그래 잘지내? 난 잘지내.응 그래 잘지내? 난 잘지내.응 그래
@@ -85,16 +91,17 @@ export default function Chat() {
           <div ref={messageEndRef}></div>
         </div>
 
-        <div className={styles.under} margin-top="200px">
-          <form onSubmit={onSendMsg}>
+        <div className={styles.under} margin-top='200px'>
+          <form onSubmit={onSendMsg} onKeyDown={handleOnKeyPress}>
             <textarea
-              type="text"
-              name="color"
-              placeholder="에이 하이에게 무엇이든 물어보세요"
-              value={colorInput}
-              onChange={(e) => setColorInput(e.target.value)}
+              type='text'
+              name='color'
+              placeholder='에이 하이에게 무엇이든 물어보세요'
+              value={msg}
+              onChange={(e) => setMsg(e.target.value)}
+              required
             />
-            <input type="submit" value="전송" />
+            <input type='submit' value='전송' />
           </form>
         </div>
       </div>

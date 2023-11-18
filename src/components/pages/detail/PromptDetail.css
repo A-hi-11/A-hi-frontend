@@ -6,3 +6,111 @@
     font-weight: 400;
     line-height: normal;
 }
+    color: #FFF;
+    font-family: Spoqa Han Sans Neo;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.detailDiv {
+    margin-left: 190px;
+    margin-top: 30px;
+    border-radius: 32px;
+    background: #04364A;
+    color: #FFF;
+    font-family: Spoqa Han Sans Neo;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal; 
+    width: 550px;  
+}
+
+.detailMenu{
+    display: inline-flex;
+}
+
+.detailMenu button{
+    background:transparent;
+    border: none;
+    margin-top: 10px;
+    margin-left: 3rem;
+    margin-right: 1rem;
+    margin-bottom: 30px;
+    color: #000;
+    text-align: center;
+    font-family: Spoqa Han Sans Neo;
+    font-size: 1.1rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.DetailChat{
+    width: 60%;
+}
+
+/* 챗지피티 사용 css */
+
+.chat-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.result{
+width: 800px;
+height: 280px;
+border-radius: 10px;
+overflow: auto;
+background-color:#bebec2;
+margin-top: 20px;
+margin-left: 15px;
+}
+  
+  .result ul{
+    height: 300px;
+      margin: 0;
+      padding: 2rem; 
+  }
+
+
+ul{
+    height: 300px;
+      margin: 0;
+      padding: 2rem; 
+  }
+  
+  .result li{
+    position: relative;
+      list-style-type: none;
+      width: 38%;
+      min-height: 40px;
+      height: fit-content;
+      margin: 0 0 10px;
+      padding: 10px;
+      border-radius: 8px;
+      background-color: #4997B0;
+      color: #fff;
+      
+  }
+li ::after{
+    content: "";
+      position: absolute;
+      top: 10px;
+      right: -10px;
+      width: 0;
+      height: 0;
+      border-bottom: 16px solid transparent;
+      border-left: 16px solid #3b82f6;
+  }
+
+.quest{
+    margin-right: auto;
+    height: min-content;
+  }
+.result .response{
+    margin-left: auto;
+    background-color: #10a37f;
+  }

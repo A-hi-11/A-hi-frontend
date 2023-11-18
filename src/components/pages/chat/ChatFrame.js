@@ -1,12 +1,10 @@
-import { Helmet } from "react-helmet";
+/** @format */
+// ChatGPT 대화창 재사용 컴포넌트
 import { useState } from "react";
 import styles from "./Chat.module.css";
-import { BiSolidConversation } from "react-icons/bi";
 import { useRef } from "react";
-import Sidebar from "./ChatSidebar";
-import Navigation from "../../Navigation";
 
-export default function Chat() {
+const Chat = ({ width, margin, fontSize, welcomeMsg }) => {
   const [colorInput, setColorInput] = useState("");
   const [result, setResult] = useState();
 
@@ -18,6 +16,15 @@ export default function Chat() {
 
   function onSendMsg(event) {
     event.preventDefault();
+    const ul = document.getElementById("msgList");
+    const li = document.createElement("li");
+    li.className = styles.quest;
+    li.innerText = colorInput;
+    ul.appendChild(li);
+    scrollToBottom(messageEndRef);
+  }
+
+  function onUploadEx() {
     const ul = document.getElementById("msgList");
     const li = document.createElement("li");
     li.className = styles.quest;
@@ -55,33 +62,33 @@ export default function Chat() {
   }
 
   return (
-    <div className={styles.chatContainer}>
-      <div className={styles.main}>
-        <div className={styles.result}>
-          <ul id="msgList">
-            <li className={styles.response}>안녕하세요 ChatGPT 입니다.</li>
-            <li className={styles.quest}>
-              응 그래 잘지내? 난 잘지내.응 그래 잘지내? 난 잘지내.응 그래
-              잘지내? 난 잘지내.응 그래 잘지내? 난 잘지내.응 그래 잘지내? 난
-              잘지내.
-            </li>
+    <div>
+      <div className={styles.main} style={{ margin }}>
+        <div
+          className={styles.result}
+          style={{ width: width, fontSize: fontSize }}
+        >
+          <ul id='msgList'>
+            <li className={styles.response}>{welcomeMsg}</li>
           </ul>
           <div ref={messageEndRef}></div>
         </div>
 
-        <div className={styles.under} margin-top="200px">
-          <form onSubmit={onSendMsg}>
+        <div className={styles.under} margin-top='200px'>
+          <form onSubmit={onSendMsg} style={{ width: width }}>
             <textarea
-              type="text"
-              name="color"
-              placeholder="에이 하이에게 무엇이든 물어보세요"
+              type='text'
+              name='color'
+              placeholder='에이 하이에게 무엇이든 물어보세요'
               value={colorInput}
               onChange={(e) => setColorInput(e.target.value)}
             />
-            <input type="submit" value="전송" />
+            <input type='submit' value='전송' />
           </form>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default Chat;
