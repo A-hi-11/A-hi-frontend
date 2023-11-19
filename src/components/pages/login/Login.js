@@ -8,12 +8,7 @@ import "./Login.css";
 
 const Login = () => {
   return (
-    <div
-      className='Login'
-      style={{
-        display: "inline-flex",
-      }}
-    >
+    <div className='Login'>
       <Navigation />
       <div
         className='this'

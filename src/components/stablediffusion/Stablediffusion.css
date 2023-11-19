@@ -1,0 +1,60 @@
+.imagePromptContainer{
+    display: inline-flex;
+      margin: 0 auto;
+        flex-direction: column;
+      align-items: center;
+}
+
+.ImagePrompt {
+    stroke-width: 2px;
+    stroke: #FFF;
+    box-shadow: 0px 4px 26.9px 0px rgba(0, 0, 0, 0.01) inset;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    border: none;
+    border-radius: 10px;
+    width: 375px;
+    height: 106px;
+    flex-shrink: 0;
+    color: #000;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+}
+
+.promptbox {
+    align-self: self-start;
+    margin-left: 120px;
+    margin-top: 60px;
+    background-color: rgba(73, 151, 176, 0.68);
+    stroke-width: 2px;
+    color: #FFF;
+    border-radius: 15px;
+    width: 100px;
+    height: 16px;
+    flex-shrink: 0;
+    text-align: center;
+    padding :8px 0;
+    margin-bottom: 10px;
+}
+
+.resultBox{
+   border:#04364A;
+   border-style: solid;
+    width: 700px;
+    height: 600px;
+    border-radius: 20px ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imageBtn {
+    margin-top: 20px;
+    align-self: center;
+    width: 150px;
+    height: 40px;
+    border-radius: 15px;
+    border: none;
+    
+}

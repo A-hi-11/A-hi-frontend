@@ -1,6 +1,5 @@
 /** @format */
 
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Myprompt from "./Myprompt";
@@ -20,11 +19,10 @@ const Profile = (props) => {
   const [nameEdit, setNameEdit] = useState("");
   const [passEdit, setPassEdit] = useState("");
   const [chatHistorys, setChatHistorys] = useState("");
-  const [isPassCheck, setPassCheck] = useState(false);
+  const [isPassCheck, setPassCheck] = useState(true);
   const [editName, setEditName] = useState("");
   const [isMine, setMine] = useState(true);
   const [isLike, setLike] = useState(false);
-  const [isPending, setIsPending] = useState(false);
   const [isHistory, setHistory] = useState(false);
   const [uploadedImage, setUploadedImage] = useState(null);
 
@@ -34,27 +32,27 @@ const Profile = (props) => {
     setLike(false);
     setHistory(false);
     setMine(true);
-    document.getElementById('mine').style.borderBottom = '3px solid #04364A';
-    document.getElementById('like').style.borderBottom = 'none';
-    document.getElementById('chatHistory').style.borderBottom = 'none';
+    document.getElementById("mine").style.borderBottom = "3px solid #04364A";
+    document.getElementById("like").style.borderBottom = "none";
+    document.getElementById("chatHistory").style.borderBottom = "none";
   }
   function onClickLike(e) {
     setLike(true);
     setHistory(false);
     setMine(false);
-    document.getElementById('like').style.borderBottom = '3px solid #04364A';
-    document.getElementById('chatHistory').style.borderBottom = 'none';
-    document.getElementById('mine').style.borderBottom = 'none';
+    document.getElementById("like").style.borderBottom = "3px solid #04364A";
+    document.getElementById("chatHistory").style.borderBottom = "none";
+    document.getElementById("mine").style.borderBottom = "none";
   }
 
   function onClickHistory(e) {
     setLike(false);
     setHistory(true);
     setMine(false);
-    document.getElementById('chatHistory').style.borderBottom =
-      '3px solid #04364A';
-    document.getElementById('mine').style.borderBottom = 'none';
-    document.getElementById('like').style.borderBottom = 'none';
+    document.getElementById("chatHistory").style.borderBottom =
+      "3px solid #04364A";
+    document.getElementById("mine").style.borderBottom = "none";
+    document.getElementById("like").style.borderBottom = "none";
   }
 
   useEffect(() => {
@@ -65,7 +63,6 @@ const Profile = (props) => {
           setMyprompts(response.data);
         });
     };
-
 
     const getMyChats = async () => {
       try {
@@ -125,7 +122,7 @@ const Profile = (props) => {
         </div>
         {editing ? (
           isPassCheck ? (
-            <PassCheck password={1234} /> // 확인용 임시 부여 비밀번호
+            <PassCheck password={1234} setPassCheck={setPassCheck} /> // 확인용 임시 부여 비밀번호
           ) : (
             <>
               <EditInfo

@@ -11,12 +11,7 @@ const Signup = () => {
     console.log("로그인 api");
   };
   return (
-    <div
-      className='Signup'
-      style={{
-        display: "inline-flex",
-      }}
-    >
+    <div className='Signup'>
       <Navigation />
       <div
         className='this'

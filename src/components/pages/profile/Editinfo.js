@@ -59,8 +59,14 @@ function EditInfo({
         )}
         <input
           type='file'
+          accept='image/gif, image/jpeg, image/png'
           onChange={onChangeImage}
-          style={{ alignSelf: "center" }}
+          style={{
+            alignSelf: "center",
+            fontSize: "12px",
+            fontWeight: "normal",
+            padding: "2px 6px",
+          }}
           className='formBtn'
         />
       </div>
