@@ -11,6 +11,7 @@
     font-style: normal;
     font-weight: 600;
     line-height: normal;
+    display: flex;
 }
 
 
@@ -26,6 +27,9 @@
     font-weight: 400;
     line-height: normal; 
     width: 550px;  
+    min-height: 868px;
+    height: fit-content;
+
 }
 
 .detailMenu{
@@ -52,6 +56,36 @@
     width: 60%;
 }
 
+.desContainer{
+   border-radius: 5px;
+   padding: 20px 10px;
+    background: #254855;
+    font-weight: 400;
+    font-size: 16px;
+    word-break: keep-all;
+    line-height: 28px;
+}
+
+.tag {
+  margin-left: 8px;
+ white-space: nowrap;
+  font-size: 15px;
+  font-weight: 100;
+  
+}
+
+.likes{
+  font-size: 14px;
+   margin-left: 7px;
+   margin-right: 7px;
+   font-weight: 400;
+}
+
+.date{
+  text-align: end;
+  font-size: 14px;
+}
+
 /* 챗지피티 사용 css */
 
 .chat-container {
@@ -59,7 +93,7 @@
     flex-direction: column;
 }
 
-.result{
+.detailResult{
 width: 800px;
 height: 280px;
 border-radius: 10px;
@@ -67,35 +101,31 @@ overflow: auto;
 background-color:#bebec2;
 margin-top: 20px;
 margin-left: 15px;
+
 }
   
-  .result ul{
-    height: 300px;
-      margin: 0;
-      padding: 2rem; 
-  }
+.detailResult ul{
+  height: 300px;
+  margin-right: 10px;
+}
 
 
-ul{
-    height: 300px;
-      margin: 0;
-      padding: 2rem; 
-  }
-  
-  .result li{
-    position: relative;
-      list-style-type: none;
-      width: 38%;
-      min-height: 40px;
-      height: fit-content;
-      margin: 0 0 10px;
-      padding: 10px;
-      border-radius: 8px;
-      background-color: #4997B0;
-      color: #fff;
-      
-  }
-li ::after{
+.detailResult li{
+  position: relative;
+    list-style-type: none;
+    width: max-content;
+      max-width: 70%;
+    min-height: 20px;
+    height: fit-content;
+    margin: 0 0 10px;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #4997B0;
+    color: #fff;
+    
+}
+
+.detailResult li ::after{
     content: "";
       position: absolute;
       top: 10px;
@@ -106,11 +136,11 @@ li ::after{
       border-left: 16px solid #3b82f6;
   }
 
-.quest{
-    margin-right: auto;
-    height: min-content;
-  }
-.result .response{
-    margin-left: auto;
-    background-color: #10a37f;
-  }
+.detailResult .quest{
+  margin-right: auto;
+    
+}
+.detailResult .response{
+  margin-left: auto;
+  background-color: #10a37f;
+}
