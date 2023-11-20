@@ -1,10 +1,13 @@
+/** @format */
+
 import React, { useEffect } from "react";
 import { useRef, useState } from "react";
 import Navigation from "../../Navigation";
 import "./PromptDetail.css";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import Loading from "../../Loading";
 import Chat from "../chat/ChatFrame";
 import { useParams } from "react-router-dom";
 
@@ -92,15 +95,7 @@ const PromptDetail = () => {
 
     return formattedDate;
   }
-  if (loading)
-    return (
-      <div style={{ margin: "500px" }}>
-        <FontAwesomeIcon
-          icon={faSpinner}
-          style={{ color: "#04364a", fontSize: "40px" }}
-        />
-      </div>
-    );
+  if (loading) return <Loading />;
   if (error) return <div>에러 발생..{error}</div>;
   if (!detail) return null;
 

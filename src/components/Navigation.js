@@ -1,8 +1,8 @@
 /** @format */
 
-import React from 'react';
-import { Link } from 'react-router-dom';
-import './Navigation.css';
+import React from "react";
+import { Link } from "react-router-dom";
+import "./Navigation.css";
 
 const Navigation = () => {
   return (
@@ -11,7 +11,7 @@ const Navigation = () => {
         <Link to='/'>Home</Link>
       </div>
       <div>
-        <Link to='/chatgpt'>Chat</Link>
+        <Link to='/generative'>Generative AI</Link>
       </div>
       <div>
         <Link to='/search'>Search</Link>

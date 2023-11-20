@@ -42,6 +42,20 @@ function Myprompt(data, key) {
         }}
       >
         <div className='myPrompts__data'>
+          <div
+            className='promptbox'
+            style={{
+              margin: 0,
+              height: "10px",
+              width: "fit-content",
+              paddingLeft: "4px",
+              paddingRight: "4px",
+            }}
+          >
+            <p style={{ margin: "0", fontSize: "12px" }}>
+              {mediaType === "text" ? "ChatGPT" : "StableDiffusion"}
+            </p>
+          </div>
           <h2>{title}</h2>
           {description !== "" && (
             <p className='myPrompts_des'>{description}...</p>

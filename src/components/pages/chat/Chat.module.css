@@ -6,7 +6,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-left: 20rem;
+  margin-left: 5rem;
 }
 .title,
 .under input, .under textarea{
@@ -87,7 +87,8 @@
 .gptMenu{
   width: 800px;
   display: flex;
-  margin-left: 170%;
+  justify-content: flex-end;
+
 }
 
 .gptMenu select, .gptMenu button{

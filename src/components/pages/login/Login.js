@@ -1,5 +1,5 @@
 /** @format */
-
+// Login과 Signup 페이지는 UI가 거의 동일합니다.
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
@@ -8,12 +8,7 @@ import "./Login.css";
 
 const Login = () => {
   return (
-    <div
-      className='Login'
-      style={{
-        display: "inline-flex",
-      }}
-    >
+    <div className='Login'>
       <Navigation />
       <div
         className='this'
