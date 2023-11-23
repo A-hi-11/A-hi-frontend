@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const PassCheck = ({ password, setPassCheck }) => {
+const PassCheck = ({ setPassCheck }) => {
   const [inputPass, setInputPass] = useState("");
   const onPassCheck = async (e) => {
     try {
@@ -60,12 +60,13 @@ const PassCheck = ({ password, setPassCheck }) => {
         <p style={{ fontSize: "16px", width: "max-content", margin: "0" }}>
           본인 확인을 위해 계정 비밀번호를 입력하세요
         </p>
-        <form
+        <div
           style={{
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
           }}
+          onsubmit='return false;'
         >
           <input
             onClick={onInputClick}
@@ -94,7 +95,7 @@ const PassCheck = ({ password, setPassCheck }) => {
             style={{ position: "absolute", top: "565px" }}
             onClick={onPassCheck}
           />
-        </form>
+        </div>
       </span>
     </div>
   );

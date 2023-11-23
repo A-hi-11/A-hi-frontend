@@ -19,13 +19,15 @@ export default function Chat() {
 
   useEffect(() => {
     console.log("result:" + result);
-    // setResult(data.answer);
-    const li = document.createElement("li");
-    li.className = styles.response;
-    li.innerText = result;
-    document.getElementById("msgList").appendChild(li);
-    scrollToBottom(messageEndRef);
-    setMsg("");
+    if (result != undefined) {
+      // setResult(data.answer);
+      const li = document.createElement("li");
+      li.className = styles.response;
+      li.innerText = result;
+      document.getElementById("msgList").appendChild(li);
+      scrollToBottom(messageEndRef);
+      setMsg("");
+    }
   }, [result]);
 
   const onSendMsg = async (event) => {

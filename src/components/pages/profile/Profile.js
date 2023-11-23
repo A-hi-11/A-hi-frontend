@@ -9,13 +9,15 @@ import EditInfo from "./Editinfo";
 import "./Profile.css";
 import Navigation from "../../Navigation";
 import PassCheck from "./PassCheck";
+import Loading from "../../Loading";
 
 const Profile = (props) => {
   const [myPrompts, setMyprompts] = useState([]);
   const userId = 9; //임시 사용자 id
   const [name, setName] = useState();
   const [editing, setEditing] = useState(false);
-  const [myChats, setMyChats] = useState("");
+  const [myChats, setMyChats] = useState([]);
+  const [likedPrompts, setLikedPrompts] = useState([]);
   const [nameEdit, setNameEdit] = useState("");
   const [passEdit, setPassEdit] = useState("");
   const [chatHistorys, setChatHistorys] = useState("");
@@ -25,6 +27,8 @@ const Profile = (props) => {
   const [isLike, setLike] = useState(false);
   const [isHistory, setHistory] = useState(false);
   const [uploadedImage, setUploadedImage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [refresh, setRefresh] = useState(1);
 
   const user_id = "test@gmail.com";
 
@@ -36,13 +40,22 @@ const Profile = (props) => {
     document.getElementById("like").style.borderBottom = "none";
     document.getElementById("chatHistory").style.borderBottom = "none";
   }
-  function onClickLike(e) {
-    setLike(true);
-    setHistory(false);
-    setMine(false);
-    document.getElementById("like").style.borderBottom = "3px solid #04364A";
-    document.getElementById("chatHistory").style.borderBottom = "none";
-    document.getElementById("mine").style.borderBottom = "none";
+  async function onClickLike(e) {
+    setIsLoading(true);
+    await axios
+      .get(`http://43.201.240.250:8080/my-page/likes`)
+      .then((response) => {
+        setLikedPrompts(response.data);
+        console.log("likedPrompt:" + likedPrompts);
+        setLike(true);
+        setHistory(false);
+        setMine(false);
+        document.getElementById("like").style.borderBottom =
+          "3px solid #04364A";
+        document.getElementById("chatHistory").style.borderBottom = "none";
+        document.getElementById("mine").style.borderBottom = "none";
+        setIsLoading(false);
+      });
   }
 
   function onClickHistory(e) {
@@ -97,8 +110,11 @@ const Profile = (props) => {
     };
 
     fetchData();
-  }, [userId]); // Added userId as a dependency
+  }, [refresh]); // Added userId as a dependency
   const toggleEditing = () => setEditing((prev) => !prev);
+
+  if (isLoading) return <Loading />;
+
   return (
     <div className='container'>
       <Navigation />
@@ -112,7 +128,7 @@ const Profile = (props) => {
               alt='my profile'
             />
             <span className='nameEmail'>
-              <h2>이름</h2>
+              <h2>{name}</h2>
               <h4>mail@gmail.com</h4>
             </span>
           </span>
@@ -122,7 +138,7 @@ const Profile = (props) => {
         </div>
         {editing ? (
           isPassCheck ? (
-            <PassCheck password={1234} setPassCheck={setPassCheck} /> // 확인용 임시 부여 비밀번호
+            <PassCheck setPassCheck={setPassCheck} /> // 확인용 임시 부여 비밀번호
           ) : (
             <>
               <EditInfo
@@ -135,6 +151,7 @@ const Profile = (props) => {
                 userId={userId}
                 uploadedImage={uploadedImage}
                 setUploadedImage={setUploadedImage}
+                setRefresh={setRefresh}
               />
             </>
           )
@@ -151,9 +168,7 @@ const Profile = (props) => {
           >
             나의 프롬프트
           </button>
-          <button id='like' onClick={onClickLike}>
-            좋아요
-          </button>
+          <button id='like'>좋아요</button>
           <button id='chatHistory' onClick={onClickHistory}>
             채팅 내역
           </button>
@@ -165,6 +180,14 @@ const Profile = (props) => {
               {myPrompts.map((myPrompt) => (
                 <Myprompt data={myPrompt} key={myPrompt.prompt_id} />
               ))}
+            </>
+          ) : null}
+          {isLike ? (
+            <>
+              {likedPrompts.map((likedPrompt) => (
+                <Myprompt data={likedPrompt} key={likedPrompt.prompt_id} />
+              ))}
+              ;
             </>
           ) : null}
           {isHistory ? (

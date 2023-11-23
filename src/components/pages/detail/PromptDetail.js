@@ -2,6 +2,7 @@
 
 import React, { useEffect } from "react";
 import { useRef, useState } from "react";
+import Modal from "react-modal";
 import Navigation from "../../Navigation";
 import "./PromptDetail.css";
 import "../chat/Chat.module.css";
@@ -23,6 +24,8 @@ const PromptDetail = () => {
   const [isHowto, setHowto] = useState(false);
   const [loading, setLoading] = useState(true); // axios에서 정보를 받아오고 랜더링하기 위한 상태 state
   const [error, setError] = useState(null); // 에러발생시 에러를 저장할 수 있는 state
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [refresh, setRefresh] = useState(1);
 
   const messageEndRef = useRef();
   const [Input, setInput] = useState("");
@@ -69,7 +72,7 @@ const PromptDetail = () => {
       setError(error);
       console.error("Error fetching prompt details:", error);
     }
-  }, []);
+  }, [refresh]);
 
   const scrollToBottom = () => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -87,14 +90,15 @@ const PromptDetail = () => {
 
   function onDeleteComment(comment_id, event) {
     event.preventDefault();
-
     try {
       axios
         .get(`http://43.201.240.250:8080/prompt/comment/delete/${comment_id}`)
         .then((res) => {
           setLoading(false);
+          setModalIsOpen(false);
           if (res.data) {
             console.log(res.data);
+            setRefresh((refresh) => refresh * -1);
           }
         });
     } catch (error) {
@@ -191,18 +195,31 @@ const PromptDetail = () => {
                   }}
                 >
                   {detail.permission ? (
-                    <button
-                      style={{
-                        border: "none",
-                        backgroundColor: "transparent",
-                        color: "white",
-                      }}
-                      onClick={(e) => {
-                        onDeleteComment(comment.comment_id, e);
-                      }}
-                    >
-                      삭제
-                    </button>
+                    <>
+                      <button
+                        style={{
+                          border: "none",
+                          backgroundColor: "transparent",
+                          color: "white",
+                        }}
+                        onClick={() => {
+                          setModalIsOpen(true);
+                        }}
+                      >
+                        삭제
+                      </button>
+                      <Modal className='modal' isOpen={modalIsOpen}>
+                        <p>정말 삭제하시겠습니까?</p>
+                        <button
+                          className='modal-button'
+                          onClick={(e) => {
+                            onDeleteComment(comment.comment_id, e);
+                          }}
+                        >
+                          예
+                        </button>
+                      </Modal>
+                    </>
                   ) : null}
                 </div>
                 <p>

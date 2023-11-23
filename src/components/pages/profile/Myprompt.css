@@ -1,4 +1,4 @@
-.myprompt{
+.myprompt {
   cursor: pointer;
   padding: 1rem;
   width: 90%;
@@ -7,42 +7,17 @@
   border-radius: 1rem;
   border: 1px solid #04364A;
   background: #FFF;
+  overflow: hidden; /* 추가: 내용이 넘칠 경우를 대비하여 오버플로우를 감춤 */
 }
 
-.myprompt  h2{
-
-    transition: all 0.2s linear;
-  }
-  .myprompt:hover h2 {
-    transform-origin: 0%, 100%;
-    transform: scale(1.1);
-  }
-
-.myPrompts__data h2{
-    display: flex;
-    padding-top: 2px;
-    word-break:keep-all;
-    height: 2rem;
-    flex-direction: column;
-    justify-content: center;
-    flex-shrink: 0;
-    color: #000;
-    font-size: 1.1rem;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 1.75rem; /* 175% */
+.myprompt:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 추가: 마우스 호버 시 그림자 효과 */
 }
 
-.myPrompt__des{
-    display: flex;
-    width: 15.3125rem;
-    height: 5.75rem;
-    flex-direction: column;
-    justify-content: center;
-    flex-shrink: 0;
-    color: #000;
-    font-size: 0.8125rem;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 1.75rem; /* 215.385% */
+.myPrompts__data h2 {
+  transition: all 0.2s linear;
+}
+
+.myprompt:hover .myPrompts__data h2 {
+  transform: scale(1.1);
 }
