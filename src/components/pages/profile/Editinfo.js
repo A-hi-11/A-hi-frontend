@@ -90,7 +90,7 @@ function EditInfo({
             className='formInput'
           />
         </span>
-        <span className='content' style={{ marginLeft: "140px" }}>
+        <span className='content' style={{ marginLeft: "34%" }}>
           <input type='submit' value='변경' className='formBtn' />
         </span>
       </form>

@@ -22,11 +22,12 @@ export default function Stablediffusion() {
       setIsLoading(true);
       const response = await axios.post(
         "http://43.201.240.250:8080/diffusion",
+
+        { prompt: imageInput },
         {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ prompt: imageInput }),
         },
       );
 

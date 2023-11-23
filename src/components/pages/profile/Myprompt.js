@@ -28,7 +28,7 @@ function Myprompt(data, key) {
     const hours = date.getHours();
     const minutes = date.getMinutes();
 
-    const formattedDate = `${year}년 ${month}월 ${day}일 ${hours}시 ${minutes}분`;
+    const formattedDate = `${year}년 ${month}월 ${day}일`;
 
     return formattedDate;
   }
@@ -52,13 +52,17 @@ function Myprompt(data, key) {
               paddingRight: "4px",
             }}
           >
-            <p style={{ margin: "0", fontSize: "12px" }}>
+            <p style={{ margin: "0", fontSize: "10px" }}>
               {mediaType === "text" ? "ChatGPT" : "StableDiffusion"}
             </p>
           </div>
           <h2>{title}</h2>
           {description !== "" && (
-            <p className='myPrompts_des'>{description}...</p>
+            <p className='myPrompts_des'>
+              {description.length > 40
+                ? description.substring(0, 40) + "..."
+                : description}
+            </p>
           )}
           <h5 className='myPrompt__date' style={{ marginBottom: "0" }}>
             등록: {member_id}

@@ -4,7 +4,8 @@
 
 .prompts{
     display: grid;
-    width: 78%;
+    max-width: 600px;
+    width: 90%;
     grid-template-columns: repeat(2,minmax(200px, 1fr));
     grid-gap: 1.3rem;
     padding: 50px;
@@ -166,8 +167,7 @@ flex-shrink: 0;
 
 .formBtn {
     background-color: rgba(4, 54, 74, 0.17);
-    outline: none;
-    border-color: #04364A;
+    border: none;
     border-radius: 7px;
     justify-self: center;
     width: 150px;
@@ -177,7 +177,7 @@ flex-shrink: 0;
 
 .content{
     width: 70%;
-    margin-top: 1rem;
+    margin-top: 1.2rem;
     display: inline-flex;
 }
 

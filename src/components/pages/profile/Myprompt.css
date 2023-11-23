@@ -1,15 +1,16 @@
 .myprompt{
-    cursor: pointer;
-    padding: 1rem;
-    width: 90%;
-    height: 14.3rem;
-    flex-shrink: 0;
-    border-radius: 1rem;
-    border: 1px solid #04364A;
-    background: #FFF;
+  cursor: pointer;
+  padding: 1rem;
+  width: 90%;
+  min-height: 14.3rem;
+  flex-shrink: 0;
+  border-radius: 1rem;
+  border: 1px solid #04364A;
+  background: #FFF;
 }
 
 .myprompt  h2{
+
     transition: all 0.2s linear;
   }
   .myprompt:hover h2 {
@@ -19,7 +20,8 @@
 
 .myPrompts__data h2{
     display: flex;
-    width: 13.0625rem;
+    padding-top: 2px;
+    word-break:keep-all;
     height: 2rem;
     flex-direction: column;
     justify-content: center;

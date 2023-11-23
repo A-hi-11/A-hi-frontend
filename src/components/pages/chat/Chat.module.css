@@ -118,15 +118,16 @@
 
 .result li{
   position: relative;
-    list-style-type: none;
-    width: 38%;
-    min-height: 40px;
-    height: fit-content;
-    margin: 0 0 10px;
-    padding: 10px;
-    border-radius: 8px;
-    background-color: #4997B0;
-    color: #fff;
+  list-style-type: none;
+  width: max-content;
+  max-width: 70%;
+  min-height: 20px;
+  height: fit-content;
+  margin: 0 0 10px;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #4997B0;
+  color: #fff;
     
 }
 .result li ::after{
@@ -143,10 +144,17 @@
 .result .response{
   margin-right: auto;
   height: min-content;
+  max-width: 400px;
+  width: max-content;
+  min-width: 250px;
+  margin-top: 10px;
 }
 .result .quest{
+  margin-top: 20px;
   margin-left: auto;
   background-color: #10a37f;
+  max-width: 400px;
+  width: max-content;
 }
 
 .list{
