@@ -2,8 +2,10 @@
 
 import React, { useEffect } from "react";
 import { useRef, useState } from "react";
+import Modal from "react-modal";
 import Navigation from "../../Navigation";
 import "./PromptDetail.css";
+import "../chat/Chat.module.css";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
@@ -14,6 +16,7 @@ import { useParams } from "react-router-dom";
 const PromptDetail = () => {
   const { prompt_id } = useParams();
   const [detail, setDetail] = useState([]);
+  const [comments, setComments] = useState([]);
   const [user, setUser] = useState([]);
   const [isUse, setUse] = useState(true);
   const [isPending, setIsPending] = useState(false);
@@ -21,6 +24,8 @@ const PromptDetail = () => {
   const [isHowto, setHowto] = useState(false);
   const [loading, setLoading] = useState(true); // axios에서 정보를 받아오고 랜더링하기 위한 상태 state
   const [error, setError] = useState(null); // 에러발생시 에러를 저장할 수 있는 state
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [refresh, setRefresh] = useState(1);
 
   const messageEndRef = useRef();
   const [Input, setInput] = useState("");
@@ -67,7 +72,7 @@ const PromptDetail = () => {
       setError(error);
       console.error("Error fetching prompt details:", error);
     }
-  }, []);
+  }, [refresh]);
 
   const scrollToBottom = () => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -83,6 +88,25 @@ const PromptDetail = () => {
     scrollToBottom(messageEndRef);
   }
 
+  function onDeleteComment(comment_id, event) {
+    event.preventDefault();
+    try {
+      axios
+        .get(`http://43.201.240.250:8080/prompt/comment/delete/${comment_id}`)
+        .then((res) => {
+          setLoading(false);
+          setModalIsOpen(false);
+          if (res.data) {
+            console.log(res.data);
+            setRefresh((refresh) => refresh * -1);
+          }
+        });
+    } catch (error) {
+      setError(error);
+      console.error("Error fetching deleting comment:", error);
+    }
+  }
+
   function formatDateTime(inputDate) {
     const date = new Date(inputDate);
     const year = date.getFullYear();
@@ -91,7 +115,7 @@ const PromptDetail = () => {
     const hours = date.getHours();
     const minutes = date.getMinutes();
 
-    const formattedDate = `${year}년 ${month}월 ${day}일 ${hours}시 ${minutes}분`;
+    const formattedDate = `${year}년 ${month}월 ${day}일 ${hours}:${minutes}`;
 
     return formattedDate;
   }
@@ -100,28 +124,31 @@ const PromptDetail = () => {
   if (!detail) return null;
 
   return (
-    <div className='detailMain' style={{ display: "flex" }}>
+    <div className='detailMain'>
       <Navigation />
       <div style={{ display: "inline-flex" }}>
         <div
           className='detailDiv'
           style={{
             marginRight: "27px",
-            height: "868px",
             flexShrink: "0",
             padding: "25px",
           }}
         >
           <h2 color='FFF'>{detail.title}</h2>
-          <h3>프롬프트 설명</h3>
-          <p style={{ fontWeight: "lighter" }}>{detail.description}</p>
-          <p style={{ marginLeft: "7px", marginRight: "7px" }}>
+          <h4 style={{ marginTop: "60px", fontWeight: "400" }}>
+            프롬프트 설명
+          </h4>
+          <div className='desContainer'>
+            <p>{detail.description}</p>
+          </div>
+          <p className='likes'>
             <FontAwesomeIcon icon={faHeart} style={{ color: "#e63b7a" }} />{" "}
             {detail.likes} likes
           </p>
           <div className='tagsContainer' style={{ display: "flex" }}>
             {detail.tags.map((tag) => (
-              <p style={{ whiteSpace: "nowrap" }}>#{tag}</p>
+              <p className='tag'>#{tag}</p>
             ))}
           </div>
           <div style={{ display: "inline-flex", marginTop: "40px" }}>
@@ -137,15 +164,79 @@ const PromptDetail = () => {
                 marginLeft: "10px",
               }}
             >
-              {detail.member_id}
+              {detail.member_nickname}
             </p>
           </div>
-          <p style={{ textAlign: "end", fontSize: "15px" }}>
-            게시일 : {formatDateTime(detail.create_time)}
-          </p>
-          <p style={{ textAlign: "end", fontSize: "15px" }}>
+          <p className='date'>게시일 : {formatDateTime(detail.create_time)}</p>
+          <p className='date'>
             최근 수정일 : {formatDateTime(detail.update_time)}
           </p>
+          <div className='desContainer' style={{ marginTop: "50px" }}>
+            <h4
+              style={{ marginTop: "0px", fontWeight: "400", fontSize: "20px" }}
+            >
+              댓글
+            </h4>
+
+            {detail.comments.map((comment) => (
+              <div
+                style={{
+                  borderBottom: "solid",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <div
+                  className='promptbox'
+                  style={{
+                    margin: "0",
+                    alignSelf: "flex-end",
+                    padding: "4px 0",
+                  }}
+                >
+                  {detail.permission ? (
+                    <>
+                      <button
+                        style={{
+                          border: "none",
+                          backgroundColor: "transparent",
+                          color: "white",
+                        }}
+                        onClick={() => {
+                          setModalIsOpen(true);
+                        }}
+                      >
+                        삭제
+                      </button>
+                      <Modal className='modal' isOpen={modalIsOpen}>
+                        <p>정말 삭제하시겠습니까?</p>
+                        <button
+                          className='modal-button'
+                          onClick={(e) => {
+                            onDeleteComment(comment.comment_id, e);
+                          }}
+                        >
+                          예
+                        </button>
+                      </Modal>
+                    </>
+                  ) : null}
+                </div>
+                <p>
+                  <img
+                    className='profilePic'
+                    src={detail.member_profile_img}
+                    style={{ width: "30px", height: "30px", margin: "0" }}
+                  />
+                  {comment.member_nickname}
+                </p>
+                <p>{comment.content}</p>
+                <p style={{ fontSize: "13px" }}>
+                  {formatDateTime(comment.create_time)}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
         <div
           className='detailDiv'
@@ -186,7 +277,16 @@ const PromptDetail = () => {
           ) : null}
           {isPrompt ? (
             <>
-              <p style={{ marginLeft: "30px" }}>{detail.content}</p>
+              <p
+                style={{
+                  marginLeft: "13px",
+                  lineHeight: "28px",
+                  wordBreak: "keep-all",
+                  fontSize: "16px",
+                }}
+              >
+                {detail.content}
+              </p>
               <h1>히히</h1>
             </>
           ) : null}
@@ -200,7 +300,7 @@ const PromptDetail = () => {
 
                   <div
                     key={groupIndex}
-                    className='result'
+                    className='detailResult'
                     style={{ width: "530px", fontSize: "14px" }}
                   >
                     <ul id='msgList'>
@@ -208,6 +308,7 @@ const PromptDetail = () => {
                         <li
                           key={`${groupIndex}-${chatIndex}`}
                           className={chat.question ? "quest" : "response"}
+                          style={{ maxWidth: "400px" }}
                         >
                           {chat.message}
                         </li>

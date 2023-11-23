@@ -15,6 +15,12 @@
     font-size: 1.2rem;
     font-style: normal;
     font-weight: 400;
-    line-height: 3rem; /* 233.333% */
+    line-height: 3.5rem; 
     text-decoration-line: none;
+    transition: transform 0.3s ease;
 }
+
+.navContainer a:hover  {
+    transform-origin: 0%, 100%;
+    transform: scale(1.1);
+  }

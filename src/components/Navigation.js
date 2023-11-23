@@ -8,19 +8,19 @@ const Navigation = () => {
   return (
     <div className='navContainer'>
       <div>
-        <Link to='/'>Home</Link>
+        <Link to='/'>홈</Link>
       </div>
       <div>
-        <Link to='/generative'>Generative AI</Link>
+        <Link to='/generative'>생성형 AI</Link>
       </div>
       <div>
-        <Link to='/search'>Search</Link>
+        <Link to='/search'>프롬프트 검색</Link>
       </div>
       <div>
-        <Link to='/profile'>Profile</Link>
+        <Link to='/profile'>마이 페이지</Link>
       </div>
       <div>
-        <Link to='/login'>Login</Link>
+        <Link to='/login'>로그인</Link>
       </div>
     </div>
   );
