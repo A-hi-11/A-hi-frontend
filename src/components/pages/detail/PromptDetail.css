@@ -79,6 +79,17 @@
    margin-left: 7px;
    margin-right: 7px;
    font-weight: 400;
+   display: inline-flex;
+   align-items: center;
+   cursor: pointer;
+}
+
+.likes .fa-heart:hover {
+  color: rgb(131, 34, 66); /* 호버 시 아이콘 색상 변경 */
+}
+
+.likes .fa-heart {
+  transition: color 0.3s ease-in-out;
 }
 
 .date{
@@ -143,56 +154,6 @@ margin-left: 15px;
 .detailResult .response{
   margin-left: auto;
   background-color: #10a37f;
-}
-
-/* 모달 스타일 */
-.modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 20px;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-}
-
-/* 배경 뒷면 스타일 */
-.modal-backdrop {
-  display: none; /* 초기에는 숨김 상태 */
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* 어두운 배경색 */
-  z-index: 999;
-}
-
-/* 모달이 열렸을 때 배경에 투명도 처리 */
-.modal.active {
-  display: block;
-}
-
-/* 모달이 열렸을 때 배경을 나타내기 위한 클래스 */
-.modal.active + .modal-backdrop {
-  display: block;
-}
-/* Yes 버튼 스타일 */
-.modal-button {
-  background-color: #28a745; /* 버튼 배경색 */
-  color: #fff; /* 버튼 텍스트 색상 */
-  padding: 10px 15px;
-  border: none;
-  margin-left: 35%;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-/* Yes 버튼에 호버 효과 추가 */
-.modal-button:hover {
-  background-color: #218838; /* 호버 시 배경색 변경 */
 }
 
 

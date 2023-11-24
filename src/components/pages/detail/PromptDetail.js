@@ -2,7 +2,6 @@
 
 import React, { useEffect } from "react";
 import { useRef, useState } from "react";
-import Modal from "react-modal";
 import Navigation from "../../Navigation";
 import "./PromptDetail.css";
 import "../chat/Chat.module.css";
@@ -12,11 +11,12 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import Loading from "../../Loading";
 import Chat from "../chat/ChatFrame";
 import { useParams } from "react-router-dom";
+import Comment from "./Comment";
+import formatDateTime from "../../FormatDateTime";
 
 const PromptDetail = () => {
   const { prompt_id } = useParams();
   const [detail, setDetail] = useState([]);
-  const [comments, setComments] = useState([]);
   const [user, setUser] = useState([]);
   const [isUse, setUse] = useState(true);
   const [isPending, setIsPending] = useState(false);
@@ -24,11 +24,36 @@ const PromptDetail = () => {
   const [isHowto, setHowto] = useState(false);
   const [loading, setLoading] = useState(true); // axios에서 정보를 받아오고 랜더링하기 위한 상태 state
   const [error, setError] = useState(null); // 에러발생시 에러를 저장할 수 있는 state
-  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [refresh, setRefresh] = useState(1);
 
   const messageEndRef = useRef();
   const [Input, setInput] = useState("");
+
+  const onClickLike = (event) => {
+    event.preventDefault();
+    try {
+      setLoading(true);
+      axios
+        .post(
+          `http://43.201.240.250:8080/prompt/like`,
+          { member_id: "test@gmail.com", prmopt_id: prompt_id, status: "like" },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          },
+        )
+        .then((res) => {
+          if (res.data) {
+            console.log(res.data);
+            setRefresh((refresh) => refresh * -1);
+          }
+        });
+    } catch (error) {
+      setError(error);
+      console.error("Error fetching sending likes:", error);
+    }
+  };
 
   function onClickUse(e) {
     setUse(true);
@@ -88,37 +113,6 @@ const PromptDetail = () => {
     scrollToBottom(messageEndRef);
   }
 
-  function onDeleteComment(comment_id, event) {
-    event.preventDefault();
-    try {
-      axios
-        .get(`http://43.201.240.250:8080/prompt/comment/delete/${comment_id}`)
-        .then((res) => {
-          setLoading(false);
-          setModalIsOpen(false);
-          if (res.data) {
-            console.log(res.data);
-            setRefresh((refresh) => refresh * -1);
-          }
-        });
-    } catch (error) {
-      setError(error);
-      console.error("Error fetching deleting comment:", error);
-    }
-  }
-
-  function formatDateTime(inputDate) {
-    const date = new Date(inputDate);
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1; // 월은 0부터 시작하므로 1을 더해줍니다.
-    const day = date.getDate();
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-
-    const formattedDate = `${year}년 ${month}월 ${day}일 ${hours}:${minutes}`;
-
-    return formattedDate;
-  }
   if (loading) return <Loading />;
   if (error) return <div>에러 발생..{error}</div>;
   if (!detail) return null;
@@ -143,8 +137,17 @@ const PromptDetail = () => {
             <p>{detail.description}</p>
           </div>
           <p className='likes'>
-            <FontAwesomeIcon icon={faHeart} style={{ color: "#e63b7a" }} />{" "}
-            {detail.likes} likes
+            <FontAwesomeIcon
+              icon={faHeart}
+              style={{
+                color: "#e63b7a",
+                cursor: "pointer",
+                marginRight: "5px",
+                fontSize: "20px",
+              }}
+              onClick={onClickLike}
+            />{" "}
+            {detail.likes} 개의 좋아요
           </p>
           <div className='tagsContainer' style={{ display: "flex" }}>
             {detail.tags.map((tag) => (
@@ -164,79 +167,21 @@ const PromptDetail = () => {
                 marginLeft: "10px",
               }}
             >
-              {detail.member_nickname}
+              {detail.nickname ? detail.nickname : "비어있는 사용자 이름"}
             </p>
           </div>
           <p className='date'>게시일 : {formatDateTime(detail.create_time)}</p>
           <p className='date'>
             최근 수정일 : {formatDateTime(detail.update_time)}
           </p>
-          <div className='desContainer' style={{ marginTop: "50px" }}>
-            <h4
-              style={{ marginTop: "0px", fontWeight: "400", fontSize: "20px" }}
-            >
-              댓글
-            </h4>
-
-            {detail.comments.map((comment) => (
-              <div
-                style={{
-                  borderBottom: "solid",
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <div
-                  className='promptbox'
-                  style={{
-                    margin: "0",
-                    alignSelf: "flex-end",
-                    padding: "4px 0",
-                  }}
-                >
-                  {detail.permission ? (
-                    <>
-                      <button
-                        style={{
-                          border: "none",
-                          backgroundColor: "transparent",
-                          color: "white",
-                        }}
-                        onClick={() => {
-                          setModalIsOpen(true);
-                        }}
-                      >
-                        삭제
-                      </button>
-                      <Modal className='modal' isOpen={modalIsOpen}>
-                        <p>정말 삭제하시겠습니까?</p>
-                        <button
-                          className='modal-button'
-                          onClick={(e) => {
-                            onDeleteComment(comment.comment_id, e);
-                          }}
-                        >
-                          예
-                        </button>
-                      </Modal>
-                    </>
-                  ) : null}
-                </div>
-                <p>
-                  <img
-                    className='profilePic'
-                    src={detail.member_profile_img}
-                    style={{ width: "30px", height: "30px", margin: "0" }}
-                  />
-                  {comment.member_nickname}
-                </p>
-                <p>{comment.content}</p>
-                <p style={{ fontSize: "13px" }}>
-                  {formatDateTime(comment.create_time)}
-                </p>
-              </div>
-            ))}
-          </div>
+          <Comment
+            comments={detail.comments}
+            refresh={refresh}
+            setRefresh={setRefresh}
+            error={error}
+            setError={setError}
+            prompt_id={prompt_id}
+          />
         </div>
         <div
           className='detailDiv'
