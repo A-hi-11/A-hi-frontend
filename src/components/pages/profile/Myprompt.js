@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faComment } from "@fortawesome/free-solid-svg-icons";
 import "./Myprompt.css";
+import formatDateTime from "../../FormatDateTime";
 
 function Myprompt(data, key) {
   const prompt_id = data.data.prompt_id;
@@ -18,20 +19,7 @@ function Myprompt(data, key) {
   const create_time = data.data.create_time;
   const update_time = data.data.update_time;
   const likes = data.data.likes;
-  const comments = data.data.comments.length;
-
-  function formatDateTime(inputDate) {
-    const date = new Date(inputDate);
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1; // 월은 0부터 시작하므로 1을 더해줍니다.
-    const day = date.getDate();
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-
-    const formattedDate = `${year}년 ${month}월 ${day}일`;
-
-    return formattedDate;
-  }
+  const comments = data.data.comments;
 
   return (
     <div className='myprompt'>
