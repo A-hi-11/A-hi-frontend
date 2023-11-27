@@ -274,20 +274,21 @@ const PromptDetail = () => {
                   {detail.content}
                 </p>
               ) : (
-                <p
-                  style={{
-                    marginLeft: "13px",
-                    lineHeight: "28px",
-                    wordBreak: "keep-all",
-                    fontSize: "16px",
-                    filter: "blur(4px)", // 블러 처리 스타일을 추가
-                  }}
-                >
-                  볼 수 없는 컨텐츠입니다.
-                </p>
+                <>
+                  <p
+                    style={{
+                      marginLeft: "13px",
+                      lineHeight: "28px",
+                      wordBreak: "keep-all",
+                      fontSize: "16px",
+                      filter: "blur(4px)", // 블러 처리 스타일을 추가
+                    }}
+                  >
+                    볼 수 없는 컨텐츠입니다.
+                  </p>
+                  <LoginButton />
+                </>
               )}
-              <h1>히히</h1>
-              <LoginButton />
             </>
           ) : null}
           {isHowto && (
