@@ -1,12 +1,10 @@
 .detailMain h1{
     color: #04364A;
-    font-family: Spoqa Han Sans Neo;
     font-size: 36px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
     color: #FFF;
-    font-family: Spoqa Han Sans Neo;
     font-size: 36px;
     font-style: normal;
     font-weight: 600;
@@ -21,7 +19,6 @@
     border-radius: 32px;
     background: #04364A;
     color: #FFF;
-    font-family: Spoqa Han Sans Neo;
     font-size: 18px;
     font-style: normal;
     font-weight: 400;
@@ -45,7 +42,6 @@
     margin-bottom: 30px;
     color: #000;
     text-align: center;
-    font-family: Spoqa Han Sans Neo;
     font-size: 1.1rem;
     font-style: normal;
     font-weight: 500;
