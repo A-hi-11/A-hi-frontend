@@ -72,7 +72,7 @@ export default function Stablediffusion() {
           <FontAwesomeIcon icon={faPaperPlane} style={{ color: "#04364a" }} />
         </button>
       </form>
-      {isLoading ? <Loading /> : null}
+      {isLoading ? <Loading color='#04364A' pos='55px' rightPos='0px' /> : null}
       <div className='promptbox' style={{ marginLeft: "3px" }}>
         <p style={{ margin: "0" }}>생성 결과</p>
       </div>

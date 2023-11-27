@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Loading from "../../Loading";
 
-const Chat = ({ width, margin, fontSize, welcomeMsg }) => {
+const PromptGpt = ({ width, margin, fontSize, welcomeMsg, prompt_id }) => {
   const [msg, setMsg] = useState("");
   const [result, setResult] = useState();
   const [isLoading, setIsLoading] = useState(false);
@@ -21,22 +21,26 @@ const Chat = ({ width, margin, fontSize, welcomeMsg }) => {
     if (result != undefined) {
       // setResult(data.answer);
       const li = document.createElement("li");
-      li.className = styles.response;
+      li.className = styles.res;
       li.innerText = result;
       document.getElementById("msgList").appendChild(li);
       scrollToBottom(messageEndRef);
-      setMsg("");
+      setResult(undefined);
     }
   }, [result]);
 
   const onSendMsg = async (event) => {
     event.preventDefault();
     try {
+      const li = document.createElement("li");
+      li.className = styles.quest;
+      li.innerText = msg;
+      document.getElementById("msgList").appendChild(li);
+      scrollToBottom(messageEndRef);
       setIsLoading(true);
-      console.log(JSON.stringify({ prompt: msg }));
       await axios
         .post(
-          "http://43.201.240.250:8080/gpt",
+          `http://43.201.240.250:8080/gpt/use/${prompt_id}`,
           {
             prompt: msg,
           },
@@ -45,6 +49,7 @@ const Chat = ({ width, margin, fontSize, welcomeMsg }) => {
           },
         )
         .then((res) => {
+          setMsg("");
           setResult(res.data.answer);
           console.log(result);
           setIsLoading(false);
@@ -66,10 +71,6 @@ const Chat = ({ width, margin, fontSize, welcomeMsg }) => {
     }
   };
 
-  if (isLoading) {
-    return <Loading color='#04364A' pos='0px' rightPos='0px' />;
-  }
-
   return (
     <div>
       <div className={styles.main} style={{ margin }}>
@@ -79,6 +80,10 @@ const Chat = ({ width, margin, fontSize, welcomeMsg }) => {
         >
           <ul id='msgList'>
             <li className={styles.response}>{welcomeMsg}</li>
+
+            {isLoading ? (
+              <Loading color='fff' pos='-15px' rightPos='335px' />
+            ) : null}
           </ul>
           <div ref={messageEndRef}></div>
         </div>
@@ -100,4 +105,4 @@ const Chat = ({ width, margin, fontSize, welcomeMsg }) => {
   );
 };
 
-export default Chat;
+export default PromptGpt;

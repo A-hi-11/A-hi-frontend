@@ -1,12 +1,19 @@
 /** @format */
 // ChatGPT 대화창 재사용 컴포넌트
-import styles from "./Chat.module.css";
+import styles from "../pages/chat/Chat.module.css";
 import { useRef } from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Loading from "../../Loading";
+import Loading from "../Loading";
+import "./PromptStableDiffusion.css";
 
-const Chat = ({ width, margin, fontSize, welcomeMsg }) => {
+const PromptStableDiffusion = ({
+  width,
+  margin,
+  fontSize,
+  content,
+  welcome_msg,
+}) => {
   const [msg, setMsg] = useState("");
   const [result, setResult] = useState();
   const [isLoading, setIsLoading] = useState(false);
@@ -20,10 +27,10 @@ const Chat = ({ width, margin, fontSize, welcomeMsg }) => {
     console.log("result:" + result);
     if (result != undefined) {
       // setResult(data.answer);
-      const li = document.createElement("li");
-      li.className = styles.response;
-      li.innerText = result;
-      document.getElementById("msgList").appendChild(li);
+      const img = document.createElement("img");
+      img.className = "quest";
+      img.src = result;
+      document.getElementById("msgList").appendChild(img);
       scrollToBottom(messageEndRef);
       setMsg("");
     }
@@ -36,7 +43,7 @@ const Chat = ({ width, margin, fontSize, welcomeMsg }) => {
       console.log(JSON.stringify({ prompt: msg }));
       await axios
         .post(
-          "http://43.201.240.250:8080/gpt",
+          "http://43.201.240.250:8080/diffusion",
           {
             prompt: msg,
           },
@@ -45,7 +52,7 @@ const Chat = ({ width, margin, fontSize, welcomeMsg }) => {
           },
         )
         .then((res) => {
-          setResult(res.data.answer);
+          setResult(res.data);
           console.log(result);
           setIsLoading(false);
         });
@@ -66,10 +73,6 @@ const Chat = ({ width, margin, fontSize, welcomeMsg }) => {
     }
   };
 
-  if (isLoading) {
-    return <Loading color='#04364A' pos='0px' rightPos='0px' />;
-  }
-
   return (
     <div>
       <div className={styles.main} style={{ margin }}>
@@ -77,9 +80,17 @@ const Chat = ({ width, margin, fontSize, welcomeMsg }) => {
           className={styles.result}
           style={{ width: width, fontSize: fontSize }}
         >
-          <ul id='msgList'>
-            <li className={styles.response}>{welcomeMsg}</li>
-          </ul>
+          <div id='msgList'>
+            <p
+              className='response'
+              style={{ backgroundColor: "#10a37f", marginLeft: "0px" }}
+            >
+              {welcome_msg}
+            </p>
+            {isLoading ? (
+              <Loading color='fff' pos='-15px' rightPos='335px' />
+            ) : null}
+          </div>
           <div ref={messageEndRef}></div>
         </div>
 
@@ -92,7 +103,7 @@ const Chat = ({ width, margin, fontSize, welcomeMsg }) => {
               value={msg}
               onChange={(e) => setMsg(e.target.value)}
             />
-            <input type='submit' value='전송' />
+            <input type='submit' value='생성' />
           </form>
         </div>
       </div>
@@ -100,4 +111,4 @@ const Chat = ({ width, margin, fontSize, welcomeMsg }) => {
   );
 };
 
-export default Chat;
+export default PromptStableDiffusion;

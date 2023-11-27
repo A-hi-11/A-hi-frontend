@@ -53,7 +53,6 @@ const PassCheck = ({ setPassCheck }) => {
         flexDirection: "column",
         alignItems: "center",
         paddingTop: "40px",
-        height: "23%",
       }}
     >
       <span>
@@ -75,7 +74,7 @@ const PassCheck = ({ setPassCheck }) => {
             autoFocus
             className='formInput'
             required
-            style={{ marginBottom: "13px", marginTop: "10px" }}
+            style={{ marginTop: "10px" }}
           />
           <p
             style={{
