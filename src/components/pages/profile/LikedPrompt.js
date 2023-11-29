@@ -1,6 +1,5 @@
 /** @format */
 
-// 전체 리스트 페이지에서 재활용해도 될 듯함
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
@@ -9,7 +8,7 @@ import { faHeart, faComment } from "@fortawesome/free-solid-svg-icons";
 import "./Myprompt.css";
 import formatDateTime from "../../FormatDateTime";
 
-function Myprompt(data, key) {
+function LikedPrompt(data, key) {
   const prompt_id = data.data.prompt_id;
   const member_id = data.data.member_id;
   const title = data.data.title;
@@ -20,7 +19,6 @@ function Myprompt(data, key) {
   const update_time = data.data.update_time;
   const likes = data.data.likes;
   const comments = data.data.comments;
-
   return (
     <div className='myprompt'>
       <Link
@@ -40,12 +38,14 @@ function Myprompt(data, key) {
               paddingRight: "4px",
             }}
           >
-            <p style={{ margin: "0", fontSize: "10px" }}>
-              {mediaType === "text" ? "ChatGPT" : "StableDiffusion"}
-            </p>
+            {mediaType != undefined && (
+              <p style={{ margin: "0", fontSize: "10px" }}>
+                {mediaType === "text" ? "ChatGPT" : "StableDiffusion"}
+              </p>
+            )}
           </div>
           <h2>{title}</h2>
-          {description !== "" && (
+          {description !== undefined && (
             <p className='myPrompts_des'>
               {description.length > 40
                 ? description.substring(0, 40) + "..."
@@ -61,32 +61,30 @@ function Myprompt(data, key) {
           >
             등록일: {formatDateTime(create_time)}
           </p>
-
-          <p style={{ marginLeft: "7px", marginRight: "7px" }}>
-            <FontAwesomeIcon
-              icon={faHeart}
-              style={{ color: "#e63b7a", marginRight: "5px" }}
-            />
-            {likes}{" "}
-            <FontAwesomeIcon
-              icon={faComment}
-              style={{ color: "#04364a", marginLeft: "5px" }}
-            />{" "}
-            {comments}
-          </p>
+          {comments != undefined && likes != undefined && (
+            <p style={{ marginLeft: "7px", marginRight: "7px" }}>
+              <FontAwesomeIcon
+                icon={faHeart}
+                style={{ color: "#e63b7a", marginRight: "5px" }}
+              />
+              {likes}{" "}
+              <FontAwesomeIcon
+                icon={faComment}
+                style={{ color: "#04364a", marginLeft: "5px" }}
+              />{" "}
+              {comments}
+            </p>
+          )}
         </div>
       </Link>
     </div>
   );
 }
 
-Myprompt.propTypes = {
+LikedPrompt.propTypes = {
   prompt_id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   created_time: PropTypes.string.isRequired,
-  update_time: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  member_id: PropTypes.string.isRequired,
 };
 
-export default Myprompt;
+export default LikedPrompt;

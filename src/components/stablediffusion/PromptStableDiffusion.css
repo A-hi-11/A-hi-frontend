@@ -1,0 +1,176 @@
+
+* { font-family: 'Spoqa Han Sans Neo', 'sans-serif'; }
+
+
+.main{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 5rem;
+}
+.title,
+.under input, .under textarea{
+  font-size: 16px;
+  line-height: 24px;
+  color: #353740;
+}
+.title, .under{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 30px;
+}
+
+.title h3 {
+  font-size: 50px;
+  line-height: 40px;
+  font-weight: bold;
+  color: #04364A;
+  margin: 2px 0 40px;
+}
+
+.title h2 {
+  font-size: 20px;
+  line-height: 40px;
+  font-weight: bold;
+  color: #04364A;
+  margin: 16px 0 2px;
+}
+
+/* 입력창, 전송 버튼이 있는 하단 부분*/
+
+/* 추가된 CSS */
+.under form {
+  display: flex;
+  flex-direction: column; /* 수정: 세로로 배치하도록 변경 */
+  align-items: center; /* 추가: 가운데 정렬 */
+}
+
+/* 수정된 CSS */
+.under textarea[type="text"] {
+  padding: 12px 16px;
+  width: 100%; /* 수정: 가로 전체 너비 사용 */
+  resize: none;
+  border: 1px solid #4997B0;
+  border-radius: 4px;
+  margin-bottom: 16px; /* 수정: 간격 조정 */
+  height: 80px;
+  outline: none;
+}
+
+.under input[type="submit"] {
+  height: 40px; /* 수정: 버튼 높이 줄임 */
+  width: 120px; /* 수정: 버튼 너비 설정 */
+  border-radius: 8px; /* 수정: 덜 둥글게 조정 */
+  color: #fff;
+  margin-top: 10px; /* 추가: 상단 여백 추가 */
+  background-color: #4997B0;
+  border: none;
+  text-align: center;
+  cursor: pointer;
+}
+
+/* 추가된 미디어 쿼리 */
+@media (max-width: 600px) {
+  .under input[type="submit"] {
+    width: 100%; /* 작은 화면에서 버튼을 가로 전체로 설정 */
+  }
+}
+
+
+
+@keyframes typing {
+  from {
+    width: 0
+  }
+}
+    
+@keyframes blink {
+  50% {
+    border-color: transparent
+  }
+}
+
+
+.gptMenu{
+  width: 800px;
+  display: flex;
+  justify-content: flex-end;
+
+}
+
+.gptMenu select, .gptMenu button{
+  outline: none;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  width: 6rem;
+}
+
+
+
+
+/*답변이 나올곳*/
+
+
+
+  .aiSelect button:hover {
+    background-color: #2980b9;
+  }
+
+  /* styles.module.css */
+
+  .result {
+    display: flex; /* 부모 컨테이너를 flex로 설정 */
+    flex-direction: column; /* 자식 요소들을 세로로 배치 */
+    width: 100%;
+    font-size: 16px;
+  }
+  
+  
+  #msgList {
+    padding: 10px; /* 메시지 리스트 주변에 간격 추가 */
+    overflow-y: auto; /* 메시지 리스트가 넘칠 경우 스크롤 허용 */
+    max-height: 400px; /* 메시지 리스트의 최대 높이 지정 */
+  }
+  
+  .response {
+    background-color: #2980b9; /* 메시지 배경 색상 */
+    width: 40%;
+    color: white; /* 텍스트 색상 */
+    padding: 10px; /* 내용 주변 간격 */
+    margin-bottom: 5px; /* 메시지 간의 간격 */
+    border-radius: 8px; /* 둥근 테두리 */
+    margin-left: 53%;
+    align-self: flex-end; /* 자기 자신을 오른쪽으로 정렬 */
+  }
+  
+  .response p {
+    margin: 0; /* 단락의 상하 간격 제거 */
+  }
+  
+  /* 스크롤바 디자인 (옵션) */
+  #msgList::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  #msgList::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+  }
+  
+  #msgList::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+  }
+
+  /* styles.module.css */
+
+.quest {
+    width: 300px; /* 이미지의 최대 너비를 부모 요소에 맞춤 */
+    border-radius: 8px;
+    align-self: flex-start; /* 'quest' 클래스에 대한 정렬을 왼쪽으로 설정 */
+    margin-bottom: 5px;
+  }
+  
+
+  
+  

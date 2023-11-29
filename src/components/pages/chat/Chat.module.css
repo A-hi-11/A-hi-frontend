@@ -1,7 +1,3 @@
-
-* { font-family: 'Spoqa Han Sans Neo', 'sans-serif'; }
-
-
 .main{
   display: flex;
   flex-direction: column;
@@ -118,15 +114,16 @@
 
 .result li{
   position: relative;
-    list-style-type: none;
-    width: 38%;
-    min-height: 40px;
-    height: fit-content;
-    margin: 0 0 10px;
-    padding: 10px;
-    border-radius: 8px;
-    background-color: #4997B0;
-    color: #fff;
+  list-style-type: none;
+  width: max-content;
+  max-width: 70%;
+  min-height: 20px;
+  height: fit-content;
+  margin: 0 0 10px;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #4997B0;
+  color: #fff;
     
 }
 .result li ::after{
@@ -143,10 +140,17 @@
 .result .response{
   margin-right: auto;
   height: min-content;
+  max-width: 400px;
+  width: max-content;
+  min-width: 250px;
+  margin-top: 10px;
 }
 .result .quest{
+  margin-top: 20px;
   margin-left: auto;
   background-color: #10a37f;
+  max-width: 400px;
+  width: max-content;
 }
 
 .list{
@@ -157,6 +161,54 @@
   background: url('arrow.jpg') no-repeat 95% 50%;
   border-radius: 0px;
   -webkit-appearance: none;
-  -moz-appearance: none;
+  -moz-appearance: n  one;
   appearance: none;
 }
+
+
+  
+  .aiSelect button:hover {
+    background-color: #2980b9;
+  }
+
+
+  .optionsContainer {
+    position: absolute;
+    top: 0;
+    right: -330px; /* 초기에 오른쪽으로 숨겨둠 */
+    width: 300px;
+    height: 100%;
+    padding: 9px;
+    background-color: rgba(255, 255, 255, 0.8); /* 투명한 흰 배경 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+    transition: right 0.3s ease-in-out; /* 좌우 이동에 부드러운 트랜지션 적용 */
+  }
+  
+  .optionsContainerVisible {
+    right: 0; /* 오른쪽에서 나타나도록 설정 */
+  }
+  .optionsContainerHidden {
+    transform: translateX(-100%);
+  }
+  
+  
+  .optionItem {
+    margin-bottom: 10px;
+  }
+  
+  .optionsContainer label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .optionsContainer select,
+  .optionsContainer input,
+  .optionsContainer textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+  }
