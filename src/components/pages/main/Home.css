@@ -16,7 +16,7 @@
 .mainKind{
     cursor : pointer;
     display:inline-block;
-    width:10vh;
+    width:80px;
     text-align:center;
     margin:0.3vw;
     padding:0.5vw;
@@ -26,7 +26,7 @@
 .mainKindactive{
     cursor : pointer;
     display:inline-block;
-    width:10vh;
+    width:80px;
     text-align:center;
     margin:0.3vw;
     padding:0.5vw;
@@ -39,14 +39,30 @@
     display:inline-block;
     text-align: center;
     justify-content: center;
-    border:solid 1px;
+
     width:30vw;
     height:10vh;
-    margin-top:-3vh;
+    margin-top:0vh;
     margin-left : 23vw;
     margin-right:30vw;
-    margin-bottom:2vh;
+    margin-bottom:9vh;
 }
+.logo h3 {
+    font-size: 70px;
+    line-height: 40px;
+    font-weight: bold;
+    color: #04364A;
+    margin: 2px 0 80px;
+  }
+  
+  .logo h2 {
+    font-size: 30px;
+    line-height: 40px;
+    font-weight: bold;
+    color: #04364A;
+    margin: 16px 0 20px;
+  }
+
 .search{
     margin-top:1vh;
     margin-left:-7.7vw;
@@ -95,13 +111,49 @@
     color:white;
     font-size : 1vw;
 }
+.sortKind{
+    display:flex;
+    width : 80vw;
+    height:5vh;
+    align-items: center;
+    margin-left:7vw;
+    margin-bottom:-1vh;
+}
+.sortKindCont{
+    cursor : pointer;
+    display:inline-block;
+    width:3vw;
+    text-align:center;
+    margin:0.3vw;
+    padding:0.5vw;
+    border:solid 1px #04364A;
+    border-radius: 8px 8px 8px 8px;
+    font-size : 1vw;
+}
+.sortKindContactive{
+    cursor : pointer;
+    display:inline-block;
+    width:3vw;
+    text-align:center;
+    margin:0.3vw;
+    padding:0.5vw;
+    border:solid 1px #04364A;
+    border-radius: 8px 8px 8px 8px;
+    background-color:#04364A;
+    color:white;
+    font-size : 1vw;
+}
+.sortKindCont:hover{
+    background-color:#04364A;
+    color:white;
+    font-size : 1vw;
+}
 .contList{
     margin-left:2vw;
     display:flex;
     flex-wrap:wrap;
 }
 .contContent{
-
     display:inline-block;
     width:18vw;
     height:12vw;
@@ -120,6 +172,7 @@
     padding:1rem;
     margin:0.5vw;
     box-shadow: 4px 4px 3px 1px gray;
+    transform: translateY(-10px);
 }
 .imageContContent{
     display:inline-block;
@@ -140,6 +193,7 @@
     padding:1rem;
     margin:0.5vw;
     box-shadow: 4px 4px 3px 1px gray;
+    transform: translateY(-10px);
 }
 .contImage{
     width:15vw;
@@ -150,8 +204,8 @@
 .mainProfilePic {
 
     margin-bottom:0.1vw;
-    width: 5vh;;
-    height: 5vh;
+    width: 2.5vw;;
+    height: 2.5vw;
     border : solid 1px gray;
     border-radius: 10rem;
 }
