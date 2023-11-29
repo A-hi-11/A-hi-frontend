@@ -38,6 +38,7 @@
     height: 3rem;
     width: 18rem;
     stroke: #fff;
+    margin-right:5px;
 }
 
 .Signup button {
@@ -51,12 +52,33 @@
     border: none;
     border-radius: 10px;
 }
-
+.Signup button:disabled {
+    width: 6rem;
+    height: 3rem;
+    flex-shrink: 0;
+    background-color: rgba(171, 171, 171, 0.96);
+    stroke-width: 2px;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+}
+.sendBtn:disabled {
+    width: 6rem;
+    height: 3rem;
+    flex-shrink: 0;
+    background-color: rgba(4, 54, 74, 0.96);
+    stroke-width: 2px;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+}
 .Signup .inputForm {
   display: grid;
   grid-template-columns: 1fr 1fr;
   width: 408.9px;
-  margin: auto;
-  margin-top: 50px;
+  margin:auto;
+  margin-top: 20px;
   margin-bottom: 50px;
 }

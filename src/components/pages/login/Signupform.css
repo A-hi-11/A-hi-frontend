@@ -1,0 +1,17 @@
+.outer{
+    display:flex;
+    justify-content: center;
+}
+.outerCont{
+    display:block;
+    border:solid 2px #04364A;
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    padding : 40px 80px 40px 80px;
+    border-radius : 10px 10px 10px 10px;
+}
+.outerCont input{
+    width:230px;
+
+}

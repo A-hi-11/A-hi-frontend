@@ -11,10 +11,10 @@ const Navigation = () => {
         <Link to='/'>홈</Link>
       </div>
       <div>
-        <Link to='/generative'>생성형 AI</Link>
+        <Link to='/generative'>생성형AI</Link>
       </div>
       <div>
-        <Link to='/search'>프롬프트 검색</Link>
+        <Link to='/create'>프롬프트 생성</Link>
       </div>
       <div>
         <Link to='/profile'>마이 페이지</Link>
