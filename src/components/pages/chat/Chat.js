@@ -42,10 +42,15 @@ export default function Chat() {
   const onSendMsg = async (event) => {
     event.preventDefault();
     try {
+      const li = document.createElement("li");
+      li.className = styles.quest;
+      li.innerText = msg;
+      document.getElementById("msgList").appendChild(li);
+      scrollToBottom(messageEndRef);
       setIsLoading(true);
       await axios
         .post(
-          "https://a-hi-prompt.com/gpt",
+          "http://43.201.240.250:8080/gpt",
           {
             prompt: msg,
             options: options,

@@ -18,6 +18,7 @@ const PromptStableDiffusion = ({
   const [result, setResult] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const messageEndRef = useRef();
+  const [chatRoomId, setChatRoomId] = useState(-1);
 
   const scrollToBottom = () => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -36,23 +37,57 @@ const PromptStableDiffusion = ({
     }
   }, [result]);
 
-  const onSendMsg = async (event) => {
-    event.preventDefault();
-    try {
-      setIsLoading(true);
-      console.log(JSON.stringify({ prompt: msg }));
+  useEffect(() => {
+    setIsLoading(true);
+    console.log(JSON.stringify({ prompt: msg }));
+    const getStableImage = async () => {
       await axios
         .post(
           "https://a-hi-prompt.com/diffusion",
           {
-            prompt: msg,
+            prompt: content,
+            member_id: "test@gmail.com",
+            model_type: "image",
+            chat_room_id: -1,
           },
           {
             headers: { "Content-Type": "application/json" },
           },
         )
         .then((res) => {
-          setResult(res.data);
+          setResult(res.data.response);
+          setChatRoomId(res.chat_room_id);
+          console.log(result);
+          setIsLoading(false);
+        });
+    };
+
+    const fetchData = async () => {
+      await getStableImage();
+    };
+
+    fetchData();
+  }, []);
+
+  const onSendMsg = async (event) => {
+    event.preventDefault();
+    try {
+      setIsLoading(true);
+      await axios
+        .post(
+          "https://a-hi-prompt.com/diffusion",
+          {
+            prompt: msg,
+            member_id: "test@gmail.com",
+            model_type: "image",
+            chat_room_id: chatRoomId,
+          },
+          {
+            headers: { "Content-Type": "application/json" },
+          },
+        )
+        .then((res) => {
+          setResult(res.data.response);
           console.log(result);
           setIsLoading(false);
         });
@@ -83,7 +118,7 @@ const PromptStableDiffusion = ({
           <div id='msgList'>
             <p
               className='response'
-              style={{ backgroundColor: "#10a37f", marginLeft: "0px" }}
+              style={{ backgroundColor: "#4997B0", marginLeft: "0px" }}
             >
               {welcome_msg}
             </p>

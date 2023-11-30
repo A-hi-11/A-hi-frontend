@@ -16,6 +16,7 @@ import ChatHistory from "./components/pages/profile/ChatHistory";
 import Generative from "./components/pages/generative/Generative";
 import Signupform from "./components/pages/login/Signupform";
 import PromptEdit from "./components/pages/detail/PromptEdit";
+import ChatDetail from "./components/pages/profile/ChatDetail";
 
 function App() {
   return (
@@ -34,7 +35,7 @@ function App() {
         <Route path='/signup' element={<Signup />} />
         <Route path='/signupform/:email' element={<Signupform />} />
         <Route path='/promptdetail/:prompt_id' element={<PromptDetail />} />
-        <Route path='/chathistory/:id' element={<ChatHistory />} />
+        <Route path='/chat_history/:chat_room_id' element={<ChatDetail />} />
         <Route path='/prompt_edit/' element={<PromptEdit />} />
       </Routes>
     </div>

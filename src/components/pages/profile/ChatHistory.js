@@ -4,6 +4,8 @@ import { React, useParams } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import "./Myprompt.css";
+import "../../stablediffusion/PromptStableDiffusion.css";
+
 import formatDateTime from "../../FormatDateTime";
 
 function ChatHistory({ data, key }) {
@@ -12,7 +14,8 @@ function ChatHistory({ data, key }) {
       <Link
         style={{ textDecoration: "none", color: "inherit" }}
         to={{
-          pathname: `/chat/${data.chat_room_id}`,
+          pathname: `/chat_history/${data.chat_room_id}`,
+          state: { chat_room_name: data.chat_room_name },
         }}
       >
         <div className='myPrompts__data'>

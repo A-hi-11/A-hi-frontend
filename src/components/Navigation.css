@@ -1,7 +1,7 @@
 .navContainer{
     width: 8.625rem;
     height: 100%;
-    
+    z-index: 2;
     flex-shrink: 0;
     background: #04364A;
     text-align: center;

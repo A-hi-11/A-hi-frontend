@@ -20,9 +20,7 @@ import LoginButton from "./LoginButton";
 const PromptDetail = () => {
   const { prompt_id } = useParams();
   const [detail, setDetail] = useState([]);
-  const [user, setUser] = useState([]);
   const [isUse, setUse] = useState(true);
-  const [isPending, setIsPending] = useState(false);
   const [isPrompt, setPrompt] = useState(false);
   const [isHowto, setHowto] = useState(false);
   const [loading, setLoading] = useState(true); // axios에서 정보를 받아오고 랜더링하기 위한 상태 state
@@ -340,7 +338,7 @@ const PromptDetail = () => {
                     className='detailResult'
                     style={{ width: "530px", fontSize: "14px" }}
                   >
-                    <ul id='msgList'>
+                    <ul id='msgList' style={{ paddingLeft: "18px" }}>
                       {chatGroup.map((chat, chatIndex) => (
                         <li
                           key={`${groupIndex}-${chatIndex}`}

@@ -102,6 +102,7 @@
 
 .detailResult{
 width: 800px;
+padding-left: 0;
 height: 280px;
 border-radius: 10px;
 overflow: auto;
