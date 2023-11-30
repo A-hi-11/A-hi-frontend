@@ -5,16 +5,14 @@ import axios from "axios"; // axios 라이브러리 추가
 
 function EditProfile({
   setName,
-  setNameEdit,
   setEditingProfile,
-  nameEdit,
   userId,
   profileImage,
   setProfileImage,
   setRefresh,
 }) {
-  const [newImg, setNewImg] = useState(profileImage);
-
+  const [newImg, setNewImg] = useState("");
+  const [nameEdit, setNameEdit] = useState("");
   useEffect(() => {
     setNewImg(newImg);
   }, [newImg]);
@@ -26,31 +24,33 @@ function EditProfile({
     setNameEdit(value);
   };
 
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setNewImg(selectedFile);
+  };
+
   const onSubmit = async (event) => {
     event.preventDefault();
-
     // 이미지 변경 API 호출
     if (newImg) {
-      try {
-        console.log(newImg);
-
-        const response = await axios
-          .put(
-            `https://a-hi-prompt.com/my-page/image`,
-            { new_profileImg: newImg },
-            {
+      const handleUpload = async () => {
+        try {
+          const formData = new FormData();
+          formData.append("profileImage", newImg);
+          await axios
+            .put("https://a-hi-prompt.com/my-page/image", {
+              body: formData,
               headers: {
-                "Content-Type": "application/json",
+                "Content-Type": "multipart/form-data",
               },
-            },
-          )
-          .then(() => {
-            setRefresh((refresh) => refresh * -1);
-          });
-        // 나머지 로직...
-      } catch (error) {
-        console.error("Error :", error);
-      }
+            })
+            .then((res) => {
+              console.log("Upload successful:", res.data);
+            });
+        } catch (error) {
+          console.error("Error uploading image:", error);
+        }
+      };
     }
 
     // 닉네임 변경 API 호출
@@ -72,42 +72,34 @@ function EditProfile({
     setRefresh((refresh) => refresh * -1);
   };
 
-  const onChangeImage = (e) => {
-    const file = e.target.files[0];
-    const imageUrl = URL.createObjectURL(file);
-    setNewImg(imageUrl);
-    console.log(newImg);
-  };
-
   return (
     <div className='editInfo'>
-      {/* 이미지 업로드 부분 */}
-      <div style={{ display: "inline-flex" }}>
-        <img
-          className='profilePic'
-          src={newImg}
-          width='100px'
-          alt='프로필사진'
-        />
+      <form onSubmit={onSubmit} id='editForm'>
+        {/* 이미지 업로드 부분 */}
+        <div style={{ display: "inline-flex" }}>
+          <img
+            className='profilePic'
+            src={newImg ? URL.createObjectURL(newImg) : ""}
+            width='100px'
+            alt='프로필사진'
+          />
 
-        <input
-          type='file'
-          accept='image/gif, image/jpeg, image/png'
-          onChange={onChangeImage}
-          style={{
-            alignSelf: "center",
-            fontSize: "12px",
-            fontWeight: "normal",
-            padding: "2px 6px",
-            width: "120px",
-            height: "30px",
-          }}
-          className='formBtn'
-        />
-      </div>
+          <input
+            type='file'
+            accept='image/*'
+            onChange={handleFileChange}
+            style={{
+              alignSelf: "center",
+              fontSize: "12px",
+              fontWeight: "normal",
+              padding: "2px 6px",
+              width: "120px",
+              height: "30px",
+            }}
+            className='formBtn'
+          />
+        </div>
 
-      {/* 폼 부분 */}
-      <form onSubmit={onSubmit}>
         <span className='content'>
           <p>닉네임</p>
           <input
