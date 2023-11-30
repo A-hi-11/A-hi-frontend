@@ -8,7 +8,7 @@ const PassCheck = ({ setPassCheck }) => {
   const onPassCheck = async (e) => {
     try {
       await axios
-        .put("http://43.201.240.250:8080/my-page/password/check", {
+        .put("https://a-hi-prompt.com/my-page/password/check", {
           cur_password: inputPass,
         })
         .then((res) => {

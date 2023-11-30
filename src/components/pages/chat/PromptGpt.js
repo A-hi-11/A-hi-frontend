@@ -40,7 +40,7 @@ const PromptGpt = ({ width, margin, fontSize, welcomeMsg, prompt_id }) => {
       setIsLoading(true);
       await axios
         .post(
-          `http://43.201.240.250:8080/gpt/use/${prompt_id}`,
+          `https://a-hi-prompt.com/gpt/use/${prompt_id}`,
           {
             prompt: msg,
           },

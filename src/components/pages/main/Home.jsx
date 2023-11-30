@@ -30,7 +30,7 @@ const Home = () => {
   useEffect( ()=>{
     const getList = async () => {
       try {
-        const res = await (axios.get("http://43.201.240.250:8080/prompt/view?sort=category&search=",{
+        const res = await (axios.get("https://a-hi-prompt.com/prompt/view?sort=category&search=",{
           params : {"sort" : "time"},
         }))
         console.log(res.title)
@@ -96,7 +96,7 @@ const Home = () => {
               </Link>
           
           )) : data&&data.map((board) => (
-            <Link to={`/promptdetail/${board.prompt_idd}`}>
+            <Link to={`/promptdetail/${board.prompt_id}`}>
             <div key={board.create_time} className="imageContContent">
               {/*<img className="contImage" src={"img/"+`${board.url}`+".JPG"} alt="image"></img>*/}
               <div className="contTitle">{board.title}</div>

@@ -43,7 +43,7 @@ const PromptStableDiffusion = ({
       console.log(JSON.stringify({ prompt: msg }));
       await axios
         .post(
-          "http://43.201.240.250:8080/diffusion",
+          "https://a-hi-prompt.com/diffusion",
           {
             prompt: msg,
           },

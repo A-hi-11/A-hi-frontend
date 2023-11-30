@@ -18,6 +18,30 @@ const Comment = ({
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [sendComment, setSendComment] = useState("");
   const [loading, setLoading] = useState(true); // axios에서 정보를 받아오고 랜더링하기 위한 상태 state
+  const [editing, setEditing] = useState(false);
+  const [editedComment, setEditedComment] = useState("");
+
+  const handleEditClick = () => {
+    setEditing(true);
+  };
+
+  const handleSaveClick = async (comment_id, e) => {
+    e.preventDefault();
+    console.log(editedComment);
+    console.log(comment_id);
+    try {
+      await axios
+        .put(`https://a-hi-prompt.com/prompt/comment/update/${comment_id}`, {
+          context: editedComment,
+        })
+        .then(() => {
+          setEditing(false);
+          console.log("Comment successfully edited.");
+        });
+    } catch {
+      console.error("Comment Edit Failed!");
+    }
+  };
 
   const onChange = (event) => {
     const {
@@ -32,7 +56,7 @@ const Comment = ({
       setLoading(true);
       axios
         .post(
-          `http://43.201.240.250:8080/prompt/comment/${prompt_id}`,
+          `https://a-hi-prompt.com/prompt/comment/${prompt_id}`,
           { comment: sendComment },
           {
             headers: {
@@ -57,7 +81,7 @@ const Comment = ({
     try {
       setLoading(true);
       axios
-        .get(`http://43.201.240.250:8080/prompt/comment/delete/${comment_id}`)
+        .get(`https://a-hi-prompt.com/prompt/comment/delete/${comment_id}`)
         .then((res) => {
           setLoading(false);
           setModalIsOpen(false);
@@ -108,16 +132,19 @@ const Comment = ({
               {comment.member_nickname}
             </p>
             <div
-              className='promptbox'
               style={{
+                display: "flex",
                 margin: "0",
-                marginLeft: "62%",
-                padding: "4px 0",
+                marginLeft: "52%",
               }}
             >
               {comment.permissioned ? (
                 <>
+                  <button className='commentEdit' onClick={handleEditClick}>
+                    수정
+                  </button>
                   <button
+                    className='commentEdit'
                     onClick={() => {
                       setModalIsOpen(true);
                     }}
@@ -154,7 +181,34 @@ const Comment = ({
               ) : null}
             </div>
           </div>
-          <p style={{ marginLeft: "42px" }}>{comment.content}</p>
+          {editing ? (
+            <>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <textarea
+                  style={{
+                    width: "70%",
+                    marginLeft: "10px",
+                    marginTop: "10px",
+                  }}
+                  value={editedComment}
+                  onChange={(e) => setEditedComment(e.target.value)}
+                />
+                <button
+                  style={{ alignSelf: "center", width: "50px", height: "50px" }}
+                  className='commentEdit'
+                  onClick={(e) => {
+                    handleSaveClick(comment.comment_id, e);
+                  }}
+                >
+                  저장
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              <p style={{ marginLeft: "42px" }}>{comment.content}</p>
+            </>
+          )}
           <p style={{ fontSize: "13px" }}>
             {formatDateTime(comment.create_time)}
           </p>

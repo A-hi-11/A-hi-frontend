@@ -53,7 +53,7 @@ const Profile = (props) => {
   async function onClickLike(e) {
     try {
       await axios
-        .get(`http://43.201.240.250:8080/my-page/likes`)
+        .get(`https://a-hi-prompt.com/my-page/likes`)
         .then((response) => {
           console.log(response.data);
 
@@ -86,7 +86,7 @@ const Profile = (props) => {
   useEffect(() => {
     const getMyPrompts = async () => {
       return await axios
-        .get(`http://43.201.240.250:8080/prompt/my-page/${user_id}`)
+        .get(`https://a-hi-prompt.com/prompt/my-page/${user_id}`)
         .then((response) => {
           setMyprompts(response.data);
         });
@@ -95,7 +95,7 @@ const Profile = (props) => {
     const getChatHistory = async () => {
       try {
         const response = await axios.get(
-          "http://43.201.240.250:8080/my-page/chat",
+          "https://a-hi-prompt.com/my-page/chat",
         );
         setChatHistorys(response.data);
       } catch (error) {

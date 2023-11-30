@@ -33,13 +33,36 @@ const PromptDetail = () => {
   const messageEndRef = useRef();
   const [Input, setInput] = useState("");
 
+  const onClickEdit = () => {
+    navigate("/prompt_edit", { state: { detail } });
+    // 수정을 수행하는 로직을 추가하세요.
+    console.log("Edit button clicked!");
+  };
+
+  const onClickDelete = async () => {
+    try {
+      await axios
+        .delete(`https://a-hi-prompt.com/prompt/my-page/${prompt_id}`, {
+          data: {
+            prompt_id: prompt_id,
+          },
+        })
+        .then(() => {
+          console.log(" button clicked!");
+          navigate(-1);
+        });
+    } catch {
+      console.error("Delete Prompt Error");
+    }
+  };
+
   const onClickLike = (event) => {
     event.preventDefault();
     try {
       setLoading(true);
       axios
         .post(
-          `http://43.201.240.250:8080/prompt/like`,
+          `https://a-hi-prompt.com/prompt/like`,
           { member_id: "test@gmail.com", prompt_id: prompt_id, status: "like" },
           {
             headers: {
@@ -89,7 +112,9 @@ const PromptDetail = () => {
     setLoading(true);
     try {
       axios
-        .get(`http://43.201.240.250:8080/prompt/view/${prompt_id}`)
+        .get(
+          `https://a-hi-prompt.com/prompt/view/info?prompt_id=${prompt_id}&member_id=test@gmail.com`,
+        )
         .then((res) => {
           setLoading(false);
           if (res.data) {
@@ -169,6 +194,16 @@ const PromptDetail = () => {
                 {detail.tags.map((tag) => (
                   <p className='tag'>#{tag}</p>
                 ))}
+                {detail.myPrompt && ( // detail.myPrompt 값이 true일 때만 버튼을 표시
+                  <>
+                    <button className='myBtn' onClick={onClickEdit}>
+                      수정
+                    </button>
+                    <button className='myBtn' onClick={onClickDelete}>
+                      삭제
+                    </button>
+                  </>
+                )}
               </div>
               <div style={{ display: "inline-flex", marginTop: "40px" }}>
                 <img
@@ -192,6 +227,7 @@ const PromptDetail = () => {
               <p className='date'>
                 최근 수정일 : {formatDateTime(detail.update_time)}
               </p>
+
               {loading ? (
                 <Loading color='white' pos='0px' rightPos='0px' />
               ) : (

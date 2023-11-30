@@ -36,7 +36,7 @@ function EditProfile({
 
         const response = await axios
           .put(
-            `http://43.201.240.250:8080/my-page/image`,
+            `https://a-hi-prompt.com/my-page/image`,
             { new_profileImg: newImg },
             {
               headers: {
@@ -56,7 +56,7 @@ function EditProfile({
     // 닉네임 변경 API 호출
     if (nameEdit) {
       try {
-        await axios.put(`http://43.201.240.250:8080/my-page/nickname`, {
+        await axios.put(`https://a-hi-prompt.com/my-page/nickname`, {
           new_nickname: nameEdit,
         });
         alert("닉네임 변경이 완료되었습니다.");

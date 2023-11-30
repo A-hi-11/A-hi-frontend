@@ -17,7 +17,7 @@ const Create = () => {
     const [content,setContent]=useState("")
 
     const [cate,setCate]=useState("etc")
-    const [permission,setPermission]=useState("yes")
+    const [permission,setPermission]=useState(true) // useState("yes") -> useState(true) 로 변경함.
     const [useWelcomeM,setUseWelcomeM]=useState("yes")
     const [welcomeM,setWelcomeM]=useState("")
     const [example,setExample]=useState("")
@@ -116,8 +116,8 @@ const Create = () => {
             <br/><br/>
             <h4 style={{margin:"10px"}}>비회원 공개여부 </h4>
             <ul className="kindForm">
-              <div className={"kind"+(permission=="yes" ? "active" : "")} onClick={()=>{setPermission("yes");}}>공개</div>
-              <div className={"kind"+(permission=="no" ? "active" : "")} onClick={()=>{setPermission("no")}}>비공개</div>
+              <div className={"kind"+(permission==true ? "active" : "")} onClick={()=>{setPermission(true);}}>공개</div>
+              <div className={"kind"+(permission==false ? "active" : "")} onClick={()=>{setPermission(false)}}>비공개</div>
             </ul>
 
             <br/>

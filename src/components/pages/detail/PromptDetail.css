@@ -152,4 +152,26 @@ margin-left: 15px;
   background-color: #10a37f;
 }
 
+.myBtn {
+  margin-left: 10px;
+  width: 65px;
+  height: 2.5rem;
+  flex-shrink: 0;
+  border: none;
+  background: rgba(73, 151, 176, 0.68);
+  border-radius: 17px;
+  color: #000;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  cursor: pointer;
+  transition: background-color 0.3s; /* 변화를 부드럽게 만들기 위한 트랜지션 설정 */
+}
+
+.myBtn:hover {
+  background-color: #e0e0e0; /* 커서를 올렸을 때의 색상 */
+}
+
+
 
