@@ -36,7 +36,7 @@ const Profile = (props) => {
   const [isLike, setLike] = useState(false);
   const [isEditingProfile, setEditingProfile] = useState(false);
   const [isHistory, setHistory] = useState(false);
-  const [profileImage, setProfileImage] = useState("/image/profile_exm.png");
+  const [profileImage, setProfileImage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [refresh, setRefresh] = useState(1);
 
