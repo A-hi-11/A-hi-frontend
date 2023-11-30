@@ -15,6 +15,8 @@ import ScrollToTop from "./components/ScrollToTop";
 import ChatHistory from "./components/pages/profile/ChatHistory";
 import Generative from "./components/pages/generative/Generative";
 import Signupform from "./components/pages/login/Signupform";
+import PromptEdit from "./components/pages/detail/PromptEdit";
+
 function App() {
   return (
     <div>
@@ -33,6 +35,7 @@ function App() {
         <Route path='/signupform/:email' element={<Signupform />} />
         <Route path='/promptdetail/:prompt_id' element={<PromptDetail />} />
         <Route path='/chathistory/:id' element={<ChatHistory />} />
+        <Route path='/prompt_edit/' element={<PromptEdit />} />
       </Routes>
     </div>
   );

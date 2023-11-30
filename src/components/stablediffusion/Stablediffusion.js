@@ -21,7 +21,7 @@ export default function Stablediffusion() {
     try {
       setIsLoading(true);
       const response = await axios.post(
-        "http://43.201.240.250:8080/diffusion",
+        "https://a-hi-prompt.com/diffusion",
 
         { prompt: imageInput },
         {

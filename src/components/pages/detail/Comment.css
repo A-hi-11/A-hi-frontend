@@ -49,21 +49,27 @@
     background-color: #218838; /* 호버 시 배경색 변경 */
   }
 
-  .promptbox button {
-    display: flex; /* Flex container for centering */
-    align-items: center; /* Center vertically */
-    justify-self: center;
-    justify-content: center; /* Center horizontally */
+  .commentEdit {
+    margin-left: 10px;
+    width: 62px;
+    height: 2rem;
+    flex-shrink: 0;
     border: none;
-    background-color: transparent;
-    color: white;
+    background: #04364A;
+    border-radius: 17px;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
     cursor: pointer;
-    transition: color 0.3s ease-in-out;
-    margin-left: 30%;
+    transition: background-color 0.3s; /* 변화를 부드럽게 만들기 위한 트랜지션 설정 */
   }
-.promptbox button:hover {
-    color: red;
+  
+  .commentEdit:hover {
+    background-color: #e0e0e0; /* 커서를 올렸을 때의 색상 */
   }
+  
   
 
   /* 댓글 입력 창 */

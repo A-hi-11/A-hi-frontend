@@ -36,7 +36,7 @@ const Chat = ({ width, margin, fontSize, welcomeMsg }) => {
       console.log(JSON.stringify({ prompt: msg }));
       await axios
         .post(
-          "http://43.201.240.250:8080/gpt",
+          "https://a-hi-prompt.com/gpt",
           {
             prompt: msg,
           },
