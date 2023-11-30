@@ -97,7 +97,16 @@ const PromptGpt = ({ width, margin, fontSize, welcomeMsg, prompt_id }) => {
               value={msg}
               onChange={(e) => setMsg(e.target.value)}
             />
-            <input type='submit' value='전송' />
+            <input
+              type='submit'
+              value='전송'
+              style={{
+                marginLeft: "10px",
+                marginTop: "20px",
+                padding: "0px",
+                height: "60px",
+              }}
+            />
           </form>
         </div>
       </div>

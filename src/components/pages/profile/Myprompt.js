@@ -11,7 +11,7 @@ import formatDateTime from "../../FormatDateTime";
 
 function Myprompt(data, key) {
   const prompt_id = data.data.prompt_id;
-  const member_id = data.data.member_id;
+  const nickname = data.data.nickname;
   const title = data.data.title;
   const description = data.data.description;
   const mediaType = data.data.mediaType;
@@ -53,7 +53,7 @@ function Myprompt(data, key) {
             </p>
           )}
           <h5 className='myPrompt__date' style={{ marginBottom: "0" }}>
-            등록: {member_id}
+            등록: {nickname}
           </h5>
           <p
             className='myPrompt__date'
