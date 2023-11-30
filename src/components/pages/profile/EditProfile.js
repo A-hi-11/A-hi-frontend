@@ -32,6 +32,8 @@ function EditProfile({
   const onSubmit = async (event) => {
     event.preventDefault();
     // 이미지 변경 API 호출
+    console.log(newImg);
+
     if (newImg) {
       const handleUpload = async () => {
         try {
