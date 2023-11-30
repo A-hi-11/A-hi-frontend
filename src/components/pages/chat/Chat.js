@@ -15,15 +15,16 @@ export default function Chat() {
   const messageEndRef = useRef();
 
   const [options, setOptions] = useState({
-    mode: "text-davinci-002",
-    model: "gpt-3.5-turbo",
+    model_name: "gpt-3.5-turbo",
     temperature: 0.7,
-    stop_sequences: "",
+    maximum_length: 500,
+    stop_sequence: "",
     top_p: 1,
     frequency_penalty: 0,
     presence_penalty: 0,
   });
 
+  console.log(options);
   const scrollToBottom = () => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -50,10 +51,10 @@ export default function Chat() {
       setIsLoading(true);
       await axios
         .post(
-          "http://43.201.240.250:8080/gpt",
+          "https://a-hi-prompt.com/gpt/24",
           {
             prompt: msg,
-            options: options,
+            gptConfigInfo: options,
           },
           {
             headers: { "Content-Type": "application/json" },
@@ -62,6 +63,10 @@ export default function Chat() {
         .then((res) => {
           setResult(res.data.answer);
           setIsLoading(false);
+          const btn = document.getElementById("optionBtn");
+          btn.className = styles.deactiveOptionBtn;
+          const optionBox = document.getElementById("optionBox");
+          optionBox.className = styles.deactiveOptionBtn;
         });
     } catch (error) {
       console.error(error);
@@ -106,6 +111,7 @@ export default function Chat() {
         <button
           onClick={toggleOptions}
           className='editBtn'
+          id='optionBtn'
           style={{ fontSize: "15px", color: "#04364A", borderColor: "#04364A" }}
         >
           옵션
@@ -114,25 +120,12 @@ export default function Chat() {
         <div
           className={`${styles.optionsContainer} ${getOptionsContainerStyle()}`}
         >
-          <div className={styles.optionItem}>
-            <label>
-              Mode:
-              <select
-                name='mode'
-                value={options.mode}
-                onChange={handleOptionChange}
-              >
-                <option value='text-davinci-002'>Text Davinci 002</option>
-                <option value='text-davinci'>Text Davinci</option>
-              </select>
-            </label>
-          </div>
-          <div className={styles.optionItem}>
+          <div className={styles.optionItem} id='optionBox'>
             <label>
               Model:
               <select
-                name='model'
-                value={options.model}
+                name='model_name'
+                value={options.model_name}
                 onChange={handleOptionChange}
               >
                 <option value='gpt-3.5-turbo'>GPT-3.5 Turbo</option>
@@ -157,10 +150,25 @@ export default function Chat() {
           </div>
           <div className={styles.optionItem}>
             <label>
-              Stop Sequences:
+              Maximum_Length:
+              <input
+                type='range'
+                min='1'
+                max='1000'
+                step='1'
+                name='maximum_length'
+                value={options.maximum_length}
+                onChange={handleOptionChange}
+              />
+              {options.maximum_length}
+            </label>
+          </div>
+          <div className={styles.optionItem}>
+            <label>
+              Stop Sequence:
               <textarea
-                name='stop_sequences'
-                value={options.stop_sequences}
+                name='stop_sequence'
+                value={options.stop_sequence}
                 onChange={handleOptionChange}
               />
             </label>
