@@ -12,17 +12,6 @@ import Loading from "../../Loading";
 import LikedPrompt from "./LikedPrompt";
 import EditProfile from "./EditProfile";
 
-const mockData = [
-  {
-    chat_room_id: 1,
-    chat_room_name: "???",
-    create_time: "2023-11-16T23:20:18.436564",
-    model_type: "gpt-3.5-turbo",
-    last_message:
-      "점심에 먹을 수 있는 다양한 옵션이 있지만, 식사 전에 당신의 개인적인 선호도와 식사 시간, 식사 장소 등을 고려해야 합니다. 다음은 점심에 먹을 수 있는 몇 가지 옵션입니다.\n\n1. 밥과 국/찌개/",
-  },
-];
-
 const Profile = (props) => {
   const storedMemberId = localStorage.getItem("memberId");
   const storedNickname = localStorage.getItem("nickname");
@@ -59,8 +48,6 @@ const Profile = (props) => {
       await axios
         .get(`https://a-hi-prompt.com/my-page/likes`)
         .then((response) => {
-          console.log(response.data);
-
           setLikedPrompts(response.data);
           setLike(true);
           setHistory(false);
@@ -77,14 +64,24 @@ const Profile = (props) => {
     }
   }
 
-  function onClickHistory(e) {
-    setLike(false);
-    setHistory(true);
-    setMine(false);
-    document.getElementById("chatHistory").style.borderBottom =
-      "3px solid #04364A";
-    document.getElementById("mine").style.borderBottom = "none";
-    document.getElementById("like").style.borderBottom = "none";
+  async function onClickHistory(e) {
+    try {
+      await axios
+        .get("https://a-hi-prompt.com/my-page/chat")
+        .then((response) => {
+          setChatHistorys(response.data);
+          console.log(chatHistorys);
+          setLike(false);
+          setHistory(true);
+          setMine(false);
+          document.getElementById("chatHistory").style.borderBottom =
+            "3px solid #04364A";
+          document.getElementById("mine").style.borderBottom = "none";
+          document.getElementById("like").style.borderBottom = "none";
+        });
+    } catch (error) {
+      console.error("Error fetching chat history:", error);
+    }
   }
 
   useEffect(() => {
@@ -96,20 +93,8 @@ const Profile = (props) => {
         });
     };
 
-    const getChatHistory = async () => {
-      try {
-        const response = await axios.get(
-          "https://a-hi-prompt.com/my-page/chat",
-        );
-        setChatHistorys(response.data);
-      } catch (error) {
-        console.error("Error fetching chat history:", error);
-      }
-    };
-
     const fetchData = async () => {
       await getMyPrompts();
-      await getChatHistory();
     };
 
     fetchData();
@@ -195,19 +180,7 @@ const Profile = (props) => {
           <button id='like' onClick={onClickLike}>
             좋아요
           </button>
-          <button
-            id='chatHistory'
-            onClick={() => {
-              setLike(false);
-              setHistory(true);
-              setMine(false);
-              document.getElementById("chatHistory").style.borderBottom =
-                "3px solid #04364A";
-              document.getElementById("mine").style.borderBottom = "none";
-              document.getElementById("like").style.borderBottom = "none";
-              setChatHistorys(mockData);
-            }}
-          >
+          <button id='chatHistory' onClick={onClickHistory}>
             채팅 내역
           </button>
         </span>
