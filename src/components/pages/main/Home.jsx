@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from 'react';
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useNavigate,useLocation} from "react-router-dom";
 import axios from "axios";
 import {BASE_URL} from "../../../assets/Strings";
 import Navigation from "../../Navigation";
@@ -9,7 +9,9 @@ import { BiSolidConversation } from "react-icons/bi";
 import "./Home.css";
 
 const Home = () => {
-    const navigate=useNavigate();
+  const location = useLocation();
+  const navigate = useNavigate();
+
     const [category,setCategory] = useState(1);
     const [boardList, setBoardList] = useState([]);
     const [mainKind,setMainKind]=useState(1)
@@ -42,7 +44,36 @@ const Home = () => {
   getList()
   }
   ,[])
+
+
+    useEffect(() => {
+      // 현재 페이지의 쿼리 스트링을 가져옴
+      const queryString = window.location.search;
   
+      // 쿼리 스트링이 비어있지 않으면 (기본 주소 뒤에 쿼리가 있다면)
+      if (queryString !== '') {
+        // 실행할 작업 수행
+        console.log('기본 주소 뒤에 쿼리가 붙어 있습니다.');
+
+        console.log("쿼리문이 있는 페이지입니다.");
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const memberId = urlParams.get("member_id");
+        const nickname = urlParams.get("nickname");
+        const profileImage = urlParams.get("profile_image");
+        const jwtToken = urlParams.get("jwt");
+  
+        // 추출한 값들을 localStorage에 저장
+        localStorage.setItem("memberId", memberId);
+        localStorage.setItem("nickname", nickname);
+        localStorage.setItem("profileImage", profileImage);
+        localStorage.setItem("jwtToken", jwtToken);
+  
+        // 예시: 다른 페이지로 리다이렉트
+        // window.location.href = '/new-page';
+      }
+    }, []);
+
 
 
   return (
