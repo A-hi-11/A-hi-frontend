@@ -156,13 +156,19 @@ export default function ChatDetail() {
             {chatList.map((chat, chatIndex) =>
               chat.content != "" ? (
                 <>
-                  <li
-                    key={chatIndex}
-                    className={chat.question ? styles.quest : styles.response}
-                    style={{ maxWidth: "400px" }}
-                  >
-                    {chat.content != "" ? chat.content : null}
-                  </li>
+                  {chat.content.startsWith("http") ? (
+                    <>
+                      <img src={chat.content} className='quest' />
+                    </>
+                  ) : (
+                    <li
+                      key={chatIndex}
+                      className={chat.question ? styles.quest : styles.response}
+                      style={{ maxWidth: "400px" }}
+                    >
+                      {chat.content != "" ? chat.content : null}
+                    </li>
+                  )}
                 </>
               ) : null,
             )}
