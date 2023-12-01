@@ -18,7 +18,7 @@ const Create = () => {
     const [content,setContent]=useState("")
 
     const [cate,setCate]=useState("etc")
-    const [permission,setPermission]=useState(true)
+    const [permission,setPermission]=useState(true) // useState("yes") -> useState(true) 로 변경함.
     const [useWelcomeM,setUseWelcomeM]=useState("yes")
     const [welcomeM,setWelcomeM]=useState("")
     const [example,setExample]=useState("")

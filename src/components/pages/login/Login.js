@@ -1,20 +1,22 @@
 /** @format */
 // Login과 Signup 페이지는 UI가 거의 동일합니다.
-import React,{useState} from "react";
+import React,{useState, useEffect} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { useLocation, useNavigate } from "react-router-dom";
 import Navigation from "../../Navigation";
 import "./Login.css";
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import cookie from 'react-cookies';
+
 const Login = () => {
 
   const [id,setId]=useState("")
   const [pw,setPw]=useState("")
   const expires = new Date()
   expires.setMinutes(expires.getMinutes() + 180)
-  function google() {
+  function login() {
     window.location.href = 'https://a-hi-prompt.com/google-login'
   };
   const naver = () => {
@@ -53,7 +55,7 @@ const Login = () => {
       >
         <h2>안녕 AI</h2>
         <h1>에이 하이</h1>
-        <Link to='/signup' style={{ color: "inherit"}}>
+        <Link to='/signup' style={{ color: "inherit" }}>
           회원이 아니신가요?
         </Link>
         <p style={{ marginTop: "30px" }}>이메일로 로그인하기</p>
@@ -66,10 +68,20 @@ const Login = () => {
           </div>
           <button type='button' onClick={()=>{onClickLogin()}}>로그인</button>
 
-          <div style={{marginTop:"30px",marginLeft:"50px"}}>
-              <img style={{display:"block", width:"300px",marginBottom:"8px"}} src="img/google_login.png" onClick={()=>{google()}}/>
-              <img style={{display:"block", width:"300px", height:"75px"}} src="img/naver_login.png" onClick={()=>{naver()}}/>
-            </div>
+          <div style={{ marginTop: "30px", marginLeft: "50px" }}>
+            <img
+              style={{ display: "block", width: "300px", marginBottom: "8px" }}
+              src='img/google_login.png'
+              onClick={login}
+            />
+            <img
+              style={{ display: "block", width: "300px", height: "75px" }}
+              src='img/naver_login.png'
+              onClick={() => {
+                naver();
+              }}
+            />
+          </div>
         </form>
       </div>
     </div>

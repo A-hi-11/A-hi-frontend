@@ -11,6 +11,7 @@ export default function Stablediffusion() {
   const [result, setResult] = useState();
   const [imageInput, setImageInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const storedMemberId = localStorage.getItem("memberId");
 
   function onChange(e) {
     setImageInput(e.target.value);
@@ -20,10 +21,21 @@ export default function Stablediffusion() {
     event.preventDefault();
     try {
       setIsLoading(true);
+      console.log({
+        prompt: imageInput,
+        member_id: storedMemberId !== null ? storedMemberId : "test@gmail.com",
+        chat_room_id: -1,
+      });
       const response = await axios.post(
         "https://a-hi-prompt.com/diffusion",
 
-        { prompt: imageInput },
+        {
+          prompt: imageInput,
+          member_id:
+            storedMemberId !== null ? storedMemberId : "test@gmail.com",
+          model_type: "image",
+          chat_room_id: -1,
+        },
         {
           headers: {
             "Content-Type": "application/json",
@@ -31,7 +43,8 @@ export default function Stablediffusion() {
         },
       );
 
-      const data = response.data;
+      const data = response.data.response;
+      console.log(data);
       if (response.status !== 200) {
         throw (
           data.error ||
