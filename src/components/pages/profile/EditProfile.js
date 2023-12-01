@@ -71,6 +71,7 @@ function EditProfile({
           new_nickname: nameEdit,
         });
         alert("닉네임 변경이 완료되었습니다.");
+        setName(nameEdit);
       } catch (error) {
         console.error("Error :", error);
       }
@@ -78,7 +79,6 @@ function EditProfile({
 
     // 상태 초기화
     setEditingProfile(false);
-    setName(nameEdit);
     setRefresh((refresh) => refresh * -1);
   };
 

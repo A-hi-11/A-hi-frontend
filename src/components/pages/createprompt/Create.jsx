@@ -5,7 +5,7 @@ import {BASE_URL} from "../../../assets/Strings";
 import "./Create.css";
 import Navigation from "../../Navigation";
 import Chat from "../chat/Chat";
-import cookie from 'react-cookies';
+//import cookie from 'react-cookies';
 const Create = () => {
     const [tags,setTags]=useState([])
     const [exms,setExms]=useState([])
