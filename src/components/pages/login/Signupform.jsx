@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import React from "react";
 import { useParams } from 'react-router-dom';
 import "./Signupform.css";
 import Navigation from "../../Navigation";
-
+import axios from 'axios';
 const Signupform = () => {
  const params = useParams();
  // 초기값 세팅 - 아이디, 닉네임, 비밀번호, 비밀번호확인, 이메일, 전화번호, 생년월일
- const [name, setName] = React.useState("");
+ const [email,setEmail] = useState(params.email)
  const [nickName, setNickName] = React.useState("");
  const [password, setPassword] = React.useState("");
  const [passwordConfirm, setPasswordConfirm] = React.useState("");
@@ -16,7 +16,6 @@ const Signupform = () => {
 
  // 오류메세지 상태 저장
 
- const [nameMessage, setNameMessage] = React.useState("");
  const [nickNameMessage, setNickNameMessage] = React.useState("");
  const [passwordMessage, setPasswordMessage] = React.useState("");
  const [passwordConfirmMessage, setPasswordConfirmMessage] = React.useState("");
@@ -82,8 +81,22 @@ const Signupform = () => {
    
  };
 
-
+ const onClickSignup = async () => {
+  try {
+    const res = await (axios.post("https://a-hi-prompt.com/user/signup",{
+        "member_id": email,
+        "password": password,
+        "nickname": nickName,
+        "profile_image": profile_img
+    }))
+    console.log(res)
+  }
+catch(error) {
+  console.log(error);
+}
+}
  return (
+  
     <div>
     <Navigation />
     <div className="outer">
@@ -92,7 +105,7 @@ const Signupform = () => {
      <div className="form">
         <div className="form-el">
          <label htmlFor="email">Email</label> <br />
-         <input id="email" name="email" value={params.email} disabled={true} />
+         <input id="email" name="email" value={email} disabled={true} />
         
        </div>
        <br/>
@@ -124,11 +137,11 @@ const Signupform = () => {
        </div>
        <div className="form-el">
          <label htmlFor="profile_img">profile_image</label> <br/>
-         <input type="file"/>
+         <input type="file" onChange={e=>setProfile_img(e.target.files)} onClick={()=>{console.log(profile_img)}}/>
          <div className="profile_img" accept='image/*'/>
        </div>
        <br />
-       <button type="submit" className="subBtn">Submit</button>
+       <button type="button" onClick={()=>{onClickSignup()}} className="subBtn">Submit</button>
      </div>
    </div>
    </div>

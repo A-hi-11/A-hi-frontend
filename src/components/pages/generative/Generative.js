@@ -23,9 +23,16 @@ export default function Generative(props) {
     <div className={styles.chatContainer}>
       <Navigation />
       <button
+        className={styles.aiSelect}
         onClick={toggleMenu}
         style={{
+          padding: "10px 20px",
+          fontSize: "12px",
           position: "absolute",
+          color: "black",
+          border: "solid #04364A",
+          borderRadius: "13px",
+          cursor: "pointer",
           top: "40px",
           left: "200px",
           margin: "0",

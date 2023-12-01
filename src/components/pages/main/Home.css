@@ -40,11 +40,10 @@
     text-align: center;
     justify-content: center;
 
-    width:30vw;
+    width:80vw;
     height:10vh;
     margin-top:0vh;
-    margin-left : 23vw;
-    margin-right:30vw;
+    margin-left : -6vw;
     margin-bottom:9vh;
 }
 .logo h3 {

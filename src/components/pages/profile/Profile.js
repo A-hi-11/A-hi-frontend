@@ -3,28 +3,35 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Myprompt from "./Myprompt";
-import MyChats from "./MyChats";
 import ChatHistory from "./ChatHistory";
 import EditInfo from "./Editinfo";
 import "./Profile.css";
 import Navigation from "../../Navigation";
 import PassCheck from "./PassCheck";
+import Loading from "../../Loading";
+import LikedPrompt from "./LikedPrompt";
+import EditProfile from "./EditProfile";
 
 const Profile = (props) => {
+  const storedMemberId = localStorage.getItem("memberId");
+  const storedNickname = localStorage.getItem("nickname");
+  const storedProfileImage = localStorage.getItem("profileImage");
+  const storedJwtToken = localStorage.getItem("jwtToken");
+
   const [myPrompts, setMyprompts] = useState([]);
-  const userId = 9; //임시 사용자 id
-  const [name, setName] = useState();
-  const [editing, setEditing] = useState(false);
-  const [myChats, setMyChats] = useState("");
+  const [name, setName] = useState(storedNickname);
+  const [isEditingPass, setEditingPass] = useState(false);
   const [nameEdit, setNameEdit] = useState("");
-  const [passEdit, setPassEdit] = useState("");
+  const [likedPrompts, setLikedPrompts] = useState([]);
   const [chatHistorys, setChatHistorys] = useState("");
   const [isPassCheck, setPassCheck] = useState(true);
-  const [editName, setEditName] = useState("");
   const [isMine, setMine] = useState(true);
   const [isLike, setLike] = useState(false);
+  const [isEditingProfile, setEditingProfile] = useState(false);
   const [isHistory, setHistory] = useState(false);
-  const [uploadedImage, setUploadedImage] = useState(null);
+  const [profileImage, setProfileImage] = useState(storedProfileImage);
+  const [isLoading, setIsLoading] = useState(false);
+  const [refresh, setRefresh] = useState(1);
 
   const user_id = "test@gmail.com";
 
@@ -36,69 +43,77 @@ const Profile = (props) => {
     document.getElementById("like").style.borderBottom = "none";
     document.getElementById("chatHistory").style.borderBottom = "none";
   }
-  function onClickLike(e) {
-    setLike(true);
-    setHistory(false);
-    setMine(false);
-    document.getElementById("like").style.borderBottom = "3px solid #04364A";
-    document.getElementById("chatHistory").style.borderBottom = "none";
-    document.getElementById("mine").style.borderBottom = "none";
+  async function onClickLike(e) {
+    try {
+      await axios
+        .get(`https://a-hi-prompt.com/my-page/likes`)
+        .then((response) => {
+          setLikedPrompts(response.data);
+          setLike(true);
+          setHistory(false);
+          setMine(false);
+          document.getElementById("like").style.borderBottom =
+            "3px solid #04364A";
+          document.getElementById("chatHistory").style.borderBottom = "none";
+          document.getElementById("mine").style.borderBottom = "none";
+          setIsLoading(true);
+          setIsLoading(false);
+        });
+    } catch (error) {
+      console.error("Error fetching getting liked prompts:", error);
+    }
   }
 
-  function onClickHistory(e) {
-    setLike(false);
-    setHistory(true);
-    setMine(false);
-    document.getElementById("chatHistory").style.borderBottom =
-      "3px solid #04364A";
-    document.getElementById("mine").style.borderBottom = "none";
-    document.getElementById("like").style.borderBottom = "none";
+  async function onClickHistory(e) {
+    try {
+      await axios
+        .get("https://a-hi-prompt.com/my-page/chat")
+        .then((response) => {
+          setChatHistorys(response.data);
+          console.log(chatHistorys);
+          setLike(false);
+          setHistory(true);
+          setMine(false);
+          document.getElementById("chatHistory").style.borderBottom =
+            "3px solid #04364A";
+          document.getElementById("mine").style.borderBottom = "none";
+          document.getElementById("like").style.borderBottom = "none";
+        });
+    } catch (error) {
+      console.error("Error fetching chat history:", error);
+    }
   }
 
   useEffect(() => {
     const getMyPrompts = async () => {
       return await axios
-        .get(`http://43.201.240.250:8080/prompt/my-page/${user_id}`)
+        .get(`https://a-hi-prompt.com/prompt/my-page/${user_id}`)
         .then((response) => {
           setMyprompts(response.data);
         });
     };
 
-    const getMyChats = async () => {
-      try {
-        const response = await axios.get(`http://localhost:3001/CHAT_ROOM`, {
-          params: {
-            Member_id: userId,
-          },
-        });
-        setMyChats(response.data);
-      } catch (error) {
-        console.error("Error fetching my chats:", error);
-      }
-    };
-
-    const getChatHistory = async () => {
-      try {
-        const response = await axios.get(`http://localhost:3001/CHAT_ROOM`, {
-          params: {
-            Member_id: userId,
-          },
-        });
-        setChatHistorys(response.data);
-      } catch (error) {
-        console.error("Error fetching chat history:", error);
-      }
-    };
-
     const fetchData = async () => {
       await getMyPrompts();
-      await getMyChats();
-      await getChatHistory();
     };
 
     fetchData();
-  }, [userId]); // Added userId as a dependency
-  const toggleEditing = () => setEditing((prev) => !prev);
+  }, [refresh]); // Added userId as a dependency
+  const toggleEditingPass = () => {
+    setEditingPass((prev) => !prev);
+    if (isEditingProfile == true) {
+      setEditingProfile((prev) => !prev);
+    }
+  };
+  const toggleEditingProfile = () => {
+    setEditingProfile((prev) => !prev);
+    if (isEditingPass == true) {
+      setEditingPass((prev) => !prev);
+    }
+  };
+
+  if (isLoading) return <Loading color='#04364A' pos='0px' rightPos='0px' />;
+
   return (
     <div className='container'>
       <Navigation />
@@ -107,40 +122,51 @@ const Profile = (props) => {
           <span className='innerInfo'>
             <img
               className='profilePic'
-              src='img/profile_exm.png'
+              src={profileImage}
               width='100px'
               alt='my profile'
             />
             <span className='nameEmail'>
-              <h2>이름</h2>
-              <h4>mail@gmail.com</h4>
+              <h2>{name != undefined ? name : "프롬프트 제작소"}</h2>
+              <h4>{storedMemberId}</h4>
             </span>
           </span>
-          <button className='editBtn' onClick={toggleEditing}>
-            정보 수정
-          </button>
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <button className='editBtn' onClick={toggleEditingProfile}>
+              프로필 변경
+            </button>
+            <button className='editBtn' onClick={toggleEditingPass}>
+              비밀번호 변경
+            </button>
+          </div>
         </div>
-        {editing ? (
+        {isEditingPass ? (
           isPassCheck ? (
-            <PassCheck password={1234} setPassCheck={setPassCheck} /> // 확인용 임시 부여 비밀번호
+            <PassCheck setPassCheck={setPassCheck} /> // 확인용 임시 부여 비밀번호
           ) : (
             <>
               <EditInfo
-                setEditing={setEditing}
-                setPassEdit={setPassEdit}
-                setNameEdit={setNameEdit}
-                setName={setName}
-                nameEdit={nameEdit}
-                passEdit={passEdit}
-                userId={userId}
-                uploadedImage={uploadedImage}
-                setUploadedImage={setUploadedImage}
+                setEditingPass={setEditingPass}
+                userId={storedMemberId}
+                setRefresh={setRefresh}
               />
             </>
           )
-        ) : (
-          <div />
-        )}
+        ) : null}
+        {isEditingProfile ? (
+          <>
+            <EditProfile
+              setEditingProfile={setEditingProfile}
+              setNameEdit={setNameEdit}
+              setName={setName}
+              nameEdit={nameEdit}
+              userId={storedMemberId}
+              profileImage={profileImage}
+              setProfileImage={setProfileImage}
+              setRefresh={setRefresh}
+            />
+          </>
+        ) : null}
       </div>
       <div className='rightSide'>
         <span className='menu'>
@@ -167,15 +193,18 @@ const Profile = (props) => {
               ))}
             </>
           ) : null}
+          {isLike ? (
+            <>
+              {likedPrompts.map((likedPrompt) => (
+                <LikedPrompt data={likedPrompt} key={likedPrompt.prompt_id} />
+              ))}
+              ;
+            </>
+          ) : null}
           {isHistory ? (
             <>
               {chatHistorys.map((chatHistory) => (
-                <ChatHistory
-                  title={chatHistory.Chat_room_name}
-                  key={chatHistory.Chat_room_id}
-                  date={chatHistory.Time}
-                  lastchat='마지막 대화가 표시됩니다.'
-                />
+                <ChatHistory data={chatHistory} />
               ))}
             </>
           ) : null}

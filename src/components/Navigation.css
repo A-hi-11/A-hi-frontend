@@ -1,7 +1,7 @@
 .navContainer{
     width: 8.625rem;
-    min-height: 50rem;
-    height: auto;
+    height: 100%;
+    z-index: 2;
     flex-shrink: 0;
     background: #04364A;
     text-align: center;
@@ -11,10 +11,15 @@
 
 .navContainer a{
     color: #FFF;
-    font-family: Spoqa Han Sans Neo;
     font-size: 1.2rem;
     font-style: normal;
     font-weight: 400;
-    line-height: 3rem; /* 233.333% */
+    line-height: 3.5rem; 
     text-decoration-line: none;
+    transition: transform 0.3s ease;
 }
+
+.navContainer a:hover  {
+    transform-origin: 0%, 100%;
+    transform: scale(1.1);
+  }
