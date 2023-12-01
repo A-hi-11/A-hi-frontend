@@ -1,35 +1,46 @@
 /** @format */
 // Login과 Signup 페이지는 UI가 거의 동일합니다.
-import React, { useEffect } from "react";
+import React,{useState, useEffect} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { useLocation, useNavigate } from "react-router-dom";
 import Navigation from "../../Navigation";
 import "./Login.css";
 import { Link } from "react-router-dom";
-import axios from "axios";
-const Login = () => {
-  const google = async () => {
-    try {
-      await axios.get("/auth/kakao", {
-        headers: {
-          "Access-Code":
-            "L8ZHluIb_u5XKuEHa3GrJQMBxeJuWZ5cnRUb5TgYtXFcnLkcdYoGsuI1AXwKKiWRAAABi-alyAbOkqTnJF629A",
-        },
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+import axios from 'axios';
+import cookie from 'react-cookies';
 
-  const login = () => {
-    window.location.href = "https://a-hi-prompt.com/google-login";
+const Login = () => {
+
+  const [id,setId]=useState("")
+  const [pw,setPw]=useState("")
+  const expires = new Date()
+  expires.setMinutes(expires.getMinutes() + 180)
+  function login() {
+    window.location.href = 'https://a-hi-prompt.com/google-login'
   };
   const naver = () => {
-    axios.get("/auth/naver", {
-      headers: { "Access-Code": "O1HrSzrucATjL7qh05" },
-    });
+    window.location.href = 'http://api.a-hi-prompt.com/'
   };
+  const onClickLogin = async () => {
+    try {
+      const res = await (axios.post("https://a-hi-prompt.com/user/signin",{
+          "userId": id,
+          "userPassword": pw
+      }))
+      if (res.data!='존재하지 않는 회원입니다. 로그인에 실패하였습니다.' && res.data!='비밀번호가 일치하지 않습니다. 로그인에 실패하였습니다.') {
+        cookie.save("token", res.data, {
+          path: "/",
+          expires,
+        });
+        console.log(cookie.load("token"))
+        window.location.replace("/");
+      }
+    }
+  catch(error) {
+    console.log(error);
+  }
+  }
   return (
     <div className='Login'>
       <Navigation />
@@ -51,11 +62,11 @@ const Login = () => {
         <form>
           <div className='inputForm'>
             <p>아이디</p>
-            <input type='text' required></input>
+            <input type='text' onChange={e=>setId(e.target.value)} required></input>
             <p>비밀번호</p>
-            <input type='text' required></input>
+            <input type='text' onChange={e=>setPw(e.target.value)} required></input>
           </div>
-          <button type='submit'>로그인</button>
+          <button type='button' onClick={()=>{onClickLogin()}}>로그인</button>
 
           <div style={{ marginTop: "30px", marginLeft: "50px" }}>
             <img

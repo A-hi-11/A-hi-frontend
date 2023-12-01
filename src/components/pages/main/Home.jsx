@@ -7,6 +7,8 @@ import Data from "../../../assets/data";
 import ImageData from "../../../assets/imageData";
 import { BiSolidConversation } from "react-icons/bi";
 import "./Home.css";
+import cookie from 'react-cookies';
+
 
 const Home = () => {
   const location = useLocation();
@@ -35,8 +37,9 @@ const Home = () => {
         const res = await (axios.get("https://a-hi-prompt.com/prompt/view?sort=category&search=",{
           params : {"sort" : "time"},
         }))
-        console.log(res.title)
         setData(res.data)
+        console.log(cookie.load("token"))
+        
       }
     catch(error) {
       console.log(error);
@@ -113,6 +116,7 @@ const Home = () => {
           <div className="contList">
           
           {mainKind==1 ? data&&data.map((board) => (
+              
               <Link to={`/promptdetail/${board.prompt_id}`}>
               <div key={board.create_time} className="contContent">
               {/*<img className='mainProfilePic' src={"img/"+`${board.profile}`} width='1px' alt='my profile'/>}*/}
