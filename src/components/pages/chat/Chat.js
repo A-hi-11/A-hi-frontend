@@ -42,12 +42,13 @@ export default function Chat() {
 
   const onSendMsg = async (event) => {
     event.preventDefault();
+    const li = document.createElement("li");
+    li.className = styles.quest;
+    li.innerText = msg;
+    const ul = document.getElementById("msgList");
+    ul.appendChild(li);
+    scrollToBottom(messageEndRef);
     try {
-      const li = document.createElement("li");
-      li.className = styles.quest;
-      li.innerText = msg;
-      document.getElementById("msgList").appendChild(li);
-      scrollToBottom(messageEndRef);
       setIsLoading(true);
       await axios
         .post(
@@ -63,10 +64,6 @@ export default function Chat() {
         .then((res) => {
           setResult(res.data.answer);
           setIsLoading(false);
-          const btn = document.getElementById("optionBtn");
-          btn.className = styles.deactiveOptionBtn;
-          const optionBox = document.getElementById("optionBox");
-          optionBox.className = styles.deactiveOptionBtn;
         });
     } catch (error) {
       console.error(error);
@@ -93,9 +90,6 @@ export default function Chat() {
       ? styles.optionsContainerVisible
       : styles.optionsContainer;
   };
-  if (isLoading) {
-    return <Loading color='white' pos='0px' rightPos='0px' />;
-  }
 
   return (
     <div
@@ -217,6 +211,7 @@ export default function Chat() {
         </div>
       </div>
       <div className={styles.result}>
+        {isLoading ? <Loading color='white' pos='0px' rightPos='0px' /> : null}
         <ul id='msgList'>
           <li className={styles.response}>안녕하세요 ChatGPT 입니다.</li>
         </ul>

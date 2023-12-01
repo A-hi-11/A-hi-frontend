@@ -11,7 +11,7 @@ function EditProfile({
   setProfileImage,
   setRefresh,
 }) {
-  const [newImg, setNewImg] = useState("");
+  const [newImg, setNewImg] = useState(profileImage);
   const [nameEdit, setNameEdit] = useState("");
   useEffect(() => {
     setNewImg(newImg);
@@ -33,26 +33,25 @@ function EditProfile({
     event.preventDefault();
     // 이미지 변경 API 호출
     console.log(newImg);
-
     if (newImg) {
-      const handleUpload = async () => {
-        try {
-          const formData = new FormData();
-          formData.append("profileImage", newImg);
-          await axios
-            .put("https://a-hi-prompt.com/my-page/image", {
-              body: formData,
-              headers: {
-                "Content-Type": "multipart/form-data",
-              },
-            })
-            .then((res) => {
-              console.log("Upload successful:", res.data);
-            });
-        } catch (error) {
-          console.error("Error uploading image:", error);
-        }
-      };
+      try {
+        console.log("here!");
+        const formData = new FormData();
+        await formData.append("profileImage", newImg);
+        console.log(formData);
+
+        await axios
+          .put("https://a-hi-prompt.com/my-page/image", formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          })
+          .then((res) => {
+            console.log("Upload successful:", res.data);
+          });
+      } catch (error) {
+        console.error("Error uploading image:", error);
+      }
     }
 
     // 닉네임 변경 API 호출
@@ -81,7 +80,7 @@ function EditProfile({
         <div style={{ display: "inline-flex" }}>
           <img
             className='profilePic'
-            src={newImg ? URL.createObjectURL(newImg) : ""}
+            src={newImg ? newImg : ""}
             width='100px'
             alt='프로필사진'
           />

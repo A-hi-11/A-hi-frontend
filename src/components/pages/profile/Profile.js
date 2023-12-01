@@ -24,9 +24,13 @@ const mockData = [
 ];
 
 const Profile = (props) => {
+  const storedMemberId = localStorage.getItem("memberId");
+  const storedNickname = localStorage.getItem("nickname");
+  const storedProfileImage = localStorage.getItem("profileImage");
+  const storedJwtToken = localStorage.getItem("jwtToken");
+
   const [myPrompts, setMyprompts] = useState([]);
-  const userId = 9; //임시 사용자 id
-  const [name, setName] = useState();
+  const [name, setName] = useState(storedNickname);
   const [isEditingPass, setEditingPass] = useState(false);
   const [nameEdit, setNameEdit] = useState("");
   const [likedPrompts, setLikedPrompts] = useState([]);
@@ -36,7 +40,7 @@ const Profile = (props) => {
   const [isLike, setLike] = useState(false);
   const [isEditingProfile, setEditingProfile] = useState(false);
   const [isHistory, setHistory] = useState(false);
-  const [profileImage, setProfileImage] = useState("");
+  const [profileImage, setProfileImage] = useState(storedProfileImage);
   const [isLoading, setIsLoading] = useState(false);
   const [refresh, setRefresh] = useState(1);
 
@@ -139,7 +143,7 @@ const Profile = (props) => {
             />
             <span className='nameEmail'>
               <h2>{name != undefined ? name : "프롬프트 제작소"}</h2>
-              <h4>mail@gmail.com</h4>
+              <h4>{storedMemberId}</h4>
             </span>
           </span>
           <div style={{ display: "flex", flexDirection: "row" }}>
@@ -158,7 +162,7 @@ const Profile = (props) => {
             <>
               <EditInfo
                 setEditingPass={setEditingPass}
-                userId={userId}
+                userId={storedMemberId}
                 setRefresh={setRefresh}
               />
             </>
@@ -171,7 +175,7 @@ const Profile = (props) => {
               setNameEdit={setNameEdit}
               setName={setName}
               nameEdit={nameEdit}
-              userId={userId}
+              userId={storedMemberId}
               profileImage={profileImage}
               setProfileImage={setProfileImage}
               setRefresh={setRefresh}
