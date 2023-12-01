@@ -11,7 +11,8 @@ function EditProfile({
   setProfileImage,
   setRefresh,
 }) {
-  const [newImg, setNewImg] = useState(profileImage);
+  const [newImg, setNewImg] = useState("");
+  const [nowImg, setNowImg] = useState(profileImage);
   const [nameEdit, setNameEdit] = useState("");
   useEffect(() => {
     setNewImg(newImg);
@@ -27,6 +28,16 @@ function EditProfile({
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     setNewImg(selectedFile);
+    // 이미지 미리보기
+    const reader = new FileReader();
+
+    reader.onload = (event) => {
+      const imageUrl = event.target.result;
+      console.log(imageUrl);
+      setNowImg(imageUrl);
+    };
+
+    reader.readAsDataURL(selectedFile);
   };
 
   const onSubmit = async (event) => {
@@ -35,7 +46,6 @@ function EditProfile({
     console.log(newImg);
     if (newImg) {
       try {
-        console.log("here!");
         const formData = new FormData();
         await formData.append("profileImage", newImg);
         console.log(formData);
@@ -47,7 +57,7 @@ function EditProfile({
             },
           })
           .then((res) => {
-            console.log("Upload successful:", res.data);
+            setProfileImage(res.data);
           });
       } catch (error) {
         console.error("Error uploading image:", error);
@@ -69,7 +79,6 @@ function EditProfile({
     // 상태 초기화
     setEditingProfile(false);
     setName(nameEdit);
-    setProfileImage(newImg);
     setRefresh((refresh) => refresh * -1);
   };
 
@@ -80,7 +89,7 @@ function EditProfile({
         <div style={{ display: "inline-flex" }}>
           <img
             className='profilePic'
-            src={newImg ? newImg : ""}
+            src={nowImg}
             width='100px'
             alt='프로필사진'
           />

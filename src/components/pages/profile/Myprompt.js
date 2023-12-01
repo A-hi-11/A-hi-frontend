@@ -81,12 +81,12 @@ function Myprompt(data, key) {
 }
 
 Myprompt.propTypes = {
-  prompt_id: PropTypes.number.isRequired,
+  prompt_id: PropTypes.number,
   title: PropTypes.string.isRequired,
   create_time: PropTypes.string.isRequired,
   update_time: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  member_id: PropTypes.string.isRequired,
+  nickname: PropTypes.string.isRequired,
 };
 
 export default Myprompt;

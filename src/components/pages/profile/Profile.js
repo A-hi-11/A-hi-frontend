@@ -16,10 +16,13 @@ const Profile = (props) => {
   const storedMemberId = localStorage.getItem("memberId");
   const storedNickname = localStorage.getItem("nickname");
   const storedProfileImage = localStorage.getItem("profileImage");
+
   const storedJwtToken = localStorage.getItem("jwtToken");
 
   const [myPrompts, setMyprompts] = useState([]);
-  const [name, setName] = useState(storedNickname);
+  const [name, setName] = useState(
+    storedNickname == null ? "임시 닉네임" : storedNickname,
+  );
   const [isEditingPass, setEditingPass] = useState(false);
   const [nameEdit, setNameEdit] = useState("");
   const [likedPrompts, setLikedPrompts] = useState([]);
@@ -29,11 +32,11 @@ const Profile = (props) => {
   const [isLike, setLike] = useState(false);
   const [isEditingProfile, setEditingProfile] = useState(false);
   const [isHistory, setHistory] = useState(false);
-  const [profileImage, setProfileImage] = useState(storedProfileImage);
+  const [profileImage, setProfileImage] = useState(
+    storedProfileImage == null ? "img/profile_exm.png" : storedProfileImage,
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [refresh, setRefresh] = useState(1);
-
-  const user_id = "test@gmail.com";
 
   function onClickMine(e) {
     setLike(false);
@@ -43,6 +46,7 @@ const Profile = (props) => {
     document.getElementById("like").style.borderBottom = "none";
     document.getElementById("chatHistory").style.borderBottom = "none";
   }
+
   async function onClickLike(e) {
     try {
       await axios
@@ -87,7 +91,7 @@ const Profile = (props) => {
   useEffect(() => {
     const getMyPrompts = async () => {
       return await axios
-        .get(`https://a-hi-prompt.com/prompt/my-page/${user_id}`)
+        .get(`https://a-hi-prompt.com/prompt/my-page/test@gmail.com`)
         .then((response) => {
           setMyprompts(response.data);
         });
