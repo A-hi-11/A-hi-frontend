@@ -16,6 +16,7 @@ import formatDateTime from "../../FormatDateTime";
 import PromptStableDiffusion from "../../stablediffusion/PromptStableDiffusion";
 import PromptGpt from "../chat/PromptGpt";
 import LoginButton from "./LoginButton";
+const storedJwtToken = localStorage.getItem("jwtToken");
 
 const PromptDetail = () => {
   const { prompt_id } = useParams();
@@ -27,6 +28,7 @@ const PromptDetail = () => {
   const [error, setError] = useState(null); // 에러발생시 에러를 저장할 수 있는 state
   const [refresh, setRefresh] = useState(1);
   const navigate = useNavigate();
+  const loginStatus = localStorage.getItem("memberId");
 
   const messageEndRef = useRef();
   const [Input, setInput] = useState("");
@@ -40,11 +42,19 @@ const PromptDetail = () => {
   const onClickDelete = async () => {
     try {
       await axios
-        .delete(`https://a-hi-prompt.com/prompt/my-page/${prompt_id}`, {
-          data: {
-            prompt_id: prompt_id,
+        .delete(
+          `https://a-hi-prompt.com/prompt/my-page/${prompt_id}`,
+          {
+            data: {
+              prompt_id: prompt_id,
+            },
           },
-        })
+          {
+            headers: {
+              Authorization: "Bearer " + storedJwtToken,
+            },
+          },
+        )
         .then(() => {
           console.log(" button clicked!");
           navigate(-1);
@@ -65,6 +75,11 @@ const PromptDetail = () => {
           {
             headers: {
               "Content-Type": "application/json",
+            },
+          },
+          {
+            headers: {
+              Authorization: "Bearer " + storedJwtToken,
             },
           },
         )
@@ -108,10 +123,17 @@ const PromptDetail = () => {
 
   useEffect(() => {
     setLoading(true);
+    const storedMemberId = localStorage.getItem("memberId");
+
     try {
       axios
         .get(
-          `https://a-hi-prompt.com/prompt/view/info?prompt_id=${prompt_id}&member_id=test@gmail.com`,
+          `https://a-hi-prompt.com/prompt/view/info?prompt_id=${prompt_id}&member_id=${storedMemberId}`,
+          {
+            headers: {
+              Authorization: "Bearer " + storedJwtToken,
+            },
+          },
         )
         .then((res) => {
           setLoading(false);
@@ -318,9 +340,9 @@ const PromptDetail = () => {
                       filter: "blur(4px)", // 블러 처리 스타일을 추가
                     }}
                   >
-                    볼 수 없는 컨텐츠입니다.
+                    조회 권한이 없는 컨텐츠입니다.
                   </p>
-                  <LoginButton />
+                  {loginStatus ? <LoginButton /> : null}
                 </>
               )}
             </>

@@ -19,6 +19,7 @@ export default function ChatDetail() {
   const messageEndRef = useRef();
   const { chat_room_id } = useParams();
   const navigate = useNavigate();
+  const storedJwtToken = localStorage.getItem("jwtToken");
 
   const [options, setOptions] = useState({
     mode: "text-davinci-002",
@@ -50,7 +51,11 @@ export default function ChatDetail() {
       try {
         setIsLoading(true);
         await axios
-          .get(`https://a-hi-prompt.com/my-page/chat/read/${chat_room_id}`)
+          .get(`https://a-hi-prompt.com/my-page/chat/read/${chat_room_id}`, {
+            headers: {
+              Authorization: "Bearer " + storedJwtToken,
+            },
+          })
           .then((response) => {
             setChatList(response.data);
             console.log(chatList);
@@ -67,7 +72,11 @@ export default function ChatDetail() {
   const onClickDelete = async () => {
     try {
       await axios
-        .delete(`https://a-hi-prompt.com/my-page/chat/${chat_room_id}`)
+        .delete(`https://a-hi-prompt.com/my-page/chat/${chat_room_id}`, {
+          headers: {
+            Authorization: "Bearer " + storedJwtToken,
+          },
+        })
         .then(() => {
           alert("채팅 내역이 삭제 되었습니다.");
           console.log(" button clicked!");
@@ -95,7 +104,7 @@ export default function ChatDetail() {
             gptConfigInfo: {
               model_name: "gpt-3.5-turbo",
               temperature: 0.7,
-              maximum_length: 500,
+              maximum_length: 200,
               stop_sequence: "\\n",
               top_p: 0.9,
               frequency_penalty: 0.2,
@@ -103,7 +112,10 @@ export default function ChatDetail() {
             },
           },
           {
-            headers: { "Content-Type": "application/json" },
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + storedJwtToken,
+            },
           },
         )
         .then((res) => {

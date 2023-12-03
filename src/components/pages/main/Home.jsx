@@ -7,7 +7,6 @@ import Data from "../../../assets/data";
 import ImageData from "../../../assets/imageData";
 import { BiSolidConversation } from "react-icons/bi";
 import "./Home.css";
-import cookie from 'react-cookies';
 
 
 const Home = () => {
@@ -19,6 +18,8 @@ const Home = () => {
     const [sortKind,setSortKind]=useState("date")
     const [data,setData]=useState()
     const [imgData,setImgData]=useState()
+  const storedJwtToken = localStorage.getItem("jwtToken")
+
     /*const getBoardList = async () => {
         const contents = await (await axios.get(BASE_URL)); // 2) 게시글 목록 데이터에 할당  
         setBoardList(contents.output); // 3) boardList 변수에 할당
@@ -35,10 +36,11 @@ const Home = () => {
       try {
         const res = await (axios.get("https://a-hi-prompt.com/prompt/view?sort=category&search=",{
           params : {"sort" : "time"},
+        }, {
+          headers: {
+            Authorization: "Bearer " + storedJwtToken,
+          },
         }))
-        setData(res.data)
-        console.log(cookie.load("token"))
-        
       }
     catch(error) {
       console.log(error);
@@ -52,12 +54,8 @@ const Home = () => {
       // 현재 페이지의 쿼리 스트링을 가져옴
       const queryString = window.location.search;
   
-      // 쿼리 스트링이 비어있지 않으면 (기본 주소 뒤에 쿼리가 있다면)
       if (queryString !== '') {
-        // 실행할 작업 수행
-        console.log('기본 주소 뒤에 쿼리가 붙어 있습니다.');
 
-        console.log("쿼리문이 있는 페이지입니다.");
 
         const urlParams = new URLSearchParams(window.location.search);
         const memberId = urlParams.get("member_id");
@@ -71,8 +69,6 @@ const Home = () => {
         localStorage.setItem("profileImage", profileImage);
         localStorage.setItem("jwtToken", jwtToken);
   
-        // 예시: 다른 페이지로 리다이렉트
-        // window.location.href = '/new-page';
       }
     }, []);
 

@@ -11,6 +11,7 @@ export default function Stablediffusion() {
   const [result, setResult] = useState();
   const [imageInput, setImageInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const storedJwtToken = localStorage.getItem("jwtToken");
   const storedMemberId = localStorage.getItem("memberId");
 
   function onChange(e) {
@@ -39,6 +40,7 @@ export default function Stablediffusion() {
         {
           headers: {
             "Content-Type": "application/json",
+            Authorization: "Bearer " + storedJwtToken,
           },
         },
       );

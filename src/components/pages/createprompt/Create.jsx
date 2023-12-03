@@ -23,6 +23,8 @@ const Create = () => {
     const [welcomeM,setWelcomeM]=useState("")
     const [example,setExample]=useState("")
     const [tagCont,setTagCont]=useState(["","","","",""])
+    const storedJwtToken = localStorage.getItem("jwtToken")
+
 
 
     const handleSubmit = async () => {
@@ -77,12 +79,14 @@ const Create = () => {
           "gptConfigInfo": {
           "model_name": "gpt-3",
           "temperature": 0.7,
-          "maximum_length": 500,
+          "maximum_length": 200,
           "stop_sequence": "\\n",
           "top_p": 0.9,
           "frequency_penalty": 0.2,
           "presence_penalty": 0.6
           }
+        },{
+          headers:{Authorization: "Bearer " + storedJwtToken},
         }))
         console.log(res)
       }

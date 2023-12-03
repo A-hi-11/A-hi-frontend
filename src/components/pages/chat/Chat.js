@@ -13,11 +13,12 @@ export default function Chat() {
   const [isLoading, setIsLoading] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
   const messageEndRef = useRef();
+  const storedJwtToken = localStorage.getItem("jwtToken");
 
   const [options, setOptions] = useState({
     model_name: "gpt-3.5-turbo",
     temperature: 0.7,
-    maximum_length: 500,
+    maximum_length: 200,
     stop_sequence: "",
     top_p: 1,
     frequency_penalty: 0,
@@ -58,7 +59,10 @@ export default function Chat() {
             gptConfigInfo: options,
           },
           {
-            headers: { "Content-Type": "application/json" },
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + storedJwtToken,
+            },
           },
         )
         .then((res) => {
@@ -148,7 +152,7 @@ export default function Chat() {
               <input
                 type='range'
                 min='1'
-                max='1000'
+                max='200'
                 step='1'
                 name='maximum_length'
                 value={options.maximum_length}

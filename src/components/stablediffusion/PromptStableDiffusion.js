@@ -19,6 +19,7 @@ const PromptStableDiffusion = ({
   const [isLoading, setIsLoading] = useState(false);
   const messageEndRef = useRef();
   const [chatRoomId, setChatRoomId] = useState(-1);
+  const storedJwtToken = localStorage.getItem("jwtToken");
 
   const scrollToBottom = () => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -51,7 +52,10 @@ const PromptStableDiffusion = ({
             chat_room_id: -1,
           },
           {
-            headers: { "Content-Type": "application/json" },
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + storedJwtToken,
+            },
           },
         )
         .then((res) => {
@@ -83,7 +87,10 @@ const PromptStableDiffusion = ({
             chat_room_id: chatRoomId,
           },
           {
-            headers: { "Content-Type": "application/json" },
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + storedJwtToken,
+            },
           },
         )
         .then((res) => {
