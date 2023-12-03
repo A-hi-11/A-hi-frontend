@@ -20,6 +20,7 @@ const PromptStableDiffusion = ({
   const messageEndRef = useRef();
   const [chatRoomId, setChatRoomId] = useState(-1);
   const storedJwtToken = localStorage.getItem("jwtToken");
+  const storedMemberId = localStorage.getItem("memberId");
 
   const scrollToBottom = () => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -47,7 +48,7 @@ const PromptStableDiffusion = ({
           "https://a-hi-prompt.com/diffusion",
           {
             prompt: content,
-            member_id: "test@gmail.com",
+            member_id: storedMemberId,
             model_type: "image",
             chat_room_id: -1,
           },
