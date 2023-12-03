@@ -4,15 +4,15 @@ import React, { useEffect, useState } from "react";
 import axios from "axios"; // axios 라이브러리 추가
 
 function EditProfile({
-  setName,
+  setStoredNickname,
   setEditingProfile,
   userId,
-  profileImage,
-  setProfileImage,
+  storedProfileImage,
+  setStoredProfileImage,
   setRefresh,
 }) {
   const [newImg, setNewImg] = useState("");
-  const [nowImg, setNowImg] = useState(profileImage);
+  const [nowImg, setNowImg] = useState(storedProfileImage);
   const [nameEdit, setNameEdit] = useState("");
   useEffect(() => {
     setNewImg(newImg);
@@ -44,6 +44,7 @@ function EditProfile({
     event.preventDefault();
     // 이미지 변경 API 호출
     console.log(newImg);
+    const urlParams = new URLSearchParams(window.location.search);
     if (newImg) {
       try {
         const formData = new FormData();
@@ -57,7 +58,10 @@ function EditProfile({
             },
           })
           .then((res) => {
-            setProfileImage(res.data);
+            alert("프로필 이미지 변경이 완료되었습니다.");
+            console.log(res.data);
+            localStorage.setItem("profileImage", res.data);
+            setStoredProfileImage(res.data);
           });
       } catch (error) {
         console.error("Error uploading image:", error);
@@ -67,11 +71,15 @@ function EditProfile({
     // 닉네임 변경 API 호출
     if (nameEdit) {
       try {
-        await axios.put(`https://a-hi-prompt.com/my-page/nickname`, {
-          new_nickname: nameEdit,
-        });
-        alert("닉네임 변경이 완료되었습니다.");
-        setName(nameEdit);
+        await axios
+          .put(`https://a-hi-prompt.com/my-page/nickname`, {
+            new_nickname: nameEdit,
+          })
+          .then((res) => {
+            alert("닉네임 변경이 완료되었습니다.");
+            localStorage.setItem("nickname", res.data);
+            setStoredNickname(res.data);
+          });
       } catch (error) {
         console.error("Error :", error);
       }

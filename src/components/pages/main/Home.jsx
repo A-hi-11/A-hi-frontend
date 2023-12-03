@@ -13,7 +13,6 @@ import cookie from 'react-cookies';
 const Home = () => {
   const location = useLocation();
   const navigate = useNavigate();
-
     const [category,setCategory] = useState(1);
     const [boardList, setBoardList] = useState([]);
     const [mainKind,setMainKind]=useState(1)
