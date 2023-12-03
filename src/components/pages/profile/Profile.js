@@ -14,15 +14,18 @@ import EditProfile from "./EditProfile";
 
 const Profile = (props) => {
   const storedMemberId = localStorage.getItem("memberId");
-  const storedNickname = localStorage.getItem("nickname");
-  const storedProfileImage = localStorage.getItem("profileImage");
 
   const storedJwtToken = localStorage.getItem("jwtToken");
 
-  const [myPrompts, setMyprompts] = useState([]);
-  const [name, setName] = useState(
-    storedNickname == null ? "임시 닉네임" : storedNickname,
+  const [storedNickname, setStoredNickname] = useState(
+    localStorage.getItem("nickname"),
   );
+  const [storedProfileImage, setStoredProfileImage] = useState(
+    localStorage.getItem("profileImage"),
+  );
+
+  const [myPrompts, setMyprompts] = useState([]);
+
   const [isEditingPass, setEditingPass] = useState(false);
   const [nameEdit, setNameEdit] = useState("");
   const [likedPrompts, setLikedPrompts] = useState([]);
@@ -88,6 +91,8 @@ const Profile = (props) => {
     }
   }
 
+  useEffect(() => {}, [storedNickname]);
+
   useEffect(() => {
     const getMyPrompts = async () => {
       return await axios
@@ -126,12 +131,16 @@ const Profile = (props) => {
           <span className='innerInfo'>
             <img
               className='profilePic'
-              src={profileImage}
+              src={storedProfileImage}
               width='100px'
               alt='my profile'
             />
             <span className='nameEmail'>
-              <h2>{name != undefined ? name : "프롬프트 제작소"}</h2>
+              <h2>
+                {storedNickname != undefined
+                  ? storedNickname
+                  : "프롬프트 제작소"}
+              </h2>
               <h4>{storedMemberId}</h4>
             </span>
           </span>
@@ -162,11 +171,11 @@ const Profile = (props) => {
             <EditProfile
               setEditingProfile={setEditingProfile}
               setNameEdit={setNameEdit}
-              setName={setName}
+              setStoredNickname={setStoredNickname}
               nameEdit={nameEdit}
               userId={storedMemberId}
-              profileImage={profileImage}
-              setProfileImage={setProfileImage}
+              storedProfileImage={storedProfileImage}
+              setStoredProfileImage={setStoredProfileImage}
               setRefresh={setRefresh}
             />
           </>
