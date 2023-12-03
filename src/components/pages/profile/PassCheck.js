@@ -5,12 +5,18 @@ import axios from "axios";
 
 const PassCheck = ({ setPassCheck }) => {
   const [inputPass, setInputPass] = useState("");
+  const storedJwtToken = localStorage.getItem("jwtToken");
+
   const onPassCheck = async (e) => {
     try {
       await axios
-        .put("https://a-hi-prompt.com/my-page/password/check", {
-          cur_password: inputPass,
-        })
+        .put(
+          "https://a-hi-prompt.com/my-page/password/check",
+          {
+            cur_password: inputPass,
+          },
+          { headers: { Authorization: "Bearer " + storedJwtToken } },
+        )
         .then((res) => {
           var tempPass = res.data;
           console.log(tempPass);

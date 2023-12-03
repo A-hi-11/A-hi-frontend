@@ -135,7 +135,7 @@ const Comment = ({
               style={{
                 display: "flex",
                 margin: "0",
-                marginLeft: "52%",
+                marginLeft: "40%",
               }}
             >
               {comment.permissioned ? (

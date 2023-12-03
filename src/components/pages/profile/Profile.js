@@ -35,9 +35,6 @@ const Profile = (props) => {
   const [isLike, setLike] = useState(false);
   const [isEditingProfile, setEditingProfile] = useState(false);
   const [isHistory, setHistory] = useState(false);
-  const [profileImage, setProfileImage] = useState(
-    storedProfileImage == null ? "img/profile_exm.png" : storedProfileImage,
-  );
   const [isLoading, setIsLoading] = useState(false);
   const [refresh, setRefresh] = useState(1);
 
@@ -53,7 +50,11 @@ const Profile = (props) => {
   async function onClickLike(e) {
     try {
       await axios
-        .get(`https://a-hi-prompt.com/my-page/likes`)
+        .get(`https://a-hi-prompt.com/my-page/likes`, {
+          headers: {
+            Authorization: "Bearer " + storedJwtToken,
+          },
+        })
         .then((response) => {
           setLikedPrompts(response.data);
           setLike(true);
@@ -74,7 +75,11 @@ const Profile = (props) => {
   async function onClickHistory(e) {
     try {
       await axios
-        .get("https://a-hi-prompt.com/my-page/chat")
+        .get("https://a-hi-prompt.com/my-page/chat", {
+          headers: {
+            Authorization: "Bearer " + storedJwtToken,
+          },
+        })
         .then((response) => {
           setChatHistorys(response.data);
           console.log(chatHistorys);
@@ -96,7 +101,11 @@ const Profile = (props) => {
   useEffect(() => {
     const getMyPrompts = async () => {
       return await axios
-        .get(`https://a-hi-prompt.com/prompt/my-page/test@gmail.com`)
+        .get(`https://a-hi-prompt.com/prompt/my-page/${storedMemberId}`, {
+          headers: {
+            Authorization: "Bearer " + storedJwtToken,
+          },
+        })
         .then((response) => {
           setMyprompts(response.data);
         });
@@ -211,7 +220,6 @@ const Profile = (props) => {
               {likedPrompts.map((likedPrompt) => (
                 <LikedPrompt data={likedPrompt} key={likedPrompt.prompt_id} />
               ))}
-              ;
             </>
           ) : null}
           {isHistory ? (

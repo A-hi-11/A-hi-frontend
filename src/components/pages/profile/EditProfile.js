@@ -72,9 +72,15 @@ function EditProfile({
     if (nameEdit) {
       try {
         await axios
-          .put(`https://a-hi-prompt.com/my-page/nickname`, {
-            new_nickname: nameEdit,
-          })
+          .put(
+            `https://a-hi-prompt.com/my-page/nickname`,
+            {
+              new_nickname: nameEdit,
+            },
+            {
+              headers: { "Content-Type": "application/json" },
+            },
+          )
           .then((res) => {
             alert("닉네임 변경이 완료되었습니다.");
             localStorage.setItem("nickname", res.data);
