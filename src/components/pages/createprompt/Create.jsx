@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from 'react';
+import React,{useEffect, useState, useRef} from 'react';
 import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 import {BASE_URL} from "../../../assets/Strings";
@@ -6,6 +6,8 @@ import "./Create.css";
 import Navigation from "../../Navigation";
 import Chat from "../chat/Chat";
 import cookie from 'react-cookies';
+import Loading from "../../Loading";
+
 const Create = () => {
     const [tags,setTags]=useState([])
     const [exms,setExms]=useState([])
@@ -24,11 +26,15 @@ const Create = () => {
     const [example,setExample]=useState("")
     const [tagCont,setTagCont]=useState(["","","","",""])
 
-
     const handleSubmit = async () => {
 
       try {
         const res = await (axios.post("https://a-hi-prompt.com/prompt/create",{
+          
+            headers : {
+              Authorization : `Bararer ${cookie.load("token")}`,
+          },
+          
           "member_id": "test@gmail.com",
           "title": title,
           "description": desc,
@@ -90,13 +96,231 @@ const Create = () => {
       console.log(error);
     }
     }
-    
+    //chat 부분
+  const [msg, setMsg] = useState("");
+  const [result, setResult] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  const [showOptions, setShowOptions] = useState(false);
+  const messageEndRef = useRef();
+  
+  const [options, setOptions] = useState({
+    model_name: "gpt-3.5-turbo",
+    temperature: 0.7,
+    maximum_length: 500,
+    stop_sequence: "",
+    top_p: 1,
+    frequency_penalty: 0,
+    presence_penalty: 0,
+  });
+
+  console.log(options);
+  const scrollToBottom = () => {
+    messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    if (result != undefined) {
+      const li = document.createElement("li");
+      li.className = "response";
+      li.innerText = result;
+      document.getElementById("msgList").appendChild(li);
+      scrollToBottom(messageEndRef);
+      setMsg("");
+    }
+  }, [result]);
+
+  const onSendMsg = async (event) => {
+    event.preventDefault();
+    const li = document.createElement("li");
+    li.className = "quest";
+    li.innerText = msg;
+    const ul = document.getElementById("msgList");
+    ul.appendChild(li);
+    scrollToBottom(messageEndRef);
+    try {
+      setIsLoading(true);
+      await axios
+        .post(
+          "https://a-hi-prompt.com/gpt/24",
+          {
+            prompt: msg,
+            gptConfigInfo: options,
+          },
+          {
+            headers: { "Content-Type": "application/json" },
+          },
+        )
+        .then((res) => {
+          setResult(res.data.answer);
+          setIsLoading(false);
+        });
+    } catch (error) {
+      console.error(error);
+      alert(error.message);
+    }};
+
+    const handleOnKeyPress = (e) => {
+      if (e.key === "Enter") {
+        onSendMsg(e);
+      }
+    };
+  
+    const handleOptionChange = (e) => {
+      const { name, value } = e.target;
+      setOptions((prevOptions) => ({ ...prevOptions, [name]: value }));
+    };
+    const toggleOptions = () => {
+      setShowOptions((prevShowOptions) => !prevShowOptions);
+    };
+  
+
+  function Chat() {
+    return (
+    <div
+      className="main"
+      style={{ marginLeft: "0", height: "max-content" }}
+    >
+
+      <div className="gptMenu">
+        <button
+          onClick={toggleOptions}
+          className='editBtn'
+          id='optionBtn'
+          style={{ fontSize: "15px", color: "#04364A", borderColor: "#04364A" }}
+        >
+          옵션
+        </button>
+
+        <div
+          className="optionsContainer"
+        >
+          <div className="optionItem" id='optionBox'>
+            <label>
+              Model:
+              <select
+                name='model_name'
+                value={options.model_name}
+                onChange={handleOptionChange}
+              >
+                <option value='gpt-3.5-turbo'>GPT-3.5 Turbo</option>
+                <option value='gpt-4'>GPT-4</option>
+              </select>
+            </label>
+          </div>
+          <div className="optionItem">
+            <label>
+              Temperature:
+              <input
+                type='range'
+                min='0'
+                max='1'
+                step='0.1'
+                name='temperature'
+                value={options.temperature}
+                onChange={handleOptionChange}
+              />
+              {options.temperature}
+            </label>
+          </div>
+          <div className="optionItem">
+            <label>
+              Maximum_Length:
+              <input
+                type='range'
+                min='1'
+                max='1000'
+                step='1'
+                name='maximum_length'
+                value={options.maximum_length}
+                onChange={handleOptionChange}
+              />
+              {options.maximum_length}
+            </label>
+          </div>
+          <div className="optionItem">
+            <label>
+              Stop Sequence:
+              <textarea
+                name='stop_sequence'
+                value={options.stop_sequence}
+                onChange={handleOptionChange}
+              />
+            </label>
+          </div>
+          <div className="optionItem">
+            <label>
+              Top P:
+              <input
+                type='range'
+                min='0'
+                max='1'
+                step='0.1'
+                name='top_p'
+                value={options.top_p}
+                onChange={handleOptionChange}
+              />
+              {options.top_p}
+            </label>
+            <label>
+              Frequency Penalty:
+              <input
+                type='range'
+                min='0'
+                max='1'
+                step='0.1'
+                name='frequency_penalty'
+                value={options.frequency_penalty}
+                onChange={handleOptionChange}
+              />
+              {options.frequency_penalty}
+            </label>
+            <label>
+              Presence Penalty:
+              <input
+                type='range'
+                min='0'
+                max='1'
+                step='0.1'
+                name='presence_penalty'
+                value={options.presence_penalty}
+                onChange={handleOptionChange}
+              />
+              {options.presence_penalty}
+            </label>
+          </div>
+        </div>
+      </div>
+      <div className="result">
+        {isLoading ? <Loading color='white' pos='0px' rightPos='0px' /> : null}
+        <ul id='msgList'>
+          <li className="response">안녕하세요 ChatGPT 입니다.</li>
+        </ul>
+        <div ref={messageEndRef}></div>
+      </div>
+
+      <div className="under">
+        <form onSubmit={onSendMsg} onKeyDown={handleOnKeyPress}>
+          <textarea
+            type='text'
+            
+            placeholder='에이 하이에게 무엇이든 물어보세요'
+            value={msg}
+            onChange={(e) => {setMsg(e.target.value);console.log(msg)}}
+            required
+          />
+          <input type='submit' value='전송' />
+        </form>
+      </div>
+    </div>
+
+    );
+  }
+
 
   return (
     <div>
         <Navigation />
         <div className="submitform">
-
         <br/>
           <ul className="kindForm">
             <div className={"kind"+(kind=="text" ? "active" : "")} onClick={()=>{setKind("text");}}>chatGPT</div>

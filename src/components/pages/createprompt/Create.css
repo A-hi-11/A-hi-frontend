@@ -187,3 +187,219 @@
 textarea {
     padding:10px;
 }
+
+/*chat 부분*/
+.main{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 5rem;
+}
+.title,
+.under input, .under textarea{
+  font-size: 16px;
+  line-height: 24px;
+  color: #353740;
+}
+.title, .under{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 30px;
+}
+
+.title h3 {
+  font-size: 50px;
+  line-height: 40px;
+  font-weight: bold;
+  color: #04364A;
+  margin: 2px 0 40px;
+}
+
+.title h2 {
+  font-size: 20px;
+  line-height: 40px;
+  font-weight: bold;
+  color: #04364A;
+  margin: 16px 0 2px;
+}
+
+/* 입력창, 전송 버튼이 있는 하단 부분*/
+
+.under form {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .under textarea[type="text"] {
+    padding: 12px 16px;
+    width: 550px;
+    resize: none;
+    border: 1px solid #4997B0;
+    border-radius: 4px;
+    margin-bottom: 24px;
+    height: 80px;
+    outline: none;
+  }
+  .under ::placeholder {
+    color: #8e8ea0;
+    opacity: 1;
+  }
+  .under input[type="submit"] {
+    height: 80px;
+    width: 80px;
+    border-radius: 160px;
+    color: #fff;
+    margin: 6px 10px 10px 40px;
+    background-color: #4997B0;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  
+  @keyframes typing {
+    from {
+      width: 0
+    }
+  }
+      
+  @keyframes blink {
+    50% {
+      border-color: transparent
+    }
+  }
+  
+  
+  .gptMenu{
+    width: 800px;
+    display: flex;
+    justify-content: flex-end;
+  
+  }
+  
+  .gptMenu select, .gptMenu button{
+    outline: none;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    width: 6rem;
+  }
+  
+  
+  
+  
+  /*답변이 나올곳*/
+  .result{
+    width: 800px;
+    height: 350px;
+    border-radius: 10px;
+    overflow: auto;
+    background-color:#bebec2;
+  }
+  
+  .result ul{
+    height: 300px;
+      margin: 0;
+      padding: 2rem; 
+  }
+  
+  .result li{
+    position: relative;
+    list-style-type: none;
+    width: max-content;
+    max-width: 70%;
+    min-height: 20px;
+    height: fit-content;
+    margin: 0 0 10px;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #4997B0;
+    color: #fff;
+      
+  }
+  .result li ::after{
+    content: "";
+      position: absolute;
+      top: 10px;
+      right: -10px;
+      width: 0;
+      height: 0;
+      border-bottom: 16px solid transparent;
+      border-left: 16px solid #3b82f6;
+  }
+  
+  .result .response{
+    margin-right: auto;
+    height: min-content;
+    max-width: 400px;
+    width: max-content;
+    min-width: 250px;
+    margin-top: 10px;
+  }
+  .result .quest{
+    margin-top: 20px;
+    margin-left: auto;
+    background-color: #10a37f;
+    max-width: 400px;
+    width: max-content;
+  }
+  
+  .list{
+    width: 200px;
+    padding: .8em .5em;
+    border: 1px solid #999;
+    font-family: inherit;
+    background: url('arrow.jpg') no-repeat 95% 50%;
+    border-radius: 0px;
+    -webkit-appearance: none;
+    -moz-appearance: n  one;
+    appearance: none;
+  }
+  
+  
+    
+    .aiSelect button:hover {
+      background-color: #2980b9;
+    }
+  
+  
+    .optionsContainer {
+      position: absolute;
+      top: 0;
+      right: -330px; /* 초기에 오른쪽으로 숨겨둠 */
+      width: 300px;
+      height: 100%;
+      padding: 9px;
+      background-color: rgba(255, 255, 255, 0.8); /* 투명한 흰 배경 */
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      overflow-y: auto;
+      transition: right 0.3s ease-in-out; /* 좌우 이동에 부드러운 트랜지션 적용 */
+      right:0;
+    }
+    
+    
+    
+    .optionItem {
+      margin-bottom: 10px;
+    }
+    
+    .optionsContainer label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    
+    .optionsContainer select,
+    .optionsContainer input,
+    .optionsContainer textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+  
+  
+    .deactiveOptionBtn {
+      display: none;
+    }

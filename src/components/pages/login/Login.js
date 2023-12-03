@@ -15,10 +15,10 @@ const Login = () => {
   const expires = new Date()
   expires.setMinutes(expires.getMinutes() + 180)
   function google() {
-    window.location.href = 'https://a-hi-prompt.com/google-login'
+    window.location.href = "https://a-hi-prompt.com/google-login";
   };
   const naver = () => {
-    window.location.href = 'http://api.a-hi-prompt.com/'
+    window.location.href = 'http://api.a-hi-prompt.com/naver-login'
   };
   const onClickLogin = async () => {
     try {
@@ -27,7 +27,7 @@ const Login = () => {
           "userPassword": pw
       }))
       if (res.data!='존재하지 않는 회원입니다. 로그인에 실패하였습니다.' && res.data!='비밀번호가 일치하지 않습니다. 로그인에 실패하였습니다.') {
-        cookie.save("token", res.data, {
+        cookie.save("token", res.data.jwt, {
           path: "/",
           expires,
         });
