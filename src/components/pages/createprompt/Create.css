@@ -35,6 +35,9 @@
     border-radius:5px 5px 5px 5px;
     border: solid 0.1px #04364A;
 }
+.namedisable{
+    display:none;
+}
 .contents{width: 600px;
     height: 300px;
     font-size: 15px;
@@ -81,6 +84,9 @@
     height:8vw;
     align-items: center;
     justify-content: center;
+}
+.exmdisable{
+  display:none;
 }
 .exm:hover .view{
     display:flex;
@@ -157,14 +163,19 @@
     transform: translate(-50%, -50%);
 }
 .btn{
-    border:solid 1px #04364A;
+    display: inline-flex;
+    border:none;
     background-color:white;
     color:#04364A;
+    font-size:30px;
     width:35px;
     height:35px;
     border-radius: 5px 5px 5px 5px;
+    align-items:center;
+    justify-content: center;
 }
 .btn:hover{
+    display: inline-flex;
     background-color:#04364A;
     color:white;
 }
@@ -180,11 +191,9 @@
     background-color:#04364A;
     color:white;
 }
-.chat{
-    margin-left:-15vh;
-}
 
-textarea {
+
+.submitform textarea {
     padding:10px;
 }
 
@@ -196,7 +205,7 @@ textarea {
   margin-left: 5rem;
 }
 .title,
-.under input, .under textarea{
+.under input, .under .create_textarea{
   font-size: 16px;
   line-height: 24px;
   color: #353740;
@@ -206,6 +215,7 @@ textarea {
   flex-direction: column;
   align-items: center;
   padding-top: 30px;
+  margin-top:-50px;
 }
 
 .title h3 {
@@ -226,12 +236,12 @@ textarea {
 
 /* 입력창, 전송 버튼이 있는 하단 부분*/
 
-.under form {
+.under .create_form {
     display: flex;
     flex-direction: row;
   }
   
-  .under textarea[type="text"] {
+  .under .create_textarea[type="text"] {
     padding: 12px 16px;
     width: 550px;
     resize: none;
@@ -245,12 +255,12 @@ textarea {
     color: #8e8ea0;
     opacity: 1;
   }
-  .under input[type="submit"] {
+  .under .create_input[type="submit"] {
     height: 80px;
     width: 80px;
     border-radius: 160px;
     color: #fff;
-    margin: 6px 10px 10px 40px;
+    margin: 12px 10px 10px 40px;
     background-color: #4997B0;
     border: none;
     text-align: center;
@@ -271,10 +281,10 @@ textarea {
   }
   
   
-  .gptMenu{
-    width: 800px;
+  .chatgptMenu{
+    
     display: flex;
-    justify-content: flex-end;
+    
   
   }
   
@@ -285,11 +295,14 @@ textarea {
     width: 6rem;
   }
   
+  .chat_outer {
+    display:flex;
+  }
   
   
   
   /*답변이 나올곳*/
-  .result{
+  .create_result{
     width: 800px;
     height: 350px;
     border-radius: 10px;
@@ -297,13 +310,13 @@ textarea {
     background-color:#bebec2;
   }
   
-  .result ul{
+  .create_result ul{
     height: 300px;
       margin: 0;
       padding: 2rem; 
   }
   
-  .result li{
+  .create_result li{
     position: relative;
     list-style-type: none;
     width: max-content;
@@ -317,7 +330,7 @@ textarea {
     color: #fff;
       
   }
-  .result li ::after{
+  .create_result li ::after{
     content: "";
       position: absolute;
       top: 10px;
@@ -328,7 +341,7 @@ textarea {
       border-left: 16px solid #3b82f6;
   }
   
-  .result .response{
+  .create_result .response{
     margin-right: auto;
     height: min-content;
     max-width: 400px;
@@ -336,7 +349,7 @@ textarea {
     min-width: 250px;
     margin-top: 10px;
   }
-  .result .quest{
+  .create_result .quest{
     margin-top: 20px;
     margin-left: auto;
     background-color: #10a37f;
@@ -364,15 +377,12 @@ textarea {
   
   
     .optionsContainer {
-      position: absolute;
-      top: 0;
-      right: -330px; /* 초기에 오른쪽으로 숨겨둠 */
-      width: 300px;
-      height: 100%;
+      width: 200px;
+      height: 92%;
       padding: 9px;
       background-color: rgba(255, 255, 255, 0.8); /* 투명한 흰 배경 */
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-      overflow-y: auto;
+
       transition: right 0.3s ease-in-out; /* 좌우 이동에 부드러운 트랜지션 적용 */
       right:0;
     }
@@ -380,23 +390,25 @@ textarea {
     
     
     .optionItem {
-      margin-bottom: 10px;
+      font-size:11px;
+      margin-bottom: 0px;
     }
     
     .optionsContainer label {
       display: block;
-      margin-bottom: 5px;
+      margin-bottom: 10px;
     }
     
     .optionsContainer select,
     .optionsContainer input,
     .optionsContainer textarea {
       width: 100%;
-      padding: 8px;
+      padding: 0px;
       border: 1px solid #ccc;
       border-radius: 4px;
       box-sizing: border-box;
       font-size: 14px;
+      
     }
   
   

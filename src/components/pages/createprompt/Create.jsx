@@ -4,12 +4,14 @@ import axios from "axios";
 import {BASE_URL} from "../../../assets/Strings";
 import "./Create.css";
 import Navigation from "../../Navigation";
-import Chat from "../chat/Chat";
 import cookie from 'react-cookies';
 import Loading from "../../Loading";
-
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const Create = () => {
-    const [tags,setTags]=useState([])
+    const ref1=useRef()
+    const ref2=useRef()
+    const [tags,setTags]=useState(0)
     const [exms,setExms]=useState([])
     const [kind,setKind]=useState("text")
     const [exm1,setExm1]=useState(false)
@@ -24,15 +26,20 @@ const Create = () => {
     const [useWelcomeM,setUseWelcomeM]=useState("yes")
     const [welcomeM,setWelcomeM]=useState("")
     const [example,setExample]=useState("")
-    const [tagCont,setTagCont]=useState(["","","","",""])
-
+    const [tag1,setTag1]=useState("")
+    const [tag2,setTag2]=useState("")
+    const [tag3,setTag3]=useState("")
+    const [tag4,setTag4]=useState("")
+    const [tag5,setTag5]=useState("")
+    const storedJwtToken = localStorage.getItem("jwtToken");
+    const loginStatus = localStorage.getItem("memberId");
     const handleSubmit = async () => {
 
       try {
         const res = await (axios.post("https://a-hi-prompt.com/prompt/create",{
           
             headers : {
-              Authorization : `Bararer ${cookie.load("token")}`,
+              Authorization: "Bearer " + storedJwtToken
           },
           
           "member_id": "test@gmail.com",
@@ -79,15 +86,9 @@ const Create = () => {
                 }
             ]
         ],
-          "tags": tagCont,
+          "tags": [tag1,tag2,tag3,tag4,tag5],
           "gptConfigInfo": {
-          "model_name": "gpt-3",
-          "temperature": 0.7,
-          "maximum_length": 500,
-          "stop_sequence": "\\n",
-          "top_p": 0.9,
-          "frequency_penalty": 0.2,
-          "presence_penalty": 0.6
+            options
           }
         }))
         console.log(res)
@@ -102,11 +103,12 @@ const Create = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
   const messageEndRef = useRef();
-  
+  const [sendResult1,setSendResult1]=useState([]);
+  const [sendResult2,setSendResult2]=useState([]);
   const [options, setOptions] = useState({
     model_name: "gpt-3.5-turbo",
     temperature: 0.7,
-    maximum_length: 500,
+    maximum_length: 200,
     stop_sequence: "",
     top_p: 1,
     frequency_penalty: 0,
@@ -128,9 +130,36 @@ const Create = () => {
       setMsg("");
     }
   }, [result]);
+  const chatClear = () => {
+    const msgList = document.getElementById("msgList");
+    // 모든 li 요소 삭제
+    while (msgList.firstChild) {
+      msgList.removeChild(msgList.firstChild);
+    }
+  }
+  const delExm1 = () => {
 
+  }
+  const delExm2 = () => {
+
+  }
   const onSendMsg = async (event) => {
     event.preventDefault();
+    //사용예시 1이 안 만들어진 경우 사용예시1을 만들기 아닌경우 사용예시2를 만들기
+    if (exms.length<1) {
+      setSendResult1([...sendResult1,{
+        "message": msg,
+        "question": true,
+        "chat_order": 0
+    }])
+    }
+    else {
+      setSendResult2([...sendResult2,{
+        "message": msg,
+        "question": true,
+        "chat_order": 1
+    }])
+    }
     const li = document.createElement("li");
     li.className = "quest";
     li.innerText = msg;
@@ -141,17 +170,34 @@ const Create = () => {
       setIsLoading(true);
       await axios
         .post(
-          "https://a-hi-prompt.com/gpt/24",
+          "https://a-hi-prompt.com/gpt/-1",
           {
             prompt: msg,
             gptConfigInfo: options,
           },
           {
-            headers: { "Content-Type": "application/json" },
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + storedJwtToken
+            },
           },
         )
         .then((res) => {
           setResult(res.data.answer);
+          if (exms.length<1) {
+            setSendResult1([...sendResult1,{
+              "message": res.data.answer,
+              "question": false,
+              "chat_order": 0
+          }])
+          }
+          else {
+            setSendResult2([...sendResult2,{
+              "message": res.data.answer,
+              "question": false,
+              "chat_order": 1
+          }])
+          }
           setIsLoading(false);
         });
     } catch (error) {
@@ -173,24 +219,27 @@ const Create = () => {
       setShowOptions((prevShowOptions) => !prevShowOptions);
     };
   
-
+    
   function Chat() {
+    
     return (
     <div
       className="main"
       style={{ marginLeft: "0", height: "max-content" }}
     >
+      <div className="chat_outer">
+      <div className="chat_container">
+      <div className="create_result">
+        {isLoading ? <Loading color='white' pos='0px' rightPos='0px' /> : null}
+        <ul id='msgList'>
+          <li className="response">안녕하세요 ChatGPT 입니다.</li>
+        </ul>
+        <div ref={messageEndRef}></div>
+      </div>
 
-      <div className="gptMenu">
-        <button
-          onClick={toggleOptions}
-          className='editBtn'
-          id='optionBtn'
-          style={{ fontSize: "15px", color: "#04364A", borderColor: "#04364A" }}
-        >
-          옵션
-        </button>
-
+      
+      </div>
+      <div className="chatgptMenu">
         <div
           className="optionsContainer"
         >
@@ -290,31 +339,55 @@ const Create = () => {
           </div>
         </div>
       </div>
-      <div className="result">
-        {isLoading ? <Loading color='white' pos='0px' rightPos='0px' /> : null}
-        <ul id='msgList'>
-          <li className="response">안녕하세요 ChatGPT 입니다.</li>
-        </ul>
-        <div ref={messageEndRef}></div>
-      </div>
-
-      <div className="under">
-        <form onSubmit={onSendMsg} onKeyDown={handleOnKeyPress}>
-          <textarea
-            type='text'
-            
-            placeholder='에이 하이에게 무엇이든 물어보세요'
-            value={msg}
-            onChange={(e) => {setMsg(e.target.value);console.log(msg)}}
-            required
-          />
-          <input type='submit' value='전송' />
-        </form>
+      
       </div>
     </div>
 
     );
   }
+   //stable부분
+   const [stableResult, setStableResult] = useState();
+   const [imageInput, setImageInput] = useState("");
+ 
+   async function generateImage(event) {
+     event.preventDefault();
+     try {
+       setIsLoading(true);
+       const response = await axios.post(
+         "https://a-hi-prompt.com/diffusion",
+ 
+         { prompt: imageInput },
+         {
+           headers: {
+             "Content-Type": "application/json",
+           },
+         },
+       );
+ 
+       const data = response.data;
+       if (response.status !== 200) {
+         throw (
+           data.error ||
+           new Error(`Request failed with status ${response.status}`)
+         );
+       }
+ 
+       setStableResult(data);
+       console.log(stableResult);
+       setImageInput("");
+       setIsLoading(false);
+     } catch (error) {
+       // Consider implementing your own error handling logic here
+       console.error(error);
+       alert(error.message);
+     }
+   }
+   useEffect(()=>{
+    if (ref2.current!=null) {
+      ref2.current.focus()
+      ref2.current.setSelectionRange(imageInput.length, imageInput.length); 
+    }
+  },[imageInput])
 
 
   return (
@@ -349,30 +422,68 @@ const Create = () => {
             </ul>
             <br/><br/><br/>
             <h4 style={{margin:"10px"}}>태그</h4> 
-            <div><input className="name" onChange={e => {let newArr=[...tagCont]; newArr[0]=e.target.value; setTagCont(newArr);console.log(tagCont)}} placeholder="태그를 입력하세요(최대 5개)"/>
-            <button type="button" className="btn" onClick={()=>{if (tags.length<4) {setTags([...tags,1])}}}>+</button></div>
+            <div><input className="name" onChange={e => {setTag1(e.target.value)}} placeholder="태그를 입력하세요(최대 5개)"/></div>
+            <div><input className={"name"+(0<tags ? "" : "disable")} id="tag2" onChange={e => {setTag2(e.target.value)}} placeholder="태그를 입력하세요(최대 5개)"/></div>
+            <div><input className={"name"+(1<tags ? "" : "disable")} id="tag3" onChange={e => {setTag3(e.target.value)}} placeholder="태그를 입력하세요(최대 5개)"/></div>
+            <div><input className={"name"+(2<tags ? "" : "disable")} id="tag4" onChange={e => {setTag4(e.target.value)}} placeholder="태그를 입력하세요(최대 5개)"/></div>
+            <div><input className={"name"+(3<tags ? "" : "disable")} id="tag5" onChange={e => {setTag5(e.target.value)}} placeholder="태그를 입력하세요(최대 5개)"/></div>
+            <button type="button" className="btn" onClick={()=>{if (tags<4) {setTags(tags+1) ;console.log(tags)}}}>+</button>
+            
 
-            {tags.map(()=>{
-                return (
-                    <div><input id={tags.length} className="name" onChange={e => {let newArr=[...tagCont]; newArr[e.target.id]=e.target.value; setTagCont(newArr);console.log(tagCont)}} placeholder="태그를 입력하세요(최대 5개)"/>
-                    <button type="button" className="btn" onClick={()=>{if (tags.length<4) {setTags([...tags,1])}}}>+</button></div>
-                );
-            })}
             
             <br/><br/><br/>
             <h4 style={{margin:"10px"}}>예시질문 생성 (최대 2개)</h4>
-            {kind=="text" ? <div className="chat"><Chat/></div> : ""}
+            {kind=="text" ? <div className="chat"><Chat/><div className="under">
+        <div className="create_form" onSubmit={onSendMsg} onKeyDown={handleOnKeyPress}>
+          <textarea
+            id="test"
+            ref={ref1}
+            className="create_textarea"
+            type='text'
+            placeholder='에이 하이에게 무엇이든 물어보세요'
+            value={msg}
+            onChange={(e) => {setMsg(e.target.value)}}
+            required
+          />
+          <input className="create_input"type='submit' value='전송' onClick={e=>{onSendMsg(e)}}/>
+        </div>
+      </div></div> : <div className='imagePromptContainer'>
+      <div className='promptbox'>
+        <p style={{ margin: "0" }}>프롬프트</p>
+      </div>
+      <form style={{ display: "flex", flexDirection: "column" }}>
+        <textarea
+          className='ImagePrompt'
+          onChange={(e)=>{setImageInput(e.target.value)}}
+          onKeyDown={handleOnKeyPress}
+          value={imageInput}
+          ref={ref2}
+        ></textarea>
+        <button onClick={generateImage} type='button' className='imageBtn'>
+          생성하기{" "}
+          <FontAwesomeIcon icon={faPaperPlane} style={{ color: "#04364a" }} />
+        </button>
+      </form>
+      {isLoading ? <Loading color='#04364A' pos='55px' rightPos='0px' /> : null}
+      {/*
+      <div className='resultBox'>
+        <img src={stableResult} style={{ width: "500px" }}></img>
+      </div>
+    */}
+    </div>}
             <br/>
-            <button type="button" className="exmBtn" onClick={()=>{if (exms.length<2) {setExms([...exms,exms.length+1])}}}>예시 생성</button>
+            <button type="button" className="exmBtn" onClick={()=>{if (exms.length<2) {setExms([...exms,exms.length+1])} else {alert("예시는 최대 2개까지 생성 가능합니다.")}; chatClear()}}>예시 생성</button>
             <div className="exmList">
-            {exms.map((i)=>{
-              return (
-                <div className="exm">사용예시{i}
-                <div className="view" onClick={()=>{if (i==1) {setExm1(true)} else {setExm2(true)}}}>상세보기</div>
-                <div className="delete" onClick={()=>{exms.pop();setExms([...exms])}}>삭제</div>
-                </div>
-              )
-            })}
+
+              <div className={"exm"+(exms.length>0 ? "" : "disable")}>사용예시1
+              <div className="view" onClick={()=>{setExm1(true)}}>상세보기</div>
+              <div className="delete" onClick={()=>{if (exms.length>1) {setSendResult1(sendResult2);setSendResult2([])} else {setSendResult1([])};exms.pop();setExms([...exms])}}>삭제</div>
+              </div>
+              <div className={"exm"+(exms.length>1 ? "" : "disable")}>사용예시2
+              <div className="view" onClick={()=>{setExm2(true)}}>상세보기</div>
+              <div className="delete" onClick={()=>{setSendResult2([]);exms.pop();setExms([...exms])}}>삭제</div>
+              </div>
+
             </div>
             {exm1 ? <div className="exmChat" onClick={()=>{setExm1(false); setExm2(false)}}><Chat/></div> : ""}
             {exm2 ? <div className="exmChat" onClick={()=>{setExm1(false); setExm2(false)}}><Chat/></div> : ""}

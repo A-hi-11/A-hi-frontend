@@ -12,12 +12,13 @@ import cookie from 'react-cookies';
 
 const Home = () => {
     const navigate=useNavigate();
-    const [category,setCategory] = useState(1);
+    const [category,setCategory] = useState("task");
     const [boardList, setBoardList] = useState([]);
-    const [mainKind,setMainKind]=useState(1)
-    const [sortKind,setSortKind]=useState("date")
+    const [mainKind,setMainKind]=useState("text")
+    const [sortKind,setSortKind]=useState("time")
     const [data,setData]=useState()
     const [imgData,setImgData]=useState()
+    const [search,setSearch]=useState("")
     /*const getBoardList = async () => {
         const contents = await (await axios.get(BASE_URL)); // 2) 게시글 목록 데이터에 할당  
         setBoardList(contents.output); // 3) boardList 변수에 할당
@@ -25,15 +26,34 @@ const Home = () => {
     useEffect(() => {
         getBoardList(); // 1) 게시글 목록 조회 함수 호출
     }, []);*/
-    const moveToCreate = () => {
-      navigate('/prompt');
-    
-  };
+    const handleOnKeyPress = (e) => {
+      if (e.key === "Enter") {
+        reloadList();
+      }
+    };
+    const reloadList = async () => {
+      try {
+        const res = await (axios.post("https://a-hi-prompt.com/prompt/view",{
+          "sort": sortKind,
+          "category": "", //수정필요
+          "search": search,
+          "mediaType": mainKind
+        }))
+        setData(res.data)
+        console.log(cookie.load("token"))
+        
+      }
+    catch(error) {
+      console.log(error);
+    }};
   useEffect( ()=>{
     const getList = async () => {
       try {
-        const res = await (axios.get("http://43.201.240.250:8080/prompt/view?sort=category&search=",{
-          params : {"sort" : "time"},
+        const res = await (axios.post("https://a-hi-prompt.com/prompt/view",{
+          "sort": sortKind,
+          "category": "", //수정필요
+          "search": search,
+          "mediaType": mainKind
         }))
         setData(res.data)
         console.log(cookie.load("token"))
@@ -44,7 +64,7 @@ const Home = () => {
     }};
   getList()
   }
-  ,[])
+  ,[mainKind,category,sortKind])
   
   useEffect(() => {
     // 현재 페이지의 쿼리 스트링을 가져옴
@@ -78,8 +98,8 @@ const Home = () => {
     <div>
       <Navigation />
       <ul className="mainKindForm">
-            <div className={"mainKind"+(mainKind==1 ? "active" : "")} onClick={()=>{setMainKind(1);}}>chatGPT</div>
-            <div className={"mainKind"+(mainKind==2 ? "active" : "")} onClick={()=>{setMainKind(2)}}>Image</div>
+            <div className={"mainKind"+(mainKind=="text" ? "active" : "")} onClick={()=>{setMainKind("text");}}>chatGPT</div>
+            <div className={"mainKind"+(mainKind=="image" ? "active" : "")} onClick={()=>{setMainKind("image")}}>Image</div>
             </ul>
       <div className="contContainer">
 
@@ -88,29 +108,29 @@ const Home = () => {
           <h2>안녕 AI</h2>
           <h3>에이-하이</h3>
       </div>
-      <input className="search" placeholder="원하는 프롬프트를 검색하세요." />
+      <input className="search" onChange={e=>{setSearch(e.target.value)}} onKeyDown={handleOnKeyPress} placeholder="원하는 프롬프트를 검색하세요." />
         <div>
           <ul className="mainCategory">
             
-            <div className={"mainCategoryCont"+(category==1 ? "active" : "")} onClick={()=>{setCategory(1)}}>{mainKind==1?"업무용":"인물"}</div>
-            <div className={"mainCategoryCont"+(category==2 ? "active" : "")} onClick={()=>{setCategory(2)}}>{mainKind==1?"생활":"동물"}</div>
-            <div className={"mainCategoryCont"+(category==3 ? "active" : "")} onClick={()=>{setCategory(3)}}>{mainKind==1?"프로그래밍":"풍경"}</div>
-            <div className={"mainCategoryCont"+(category==4 ? "active" : "")} onClick={()=>{setCategory(4)}}>{mainKind==1?"창의":"사물"}</div>
-            <div className={"mainCategoryCont"+(category==5 ? "active" : "")} onClick={()=>{setCategory(5)}}>{mainKind==1?"교육":"캐릭터"}</div>
-            <div className={"mainCategoryCont"+(category==6 ? "active" : "")} onClick={()=>{setCategory(6)}}>기타</div>
+            <div className={"mainCategoryCont"+(category=="task"||category=="human" ? "active" : "")} onClick={()=>{mainKind=="text"?setCategory("task"):setCategory("human")}}>{mainKind=="text"?"업무용":"인물"}</div>
+            <div className={"mainCategoryCont"+(category=="life"||category=="animal" ? "active" : "")} onClick={()=>{mainKind=="text"?setCategory("life"):setCategory("animal")}}>{mainKind=="text"?"생활":"동물"}</div>
+            <div className={"mainCategoryCont"+(category=="programming"||category=="sight" ? "active" : "")} onClick={()=>{mainKind=="text"?setCategory("programming"):setCategory("sight")}}>{mainKind=="text"?"프로그래밍":"풍경"}</div>
+            <div className={"mainCategoryCont"+(category=="creative"||category=="obj" ? "active" : "")} onClick={()=>{mainKind=="text"?setCategory("creative"):setCategory("obj")}}>{mainKind=="text"?"창의":"사물"}</div>
+            <div className={"mainCategoryCont"+(category=="edu"||category=="character" ? "active" : "")} onClick={()=>{mainKind=="text"?setCategory("edu"):setCategory("character")}}>{mainKind=="text"?"교육":"캐릭터"}</div>
+            <div className={"mainCategoryCont"+(category=="etc" ? "active" : "")} onClick={()=>{setCategory("etc")}}>기타</div>
 
           </ul>
           </div>
           <div>
             <ul className="sortKind">
-              <div className={"sortKindCont"+(sortKind=="date" ? "active" : "")} onClick={()=>{setSortKind("date")}}>최신순</div>
-              <div className={"sortKindCont"+(sortKind=="like" ? "active" : "")} onClick={()=>{setSortKind("like")}}>인기순</div>
+              <div className={"sortKindCont"+(sortKind=="time" ? "active" : "")} onClick={()=>{setSortKind("time")}}>최신순</div>
+              <div className={"sortKindCont"+(sortKind=="likes" ? "active" : "")} onClick={()=>{setSortKind("likes")}}>인기순</div>
             </ul>
           </div>
           <ul >
           <div className="contList">
           
-          {mainKind==1 ? data&&data.map((board) => (
+          {mainKind=="text" ? data&&data.map((board) => (
               
               <Link to={`/promptdetail/${board.prompt_id}`}>
               <div key={board.create_time} className="contContent">

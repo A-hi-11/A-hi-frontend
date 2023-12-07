@@ -16,6 +16,7 @@ import formatDateTime from "../../FormatDateTime";
 import PromptStableDiffusion from "../../stablediffusion/PromptStableDiffusion";
 import PromptGpt from "../chat/PromptGpt";
 import LoginButton from "./LoginButton";
+const storedJwtToken = localStorage.getItem("jwtToken");
 
 const PromptDetail = () => {
   const { prompt_id } = useParams();
@@ -26,27 +27,30 @@ const PromptDetail = () => {
   const [loading, setLoading] = useState(true); // axios에서 정보를 받아오고 랜더링하기 위한 상태 state
   const [error, setError] = useState(null); // 에러발생시 에러를 저장할 수 있는 state
   const [refresh, setRefresh] = useState(1);
-  const navigate = useNavigate();
+  const [chatList, setChatList] = useState([]);
 
-  const messageEndRef = useRef();
-  const [Input, setInput] = useState("");
+  const navigate = useNavigate();
+  const loginStatus = localStorage.getItem("memberId");
 
   const onClickEdit = () => {
     navigate("/prompt_edit", { state: { detail } });
-    // 수정을 수행하는 로직을 추가하세요.
     console.log("Edit button clicked!");
   };
 
   const onClickDelete = async () => {
     try {
       await axios
-        .delete(`https://a-hi-prompt.com/prompt/my-page/${prompt_id}`, {
-          data: {
-            prompt_id: prompt_id,
+        .delete(
+          `https://a-hi-prompt.com/prompt/my-page/${prompt_id}`,
+
+          {
+            headers: {
+              Authorization: "Bearer " + storedJwtToken,
+            },
           },
-        })
+        )
         .then(() => {
-          console.log(" button clicked!");
+          alert("프롬프트 삭제가 완료되었습니다.");
           navigate(-1);
         });
     } catch {
@@ -61,10 +65,11 @@ const PromptDetail = () => {
       axios
         .post(
           `https://a-hi-prompt.com/prompt/like`,
-          { member_id: "test@gmail.com", prompt_id: prompt_id, status: "like" },
+          { prompt_id: detail.prompt_id, status: "like" },
           {
             headers: {
               "Content-Type": "application/json",
+              Authorization: "Bearer " + storedJwtToken,
             },
           },
         )
@@ -107,41 +112,60 @@ const PromptDetail = () => {
   }
 
   useEffect(() => {
-    setLoading(true);
-    try {
-      axios
-        .get(
-          `https://a-hi-prompt.com/prompt/view/info?prompt_id=${prompt_id}&member_id=test@gmail.com`,
-        )
-        .then((res) => {
-          setLoading(false);
-          if (res.data) {
-            setDetail(res.data);
-          } else {
-            // 데이터가 없을 경우 이전 페이지로 이동
-            navigate(-1);
-          }
-          console.log(res.data);
-        });
-    } catch (error) {
-      setError(error);
-      console.error("Error fetching prompt details:", error);
-    }
+    const fetchChatList = async () => {
+      try {
+        setLoading(true);
+        await axios
+          .get(
+            `https://a-hi-prompt.com/my-page/chat/read/${detail.chat_room_id}`,
+            {
+              headers: {
+                Authorization: "Bearer " + storedJwtToken,
+              },
+            },
+          )
+          .then((response) => {
+            setChatList(response.data);
+            console.log(chatList);
+            setLoading(false);
+          });
+      } catch (error) {
+        console.error("Error fetching chat list:", error);
+      }
+    };
+    const fetchPromptDetail = async () => {
+      setLoading(true);
+      const storedMemberId = localStorage.getItem("memberId");
+
+      try {
+        axios
+          .get(
+            `https://a-hi-prompt.com/prompt/view/info?prompt_id=${prompt_id}&member_id=${storedMemberId}`,
+            {
+              headers: {
+                Authorization: "Bearer " + storedJwtToken,
+              },
+            },
+          )
+          .then((res) => {
+            setLoading(false);
+            if (res.data) {
+              setDetail(res.data);
+            } else {
+              // 데이터가 없을 경우 이전 페이지로 이동
+              navigate(-1);
+            }
+            console.log(res.data);
+          });
+      } catch (error) {
+        setError(error);
+        console.error("Error fetching prompt details:", error);
+      }
+    };
+
+    fetchChatList();
+    fetchPromptDetail();
   }, [refresh, navigate, prompt_id]);
-
-  const scrollToBottom = () => {
-    messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  function onSendMsg(event) {
-    event.preventDefault();
-    const ul = document.getElementById("msgList");
-    const li = document.createElement("li");
-    //li.className = 'quest';
-    li.innerText = Input;
-    ul.appendChild(li);
-    scrollToBottom(messageEndRef);
-  }
 
   if (error) return <div>에러 발생..{error}</div>;
   if (!detail) return null;
@@ -189,9 +213,8 @@ const PromptDetail = () => {
                 </>
               )}
               <div className='tagsContainer' style={{ display: "flex" }}>
-                {detail.tags.map((tag) => (
-                  <p className='tag'>#{tag}</p>
-                ))}
+                {detail.tags &&
+                  detail.tags.map((tag) => <p className='tag'>#{tag}</p>)}
                 {detail.myPrompt && ( // detail.myPrompt 값이 true일 때만 버튼을 표시
                   <>
                     <button className='myBtn' onClick={onClickEdit}>
@@ -216,7 +239,7 @@ const PromptDetail = () => {
                     marginLeft: "10px",
                   }}
                 >
-                  {detail.nickname ? detail.nickname : "비어있는 사용자 이름"}
+                  {detail.nickname}
                 </p>
               </div>
               <p className='date'>
@@ -271,27 +294,45 @@ const PromptDetail = () => {
             </button>
           </span>
           {isUse ? (
-            <>
-              {detail.mediaType === "image" ? (
-                // mediaType이 "image"인 경우에 대한 컴포넌트 또는 렌더링
-                <PromptStableDiffusion
-                  width='530px'
-                  margin='10px'
-                  fontSize='14px'
-                  content={detail.content}
-                  welcome_msg={detail.welcome_message}
-                />
-              ) : (
-                // mediaType이 "image"가 아닌 경우에 대한 컴포넌트 또는 렌더링
-                <PromptGpt
-                  width='530px'
-                  margin='10px'
-                  fontSize='14px'
-                  welcomeMsg={detail.welcome_message}
-                  prompt_id={detail.prompt_id}
-                />
-              )}
-            </>
+            !loginStatus ? (
+              <>
+                <p
+                  style={{
+                    marginLeft: "13px",
+                    lineHeight: "28px",
+                    wordBreak: "keep-all",
+                    fontSize: "16px",
+                    filter: "blur(4px)",
+                  }}
+                >
+                  프롬프트 이용하기 기능은 회원 전용입니다. 간편하게 가입하고
+                  에이하이의 회원 전용 기능을 이용하세요!
+                </p>
+                {loginStatus ? <LoginButton /> : null}
+              </>
+            ) : (
+              <>
+                {detail.mediaType === "image" ? (
+                  <PromptStableDiffusion
+                    width='530px'
+                    margin='10px'
+                    fontSize='14px'
+                    content={detail.content}
+                    welcome_msg={detail.welcome_message}
+                    prompt_id={detail.prompt_id}
+                  />
+                ) : (
+                  // mediaType이 "image"가 아닌 경우에 대한 컴포넌트 또는 렌더링
+                  <PromptGpt
+                    width='530px'
+                    margin='10px'
+                    fontSize='14px'
+                    welcomeMsg={detail.welcome_message}
+                    prompt_id={detail.prompt_id}
+                  />
+                )}
+              </>
+            )
           ) : null}
 
           {isPrompt ? (
@@ -318,9 +359,9 @@ const PromptDetail = () => {
                       filter: "blur(4px)", // 블러 처리 스타일을 추가
                     }}
                   >
-                    볼 수 없는 컨텐츠입니다.
+                    조회 권한이 없는 컨텐츠입니다.
                   </p>
-                  <LoginButton />
+                  {loginStatus ? <LoginButton /> : null}
                 </>
               )}
             </>
@@ -342,7 +383,7 @@ const PromptDetail = () => {
                       {chatGroup.map((chat, chatIndex) => (
                         <li
                           key={`${groupIndex}-${chatIndex}`}
-                          className={chat.question ? "quest" : "response"}
+                          className={chat.question ? "response" : "quest"}
                           style={{ maxWidth: "400px" }}
                         >
                           {chat.message}

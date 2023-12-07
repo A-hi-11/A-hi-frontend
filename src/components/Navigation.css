@@ -23,3 +23,16 @@
     transform-origin: 0%, 100%;
     transform: scale(1.1);
   }
+
+  .logoutBtn {
+    color: #FFF;
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 3.5rem; 
+    text-decoration-line: none;
+    transition: transform 0.3s ease;
+
+  }

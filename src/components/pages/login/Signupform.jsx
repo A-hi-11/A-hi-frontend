@@ -89,7 +89,10 @@ const Signupform = () => {
         "nickname": nickName,
         "profile_image": profile_img
     }))
-    console.log(res)
+  if (res.data=='회원가입에 성공하였습니다.') {
+    alert('회원가입에 성공하였습니다.')
+    window.location.replace("/login");
+  }
   }
 catch(error) {
   console.log(error);
@@ -113,27 +116,29 @@ catch(error) {
        <div className="form-el">
          <label htmlFor="nickName">Nick Name</label> <br />
          <input id="nickName" name="nickName" value={nickName} onChange={onChangeNickName} />
-         <p className="message">{nickNameMessage}</p>
+         <p className="message" style={{fontSize:"12px"}}>{nickNameMessage}</p>
        </div>
        <div className="form-el">
          <label htmlFor="password">Password</label> <br />
          <input
+           type="password"
            id="password"
            name="password"
            value={password}
            onChange={onChangePassword}
          />
-         <p className="message">{passwordMessage}</p>
+         <p className="message" style={{fontSize:"12px"}}>{passwordMessage}</p>
        </div>
        <div className="form-el">
          <label htmlFor="passwordConfirm">Password Confirm</label> <br />
          <input
+           type="password"
            id="passwordConfirm"
            name="passwordConfirm"
            value={passwordConfirm}
            onChange={onChangePasswordConfirm}
          />
-         <p className="message">{passwordConfirmMessage}</p>
+         <p className="message" style={{fontSize:"12px"}}>{passwordConfirmMessage}</p>
        </div>
        <div className="form-el">
          <label htmlFor="profile_img">profile_image</label> <br/>

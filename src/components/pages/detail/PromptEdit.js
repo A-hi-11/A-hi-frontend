@@ -26,24 +26,66 @@ const Create = () => {
   const [example, setExample] = useState(location.example);
   const [tagCont, setTagCont] = useState(location.tags);
   const navigate = useNavigate();
+  const storedJwtToken = localStorage.getItem("jwtToken");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(example);
+    console.log({
+      member_id: location.member_id,
+      title: title ? title : location.title,
+      description: desc ? desc : location.desc,
+      content: content ? content : location.content,
+      mediaType: location.mediaType,
+      category: cate ? cate : location.category,
+      permission: permission,
+      welcome_message: welcomeM ? welcomeM : location.welcomeM,
+      example: location.example,
+      tags: tagCont ? tagCont : location.tags,
+      ...(location.mediaType != "image" && {
+        gptConfigInfo: {
+          model_name: "gpt-3.5-turbo",
+          temperature: 0.7,
+          maximum_length: 200,
+          stop_sequence: "\\n",
+          top_p: 0.9,
+          frequency_penalty: 0.2,
+          presence_penalty: 0.6,
+        },
+      }),
+    });
     try {
       await axios
-        .put(`https://a-hi-prompt.com/prompt/my-page/${location.prompt_id}`, {
-          member_id: location.member_id,
-          title: title ? title : location.title,
-          description: desc ? desc : location.desc,
-          content: content ? content : location.content,
-          mediaType: location.mediaType,
-          category: cate ? cate : location.category,
-          permission: permission,
-          welcome_message: welcomeM ? welcomeM : location.welcomeM,
-          example: location.example,
-          tags: tagCont ? tagCont : location.tags,
-        })
+        .put(
+          `https://a-hi-prompt.com/prompt/my-page/${location.prompt_id}`,
+          {
+            member_id: location.member_id,
+            title: title ? title : location.title,
+            description: desc ? desc : location.desc,
+            content: content ? content : location.content,
+            mediaType: location.mediaType,
+            category: cate ? cate : location.category,
+            permission: permission,
+            welcome_message: welcomeM ? welcomeM : location.welcomeM,
+            example: location.example,
+            tags: tagCont ? tagCont : location.tags,
+            ...(location.mediaType != "image" && {
+              gptConfigInfo: {
+                model_name: "gpt-3.5-turbo",
+                temperature: 0.7,
+                maximum_length: 200,
+                stop_sequence: "\\n",
+                top_p: 0.9,
+                frequency_penalty: 0.2,
+                presence_penalty: 0.6,
+              },
+            }),
+          },
+          {
+            headers: {
+              Authorization: "Bearer " + storedJwtToken,
+            },
+          },
+        )
         .then((res) => {
           console.log(res);
           navigate(`/promptdetail/${location.prompt_id}`);

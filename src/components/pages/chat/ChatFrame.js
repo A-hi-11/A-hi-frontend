@@ -11,6 +11,7 @@ const Chat = ({ width, margin, fontSize, welcomeMsg }) => {
   const [result, setResult] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const messageEndRef = useRef();
+  const storedJwtToken = localStorage.getItem("jwtToken");
 
   const scrollToBottom = () => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -41,7 +42,10 @@ const Chat = ({ width, margin, fontSize, welcomeMsg }) => {
             prompt: msg,
           },
           {
-            headers: { "Content-Type": "application/json" },
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + storedJwtToken,
+            },
           },
         )
         .then((res) => {

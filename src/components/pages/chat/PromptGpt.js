@@ -5,6 +5,7 @@ import { useRef } from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Loading from "../../Loading";
+const storedJwtToken = localStorage.getItem("jwtToken");
 
 const PromptGpt = ({ width, margin, fontSize, welcomeMsg, prompt_id }) => {
   const [msg, setMsg] = useState("");
@@ -45,7 +46,10 @@ const PromptGpt = ({ width, margin, fontSize, welcomeMsg, prompt_id }) => {
             prompt: msg,
           },
           {
-            headers: { "Content-Type": "application/json" },
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + storedJwtToken,
+            },
           },
         )
         .then((res) => {
@@ -89,7 +93,11 @@ const PromptGpt = ({ width, margin, fontSize, welcomeMsg, prompt_id }) => {
         </div>
 
         <div className={styles.under} margin-top='200px'>
-          <form onSubmit={onSendMsg} style={{ width: width }}>
+          <form
+            onSubmit={onSendMsg}
+            onKeyDown={handleOnKeyPress}
+            style={{ width: width }}
+          >
             <textarea
               type='text'
               name='color'

@@ -137,11 +137,6 @@ catch(error) {
             </button>
             </Link>
 
-  
-            <div style={{marginTop:"30px",marginLeft:"50px"}}>
-              <img style={{display:"block", width:"300px",marginBottom:"8px"}} src="img/google_start.png" onClick={()=>{google()}}/>
-              <img style={{display:"block", width:"300px", height:"75px"}} src="img/naver_start.png" onClick={()=>{naver()}}/>
-            </div>
 
         </form>
       </div>

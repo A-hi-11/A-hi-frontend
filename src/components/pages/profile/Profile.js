@@ -14,12 +14,18 @@ import EditProfile from "./EditProfile";
 
 const Profile = (props) => {
   const storedMemberId = localStorage.getItem("memberId");
-  const storedNickname = localStorage.getItem("nickname");
-  const storedProfileImage = localStorage.getItem("profileImage");
   const storedJwtToken = localStorage.getItem("jwtToken");
+  const isOAuth = localStorage.getItem("isOAuth");
+
+  const [storedNickname, setStoredNickname] = useState(
+    localStorage.getItem("nickname"),
+  );
+  const [storedProfileImage, setStoredProfileImage] = useState(
+    localStorage.getItem("profileImage"),
+  );
 
   const [myPrompts, setMyprompts] = useState([]);
-  const [name, setName] = useState(storedNickname);
+
   const [isEditingPass, setEditingPass] = useState(false);
   const [nameEdit, setNameEdit] = useState("");
   const [likedPrompts, setLikedPrompts] = useState([]);
@@ -29,11 +35,8 @@ const Profile = (props) => {
   const [isLike, setLike] = useState(false);
   const [isEditingProfile, setEditingProfile] = useState(false);
   const [isHistory, setHistory] = useState(false);
-  const [profileImage, setProfileImage] = useState(storedProfileImage);
   const [isLoading, setIsLoading] = useState(false);
   const [refresh, setRefresh] = useState(1);
-
-  const user_id = "test@gmail.com";
 
   function onClickMine(e) {
     setLike(false);
@@ -43,11 +46,17 @@ const Profile = (props) => {
     document.getElementById("like").style.borderBottom = "none";
     document.getElementById("chatHistory").style.borderBottom = "none";
   }
+
   async function onClickLike(e) {
     try {
       await axios
-        .get(`https://a-hi-prompt.com/my-page/likes`)
+        .get(`https://a-hi-prompt.com/my-page/likes`, {
+          headers: {
+            Authorization: "Bearer " + storedJwtToken,
+          },
+        })
         .then((response) => {
+          console.log(response.data);
           setLikedPrompts(response.data);
           setLike(true);
           setHistory(false);
@@ -67,7 +76,11 @@ const Profile = (props) => {
   async function onClickHistory(e) {
     try {
       await axios
-        .get("https://a-hi-prompt.com/my-page/chat")
+        .get("https://a-hi-prompt.com/my-page/chat", {
+          headers: {
+            Authorization: "Bearer " + storedJwtToken,
+          },
+        })
         .then((response) => {
           setChatHistorys(response.data);
           console.log(chatHistorys);
@@ -84,10 +97,16 @@ const Profile = (props) => {
     }
   }
 
+  useEffect(() => {}, [storedNickname]);
+
   useEffect(() => {
     const getMyPrompts = async () => {
       return await axios
-        .get(`https://a-hi-prompt.com/prompt/my-page/${user_id}`)
+        .get(`https://a-hi-prompt.com/prompt/my-page`, {
+          headers: {
+            Authorization: "Bearer " + storedJwtToken,
+          },
+        })
         .then((response) => {
           setMyprompts(response.data);
         });
@@ -122,12 +141,16 @@ const Profile = (props) => {
           <span className='innerInfo'>
             <img
               className='profilePic'
-              src={profileImage}
+              src={storedProfileImage}
               width='100px'
               alt='my profile'
             />
             <span className='nameEmail'>
-              <h2>{name != undefined ? name : "프롬프트 제작소"}</h2>
+              <h2>
+                {storedNickname != undefined
+                  ? storedNickname
+                  : "프롬프트 제작소"}
+              </h2>
               <h4>{storedMemberId}</h4>
             </span>
           </span>
@@ -135,9 +158,11 @@ const Profile = (props) => {
             <button className='editBtn' onClick={toggleEditingProfile}>
               프로필 변경
             </button>
-            <button className='editBtn' onClick={toggleEditingPass}>
-              비밀번호 변경
-            </button>
+            {isOAuth ? null : (
+              <button className='editBtn' onClick={toggleEditingPass}>
+                비밀번호 변경
+              </button>
+            )}
           </div>
         </div>
         {isEditingPass ? (
@@ -158,11 +183,11 @@ const Profile = (props) => {
             <EditProfile
               setEditingProfile={setEditingProfile}
               setNameEdit={setNameEdit}
-              setName={setName}
+              setStoredNickname={setStoredNickname}
               nameEdit={nameEdit}
               userId={storedMemberId}
-              profileImage={profileImage}
-              setProfileImage={setProfileImage}
+              storedProfileImage={storedProfileImage}
+              setStoredProfileImage={setStoredProfileImage}
               setRefresh={setRefresh}
             />
           </>
@@ -188,24 +213,32 @@ const Profile = (props) => {
         <div className='prompts'>
           {isMine ? (
             <>
-              {myPrompts.map((myPrompt) => (
-                <Myprompt data={myPrompt} key={myPrompt.prompt_id} />
-              ))}
+              {myPrompts.length > 0
+                ? myPrompts.map((myPrompt) => (
+                    <Myprompt data={myPrompt} key={myPrompt.prompt_id} />
+                  ))
+                : null}
             </>
           ) : null}
           {isLike ? (
             <>
-              {likedPrompts.map((likedPrompt) => (
-                <LikedPrompt data={likedPrompt} key={likedPrompt.prompt_id} />
-              ))}
-              ;
+              {likedPrompts.length > 0
+                ? likedPrompts.map((likedPrompt) => (
+                    <LikedPrompt
+                      data={likedPrompt}
+                      key={likedPrompt.prompt_id}
+                    />
+                  ))
+                : null}
             </>
           ) : null}
           {isHistory ? (
             <>
-              {chatHistorys.map((chatHistory) => (
-                <ChatHistory data={chatHistory} />
-              ))}
+              {chatHistorys.length > 0
+                ? chatHistorys.map((chatHistory) => (
+                    <ChatHistory data={chatHistory} />
+                  ))
+                : null}
             </>
           ) : null}
         </div>
