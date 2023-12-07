@@ -54,7 +54,7 @@ export default function Chat() {
       setIsLoading(true);
       await axios
         .post(
-          "https://a-hi-prompt.com/gpt/24",
+          "https://a-hi-prompt.com/gpt/-1",
           {
             prompt: msg,
             gptConfigInfo: options,

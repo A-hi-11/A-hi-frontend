@@ -8,7 +8,6 @@ import Navigation from "../../Navigation";
 import "./Login.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import cookie from "react-cookies";
 
 const Login = () => {
   const [id, setId] = useState("");
@@ -18,9 +17,9 @@ const Login = () => {
   function login() {
     window.location.href = "https://a-hi-prompt.com/google-login";
   }
-  const naver = () => {
-    window.location.href = "http://api.a-hi-prompt.com/";
-  };
+  function naver() {
+    window.location.href = "https://a-hi-prompt.com/naver-login";
+  }
   const onClickLogin = async () => {
     try {
       const res = await axios.post("https://a-hi-prompt.com/user/signin", {
@@ -94,9 +93,7 @@ const Login = () => {
             <img
               style={{ display: "block", width: "300px", height: "75px" }}
               src='img/naver_login.png'
-              onClick={() => {
-                naver();
-              }}
+              onClick={naver}
             />
           </div>
         </form>

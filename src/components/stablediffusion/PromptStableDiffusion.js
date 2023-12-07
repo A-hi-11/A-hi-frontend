@@ -13,6 +13,7 @@ const PromptStableDiffusion = ({
   fontSize,
   content,
   welcome_msg,
+  prompt_id,
 }) => {
   const [msg, setMsg] = useState("");
   const [result, setResult] = useState();
@@ -45,7 +46,7 @@ const PromptStableDiffusion = ({
     const getStableImage = async () => {
       await axios
         .post(
-          "https://a-hi-prompt.com/diffusion",
+          `https://a-hi-prompt.com/diffusion/${prompt_id}`,
           {
             prompt: content,
             member_id: storedMemberId,
@@ -138,7 +139,11 @@ const PromptStableDiffusion = ({
         </div>
 
         <div className={styles.under} margin-top='200px'>
-          <form onSubmit={onSendMsg} style={{ width: width }}>
+          <form
+            onSubmit={onSendMsg}
+            onKeyDown={handleOnKeyPress}
+            style={{ width: width }}
+          >
             <textarea
               type='text'
               name='color'
