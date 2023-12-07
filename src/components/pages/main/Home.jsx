@@ -10,6 +10,7 @@ import "./Home.css";
 
 
 const Home = () => {
+  const [refresh, setRefresh] = useState(1);
   const location = useLocation();
   const navigate = useNavigate();
     const [category,setCategory] = useState(1);
@@ -34,7 +35,7 @@ const Home = () => {
   useEffect( ()=>{
     const getList = async () => {
       try {
-        const res = await (axios.get("https://a-hi-prompt.com/prompt/view?sort=category&search=",{
+        const res = await (axios.post("https://a-hi-prompt.com/prompt/view?sort=category&search=",{
           params : {"sort" : "time"},
         }, {
           headers: {
@@ -47,7 +48,8 @@ const Home = () => {
     }};
   getList()
   }
-  ,[])
+  
+  ,[refresh])
 
 
     useEffect(() => {
@@ -62,12 +64,16 @@ const Home = () => {
         const nickname = urlParams.get("nickname");
         const profileImage = urlParams.get("profile_image");
         const jwtToken = urlParams.get("jwt");
+        const isOAuth = urlParams.get("isOAuth")
   
         // 추출한 값들을 localStorage에 저장
         localStorage.setItem("memberId", memberId);
         localStorage.setItem("nickname", nickname);
         localStorage.setItem("profileImage", profileImage);
         localStorage.setItem("jwtToken", jwtToken);
+        localStorage.setItem("isOAuth", isOAuth);
+    setRefresh((refresh) => refresh * -1);
+
   
       }
     }, []);

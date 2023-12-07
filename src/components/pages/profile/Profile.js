@@ -14,8 +14,8 @@ import EditProfile from "./EditProfile";
 
 const Profile = (props) => {
   const storedMemberId = localStorage.getItem("memberId");
-
   const storedJwtToken = localStorage.getItem("jwtToken");
+  const isOAuth = localStorage.getItem("isOAuth");
 
   const [storedNickname, setStoredNickname] = useState(
     localStorage.getItem("nickname"),
@@ -56,6 +56,7 @@ const Profile = (props) => {
           },
         })
         .then((response) => {
+          console.log(response.data);
           setLikedPrompts(response.data);
           setLike(true);
           setHistory(false);
@@ -101,7 +102,7 @@ const Profile = (props) => {
   useEffect(() => {
     const getMyPrompts = async () => {
       return await axios
-        .get(`https://a-hi-prompt.com/prompt/my-page/${storedMemberId}`, {
+        .get(`https://a-hi-prompt.com/prompt/my-page`, {
           headers: {
             Authorization: "Bearer " + storedJwtToken,
           },
@@ -157,9 +158,11 @@ const Profile = (props) => {
             <button className='editBtn' onClick={toggleEditingProfile}>
               프로필 변경
             </button>
-            <button className='editBtn' onClick={toggleEditingPass}>
-              비밀번호 변경
-            </button>
+            {isOAuth ? null : (
+              <button className='editBtn' onClick={toggleEditingPass}>
+                비밀번호 변경
+              </button>
+            )}
           </div>
         </div>
         {isEditingPass ? (
@@ -210,23 +213,32 @@ const Profile = (props) => {
         <div className='prompts'>
           {isMine ? (
             <>
-              {myPrompts.map((myPrompt) => (
-                <Myprompt data={myPrompt} key={myPrompt.prompt_id} />
-              ))}
+              {myPrompts.length > 0
+                ? myPrompts.map((myPrompt) => (
+                    <Myprompt data={myPrompt} key={myPrompt.prompt_id} />
+                  ))
+                : null}
             </>
           ) : null}
           {isLike ? (
             <>
-              {likedPrompts.map((likedPrompt) => (
-                <LikedPrompt data={likedPrompt} key={likedPrompt.prompt_id} />
-              ))}
+              {likedPrompts.length > 0
+                ? likedPrompts.map((likedPrompt) => (
+                    <LikedPrompt
+                      data={likedPrompt}
+                      key={likedPrompt.prompt_id}
+                    />
+                  ))
+                : null}
             </>
           ) : null}
           {isHistory ? (
             <>
-              {chatHistorys.map((chatHistory) => (
-                <ChatHistory data={chatHistory} />
-              ))}
+              {chatHistorys.length > 0
+                ? chatHistorys.map((chatHistory) => (
+                    <ChatHistory data={chatHistory} />
+                  ))
+                : null}
             </>
           ) : null}
         </div>

@@ -93,7 +93,11 @@ const PromptGpt = ({ width, margin, fontSize, welcomeMsg, prompt_id }) => {
         </div>
 
         <div className={styles.under} margin-top='200px'>
-          <form onSubmit={onSendMsg} style={{ width: width }}>
+          <form
+            onSubmit={onSendMsg}
+            onKeyDown={handleOnKeyPress}
+            style={{ width: width }}
+          >
             <textarea
               type='text'
               name='color'

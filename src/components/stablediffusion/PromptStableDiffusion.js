@@ -13,6 +13,7 @@ const PromptStableDiffusion = ({
   fontSize,
   content,
   welcome_msg,
+  prompt_id,
 }) => {
   const [msg, setMsg] = useState("");
   const [result, setResult] = useState();
@@ -20,6 +21,7 @@ const PromptStableDiffusion = ({
   const messageEndRef = useRef();
   const [chatRoomId, setChatRoomId] = useState(-1);
   const storedJwtToken = localStorage.getItem("jwtToken");
+  const storedMemberId = localStorage.getItem("memberId");
 
   const scrollToBottom = () => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -44,10 +46,10 @@ const PromptStableDiffusion = ({
     const getStableImage = async () => {
       await axios
         .post(
-          "https://a-hi-prompt.com/diffusion",
+          `https://a-hi-prompt.com/diffusion/${prompt_id}`,
           {
             prompt: content,
-            member_id: "test@gmail.com",
+            member_id: storedMemberId,
             model_type: "image",
             chat_room_id: -1,
           },
@@ -137,7 +139,11 @@ const PromptStableDiffusion = ({
         </div>
 
         <div className={styles.under} margin-top='200px'>
-          <form onSubmit={onSendMsg} style={{ width: width }}>
+          <form
+            onSubmit={onSendMsg}
+            onKeyDown={handleOnKeyPress}
+            style={{ width: width }}
+          >
             <textarea
               type='text'
               name='color'

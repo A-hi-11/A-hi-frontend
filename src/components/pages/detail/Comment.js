@@ -17,9 +17,10 @@ const Comment = ({
 }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [sendComment, setSendComment] = useState("");
-  const [loading, setLoading] = useState(true); // axios에서 정보를 받아오고 랜더링하기 위한 상태 state
+  const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(false);
   const [editedComment, setEditedComment] = useState("");
+  const storedJwtToken = localStorage.getItem("jwtToken");
 
   const handleEditClick = () => {
     setEditing(true);
@@ -31,9 +32,13 @@ const Comment = ({
     console.log(comment_id);
     try {
       await axios
-        .put(`https://a-hi-prompt.com/prompt/comment/update/${comment_id}`, {
-          context: editedComment,
-        })
+        .put(
+          `https://a-hi-prompt.com/prompt/comment/update/${comment_id}`,
+          {
+            context: editedComment,
+          },
+          { headers: { Authorization: "Bearer " + storedJwtToken } },
+        )
         .then(() => {
           setEditing(false);
           console.log("Comment successfully edited.");
@@ -61,6 +66,7 @@ const Comment = ({
           {
             headers: {
               "Content-Type": "application/json",
+              Authorization: "Bearer " + storedJwtToken,
             },
           },
         )
@@ -81,7 +87,11 @@ const Comment = ({
     try {
       setLoading(true);
       axios
-        .get(`https://a-hi-prompt.com/prompt/comment/delete/${comment_id}`)
+        .get(`https://a-hi-prompt.com/prompt/comment/delete/${comment_id}`, {
+          headers: {
+            Authorization: "Bearer " + storedJwtToken,
+          },
+        })
         .then((res) => {
           setLoading(false);
           setModalIsOpen(false);

@@ -9,7 +9,6 @@ import axios from "axios";
 import Loading from "../../Loading";
 import Navigation from "../../Navigation";
 import "../../stablediffusion/PromptStableDiffusion.css";
-import { useLocation } from "react-router-dom";
 
 export default function ChatDetail() {
   const [msg, setMsg] = useState("");
@@ -20,16 +19,6 @@ export default function ChatDetail() {
   const { chat_room_id } = useParams();
   const navigate = useNavigate();
   const storedJwtToken = localStorage.getItem("jwtToken");
-
-  const [options, setOptions] = useState({
-    mode: "text-davinci-002",
-    model: "gpt-3.5-turbo",
-    temperature: 0.7,
-    stop_sequences: "",
-    top_p: 1,
-    frequency_penalty: 0,
-    presence_penalty: 0,
-  });
 
   const scrollToBottom = () => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });

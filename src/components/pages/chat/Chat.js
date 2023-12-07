@@ -14,6 +14,7 @@ export default function Chat() {
   const [showOptions, setShowOptions] = useState(false);
   const messageEndRef = useRef();
   const storedJwtToken = localStorage.getItem("jwtToken");
+  const loginStatus = localStorage.getItem("memberId");
 
   const [options, setOptions] = useState({
     model_name: "gpt-3.5-turbo",
@@ -53,7 +54,7 @@ export default function Chat() {
       setIsLoading(true);
       await axios
         .post(
-          "https://a-hi-prompt.com/gpt/24",
+          "https://a-hi-prompt.com/gpt/-1",
           {
             prompt: msg,
             gptConfigInfo: options,
@@ -83,6 +84,13 @@ export default function Chat() {
 
   const handleOptionChange = (e) => {
     const { name, value } = e.target;
+    if (value == "gpt-4" && !loginStatus) {
+      alert("GPT-4는 회원만 이용할 수 있습니다.");
+      setOptions((prevOptions) => ({
+        ...prevOptions,
+        model_name: "gpt-3.5 Turbo",
+      }));
+    }
     setOptions((prevOptions) => ({ ...prevOptions, [name]: value }));
   };
   const toggleOptions = () => {

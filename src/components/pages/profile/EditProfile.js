@@ -6,7 +6,6 @@ import axios from "axios"; // axios 라이브러리 추가
 function EditProfile({
   setStoredNickname,
   setEditingProfile,
-  userId,
   storedProfileImage,
   setStoredProfileImage,
   setRefresh,
@@ -14,6 +13,8 @@ function EditProfile({
   const [newImg, setNewImg] = useState("");
   const [nowImg, setNowImg] = useState(storedProfileImage);
   const [nameEdit, setNameEdit] = useState("");
+  const storedJwtToken = localStorage.getItem("storedJwtToken");
+
   useEffect(() => {
     setNewImg(newImg);
   }, [newImg]);
@@ -55,6 +56,7 @@ function EditProfile({
           .put("https://a-hi-prompt.com/my-page/image", formData, {
             headers: {
               "Content-Type": "multipart/form-data",
+              Authorization: "Bearer " + storedJwtToken,
             },
           })
           .then((res) => {
@@ -78,7 +80,10 @@ function EditProfile({
               new_nickname: nameEdit,
             },
             {
-              headers: { "Content-Type": "application/json" },
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + storedJwtToken,
+              },
             },
           )
           .then((res) => {

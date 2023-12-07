@@ -2,10 +2,10 @@
 // EditInfo.js는 비밀번호 변경 전용 입니다!
 
 import React, { useEffect, useState } from "react";
-import axios from "axios"; // axios 라이브러리 추가
+import axios from "axios";
 
-function EditInfo({ setEditingPass, userId, passEdit, setRefresh }) {
-  const [newPassword, setNewPassword] = useState(""); // 새로운 비밀번호 상태 추가
+function EditInfo({ setEditingPass, setRefresh }) {
+  const [newPassword, setNewPassword] = useState("");
   const storedJwtToken = localStorage.getItem("jwtToken");
 
   const onSubmit = async (event) => {
