@@ -14,12 +14,12 @@ const PromptStableDiffusion = ({
   content,
   welcome_msg,
   prompt_id,
+  chat_room_id,
 }) => {
   const [msg, setMsg] = useState("");
   const [result, setResult] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const messageEndRef = useRef();
-  const [chatRoomId, setChatRoomId] = useState(-1);
   const storedJwtToken = localStorage.getItem("jwtToken");
   const storedMemberId = localStorage.getItem("memberId");
 
@@ -40,53 +40,17 @@ const PromptStableDiffusion = ({
     }
   }, [result]);
 
-  useEffect(() => {
-    setIsLoading(true);
-    console.log(JSON.stringify({ prompt: msg }));
-    const getStableImage = async () => {
-      await axios
-        .post(
-          `https://a-hi-prompt.com/diffusion/${prompt_id}`,
-          {
-            prompt: content,
-            member_id: storedMemberId,
-            model_type: "image",
-            chat_room_id: -1,
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + storedJwtToken,
-            },
-          },
-        )
-        .then((res) => {
-          setResult(res.data.response);
-          setChatRoomId(res.chat_room_id);
-          console.log(result);
-          setIsLoading(false);
-        });
-    };
-
-    const fetchData = async () => {
-      await getStableImage();
-    };
-
-    fetchData();
-  }, []);
-
   const onSendMsg = async (event) => {
     event.preventDefault();
     try {
       setIsLoading(true);
       await axios
         .post(
-          "https://a-hi-prompt.com/diffusion",
+          `https://a-hi-prompt.com/diffusion/${prompt_id}`,
           {
             prompt: msg,
-            member_id: "test@gmail.com",
             model_type: "image",
-            chat_room_id: chatRoomId,
+            chat_room_id: -1,
           },
           {
             headers: {

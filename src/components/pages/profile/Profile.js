@@ -83,7 +83,7 @@ const Profile = (props) => {
         })
         .then((response) => {
           setChatHistorys(response.data);
-          console.log(chatHistorys);
+          console.log(response.data);
           setLike(false);
           setHistory(true);
           setMine(false);
@@ -213,7 +213,7 @@ const Profile = (props) => {
         <div className='prompts'>
           {isMine ? (
             <>
-              {myPrompts.length > 0
+              {myPrompts
                 ? myPrompts.map((myPrompt) => (
                     <Myprompt data={myPrompt} key={myPrompt.prompt_id} />
                   ))
@@ -222,7 +222,7 @@ const Profile = (props) => {
           ) : null}
           {isLike ? (
             <>
-              {likedPrompts.length > 0
+              {likedPrompts
                 ? likedPrompts.map((likedPrompt) => (
                     <LikedPrompt
                       data={likedPrompt}
@@ -234,7 +234,7 @@ const Profile = (props) => {
           ) : null}
           {isHistory ? (
             <>
-              {chatHistorys.length > 0
+              {chatHistorys
                 ? chatHistorys.map((chatHistory) => (
                     <ChatHistory data={chatHistory} />
                   ))
