@@ -8,7 +8,7 @@ import ImageData from "../../../assets/imageData";
 import { BiSolidConversation } from "react-icons/bi";
 import "./Home.css";
 import cookie from 'react-cookies';
-
+import moment from 'moment';
 
 const Home = () => {
     const navigate=useNavigate();
@@ -35,7 +35,7 @@ const Home = () => {
       try {
         const res = await (axios.post("https://a-hi-prompt.com/prompt/view",{
           "sort": sortKind,
-          "category": "", //수정필요
+          "category": category, //수정필요
           "search": search,
           "mediaType": mainKind
         }))
@@ -51,13 +51,13 @@ const Home = () => {
       try {
         const res = await (axios.post("https://a-hi-prompt.com/prompt/view",{
           "sort": sortKind,
-          "category": "", //수정필요
+          "category": category, //수정필요
           "search": search,
           "mediaType": mainKind
         }))
         setData(res.data)
         console.log(cookie.load("token"))
-        
+        console.log(res.data)
       }
     catch(error) {
       console.log(error);
@@ -138,23 +138,23 @@ const Home = () => {
                 <div className="contTitle">{board.title}</div>
                 <div className="contExplain">{board.description}</div>
                 <div className="contBottom">
-                <div className="contDate">{board.create_time}&nbsp;&nbsp;|</div>
+                <div className="contDate">{moment(board.create_time).format('YYYY-MM-DD HH:mm')}&nbsp;&nbsp;|</div>
                 <div className="contDate">&nbsp;&nbsp;♡{board.likes}&nbsp;&nbsp;|</div>
-                <div className="contDate">&nbsp;&nbsp;댓글{board.comment}</div>
+                <div className="contDate">&nbsp;&nbsp;댓글{board.comments}</div>
                 </div>
                 </div>
               </Link>
           
           )) : data&&data.map((board) => (
-            <Link to={`/promptdetail/${board.prompt_idd}`}>
+            <Link to={`/promptdetail/${board.prompt_id}`}>
             <div key={board.create_time} className="imageContContent">
-              {/*<img className="contImage" src={"img/"+`${board.url}`+".JPG"} alt="image"></img>*/}
+              <img className="contImage" src={board.image} alt="image"></img>
               <div className="contTitle">{board.title}</div>
               <div className="contExplain">{board.description}</div>
               <div className="contBottom">
-              <div className="contDate">{board.create_time}&nbsp;&nbsp;|</div>
+              <div className="contDate">{moment(board.create_time).format('YYYY-MM-DD HH:mm')}&nbsp;&nbsp;|</div>
               <div className="contDate">&nbsp;&nbsp;♡{board.likes}&nbsp;&nbsp;|</div>
-              <div className="contDate">&nbsp;&nbsp;댓글{board.comment}</div>
+              <div className="contDate">&nbsp;&nbsp;댓글{board.comments}</div>
               </div>
               </div>
             </Link>
