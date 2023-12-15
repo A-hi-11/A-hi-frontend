@@ -206,7 +206,7 @@ const PromptDetail = () => {
               <div style={{ display: "inline-flex", marginTop: "40px" }}>
                 <img
                   className='profilePic'
-                  src={process.env.PUBLIC_URL + "/img/profile_exm.png"}
+                  src={process.env.PUBLIC_URL + "/img/profile_exm2.jpg"}
                   style={{ width: "60px", height: "60px", margin: "0" }}
                 />
                 <p

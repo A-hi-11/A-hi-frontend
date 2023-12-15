@@ -61,7 +61,7 @@ const Login = () => {
           회원이 아니신가요?
         </Link>
         <p style={{ marginTop: "30px" }}>이메일로 로그인하기</p>
-        <form >
+        <form>
           <div className='inputForm'>
             <p>아이디</p>
             <input
@@ -70,9 +70,12 @@ const Login = () => {
               required
             ></input>
             <p>비밀번호</p>
+            <input
               type='password'
               onChange={(e) => setPw(e.target.value)}
-              onKeyDown={e=>{onClickLogin()}}
+              onKeyDown={(e) => {
+                onClickLogin();
+              }}
               required
             ></input>
           </div>

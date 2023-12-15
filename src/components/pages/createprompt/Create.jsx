@@ -247,11 +247,8 @@ const Create = () => {
        setIsLoading(true);
        const response = await axios.post(
         "https://a-hi-prompt.com/diffusion",
-
         {
           prompt: imageInput,
-          member_id:
-            storedMemberId !== null ? storedMemberId : "test@gmail.com",
           model_type: "image",
           chat_room_id: -1,
         },

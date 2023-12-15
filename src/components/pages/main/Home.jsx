@@ -99,10 +99,7 @@ const Home = () => {
       }
     }, []);
 
-      // 예시: 다른 페이지로 리다이렉트
-      // window.location.href = '/new-page';
-    }
-  }, []);
+
 
   return (
     <div>

@@ -306,47 +306,6 @@ const Create = () => {
             ""
           )}
           <br />
-          <button
-            type='button'
-            className='exmBtn'
-            onClick={() => {
-              if (exms.length < 2) {
-                setExms([...exms, exms.length + 1]);
-              }
-            }}
-          >
-            예시 생성
-          </button>
-          <div className='exmList'>
-            {exms.map((i) => {
-              return (
-                <div className='exm'>
-                  사용예시{i}
-                  <div
-                    className='view'
-                    onClick={() => {
-                      if (i == 1) {
-                        setExm1(true);
-                      } else {
-                        setExm2(true);
-                      }
-                    }}
-                  >
-                    상세보기
-                  </div>
-                  <div
-                    className='delete'
-                    onClick={() => {
-                      exms.pop();
-                      setExms([...exms]);
-                    }}
-                  >
-                    삭제
-                  </div>
-                </div>
-              );
-            })}
-          </div>
           {exm1 ? (
             <div
               className='exmChat'

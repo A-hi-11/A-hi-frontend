@@ -19,8 +19,6 @@ const PromptStableDiffusion = ({
   const [result, setResult] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const messageEndRef = useRef();
-  const storedJwtToken = localStorage.getItem("jwtToken");
-  const storedMemberId = localStorage.getItem("memberId");
   const [chatRoomId, setChatRoomId] = useState(-1);
   const storedJwtToken = localStorage.getItem("jwtToken");
   const storedMemberId = localStorage.getItem("memberId");
@@ -42,37 +40,39 @@ const PromptStableDiffusion = ({
     }
   }, [result]);
 
-  useEffect( () => {
-
-    const fetch
-    try {
-      setIsLoading(true);
-      await axios
-        .post(
-          `https://a-hi-prompt.com/diffusion/${prompt_id}`,
-          {
-            prompt: "",
-            model_type: "image",
-            chat_room_id: -1,
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + storedJwtToken,
+  useEffect(() => {
+    const fetchImage = async () => {
+      try {
+        setIsLoading(true);
+        await axios
+          .post(
+            `https://a-hi-prompt.com/diffusion/${prompt_id}`,
+            {
+              prompt: "",
+              model_type: "image",
+              chat_room_id: -1,
             },
-          },
-        )
-        .then((res) => {
-          setResult(res.data.response);
-          setChatRoomId(res.data.chat_room_id);
-          console.log(res.data);
-          setIsLoading(false);
-        });
-    } catch (error) {
-      // Consider implementing your own error handling logic here
-      console.error(error);
-      alert(error.message);
-    }
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + storedJwtToken,
+              },
+            },
+          )
+          .then((res) => {
+            setResult(res.data.response);
+            setChatRoomId(res.data.chat_room_id);
+            console.log(res.data);
+            setIsLoading(false);
+          });
+      } catch (error) {
+        // Consider implementing your own error handling logic here
+        console.error(error);
+        alert(error.message);
+      }
+    };
+
+    fetchImage();
   }, []);
 
   const onSendMsg = async (event) => {
@@ -156,7 +156,16 @@ const PromptStableDiffusion = ({
               value={msg}
               onChange={(e) => setMsg(e.target.value)}
             />
-            <input type='submit' value='생성' />
+            <input
+              type='submit'
+              style={{
+                marginLeft: "10px",
+                marginTop: "20px",
+                padding: "0px",
+                height: "60px",
+              }}
+              value='생성'
+            />
           </form>
         </div>
       </div>
