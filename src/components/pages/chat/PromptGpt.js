@@ -60,10 +60,6 @@ const PromptGpt = ({ width, margin, fontSize, welcomeMsg, prompt_id }) => {
 
           setIsLoading(false);
         });
-
-      // if (response.status !== 200) {
-      //   throw new Error(`Request failed with status ${response.status}`);
-      // }
     } catch (error) {
       // Consider implementing your own error handling logic here
       console.error(error);

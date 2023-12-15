@@ -14,7 +14,6 @@ const PromptStableDiffusion = ({
   content,
   welcome_msg,
   prompt_id,
-  chat_room_id,
 }) => {
   const [msg, setMsg] = useState("");
   const [result, setResult] = useState();
@@ -22,6 +21,7 @@ const PromptStableDiffusion = ({
   const messageEndRef = useRef();
   const storedJwtToken = localStorage.getItem("jwtToken");
   const storedMemberId = localStorage.getItem("memberId");
+  const [chatRoomId, setChatRoomId] = useState(-1);
 
   const scrollToBottom = () => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -40,15 +40,16 @@ const PromptStableDiffusion = ({
     }
   }, [result]);
 
-  const onSendMsg = async (event) => {
-    event.preventDefault();
+  useEffect( () => {
+
+    const fetch
     try {
       setIsLoading(true);
       await axios
         .post(
           `https://a-hi-prompt.com/diffusion/${prompt_id}`,
           {
-            prompt: msg,
+            prompt: "",
             model_type: "image",
             chat_room_id: -1,
           },
@@ -61,7 +62,45 @@ const PromptStableDiffusion = ({
         )
         .then((res) => {
           setResult(res.data.response);
+          setChatRoomId(res.data.chat_room_id);
+          console.log(res.data);
+          setIsLoading(false);
+        });
+    } catch (error) {
+      // Consider implementing your own error handling logic here
+      console.error(error);
+      alert(error.message);
+    }
+  }, []);
+
+  const onSendMsg = async (event) => {
+    event.preventDefault();
+    try {
+      const li = document.createElement("li");
+      li.className = styles.quest;
+      li.innerText = msg;
+      document.getElementById("msgList").appendChild(li);
+      scrollToBottom(messageEndRef);
+      setIsLoading(true);
+      await axios
+        .post(
+          `https://a-hi-prompt.com/diffusion/${prompt_id}`,
+          {
+            prompt: msg,
+            model_type: "image",
+            chat_room_id: chatRoomId,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + storedJwtToken,
+            },
+          },
+        )
+        .then((res) => {
+          setResult(res.data.response);
           console.log(result);
+          console.log(chatRoomId);
           setIsLoading(false);
         });
 
