@@ -20,6 +20,7 @@ const Login = () => {
   function naver() {
     window.location.href = "https://a-hi-prompt.com/naver-login";
   }
+
   const onClickLogin = async () => {
     try {
       const res = await axios.post("https://a-hi-prompt.com/user/signin", {
@@ -34,8 +35,8 @@ const Login = () => {
         localStorage.setItem("memberId", res.data.memberId);
         localStorage.setItem("nickname", res.data.nickname);
         localStorage.setItem("profileImage", res.data.profileImage);
-        localStorage.setItem("jwtToken", res.data.jwtToken);
-        console("memberId", res.data.memberId);
+        localStorage.setItem("jwtToken", res.data.jwt);
+        console.log("memberId", res.data.jwt);
         window.location.replace("/");
       }
     } catch (error) {
@@ -60,18 +61,18 @@ const Login = () => {
           회원이 아니신가요?
         </Link>
         <p style={{ marginTop: "30px" }}>이메일로 로그인하기</p>
-        <form>
+        <form >
           <div className='inputForm'>
             <p>아이디</p>
             <input
-              type='text'
+              type='email'
               onChange={(e) => setId(e.target.value)}
               required
             ></input>
             <p>비밀번호</p>
-            <input
-              type='text'
+              type='password'
               onChange={(e) => setPw(e.target.value)}
+              onKeyDown={e=>{onClickLogin()}}
               required
             ></input>
           </div>

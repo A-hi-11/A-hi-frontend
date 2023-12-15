@@ -35,6 +35,9 @@
     border-radius:5px 5px 5px 5px;
     border: solid 0.1px #04364A;
 }
+.namedisable{
+    display:none;
+}
 .contents{width: 600px;
     height: 300px;
     font-size: 15px;
@@ -82,6 +85,9 @@
     align-items: center;
     justify-content: center;
 }
+.exmdisable{
+  display:none;
+}
 .exm:hover .view{
     display:flex;
 }
@@ -114,7 +120,7 @@
 .view:hover{
     cursor:pointer;
     font-size:15px;
-    display:none;
+
     border:solid 1px black;
     border-radius : 5px 5px; 
     width:100%;
@@ -139,7 +145,7 @@
 .delete:hover{
     cursor:pointer;
     font-size:15px;
-    display:none;
+    
     border:solid 1px black;
     border-radius : 5px 5px; 
     width:100%;
@@ -157,14 +163,19 @@
     transform: translate(-50%, -50%);
 }
 .btn{
-    border:solid 1px #04364A;
+    display: inline-flex;
+    border:none;
     background-color:white;
     color:#04364A;
+    font-size:30px;
     width:35px;
     height:35px;
     border-radius: 5px 5px 5px 5px;
+    align-items:center;
+    justify-content: center;
 }
 .btn:hover{
+    display: inline-flex;
     background-color:#04364A;
     color:white;
 }
@@ -180,10 +191,273 @@
     background-color:#04364A;
     color:white;
 }
-.chat{
-    margin-left:-15vh;
+
+
+.submitform textarea {
+    padding:10px;
 }
 
-textarea {
-    padding:10px;
+/*chat 부분*/
+.main{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 5rem;
+}
+.title,
+.under input, .under .create_textarea{
+  font-size: 16px;
+  line-height: 24px;
+  color: #353740;
+}
+.title, .under{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 30px;
+  margin-top:-50px;
+}
+
+.title h3 {
+  font-size: 50px;
+  line-height: 40px;
+  font-weight: bold;
+  color: #04364A;
+  margin: 2px 0 40px;
+}
+
+.title h2 {
+  font-size: 20px;
+  line-height: 40px;
+  font-weight: bold;
+  color: #04364A;
+  margin: 16px 0 2px;
+}
+
+/* 입력창, 전송 버튼이 있는 하단 부분*/
+
+.under .create_form {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .under .create_textarea[type="text"] {
+    padding: 12px 16px;
+    width: 550px;
+    resize: none;
+    border: 1px solid #4997B0;
+    border-radius: 4px;
+    margin-bottom: 24px;
+    height: 80px;
+    outline: none;
+  }
+  .under ::placeholder {
+    color: #8e8ea0;
+    opacity: 1;
+  }
+  .under .create_input[type="submit"] {
+    height: 80px;
+    width: 80px;
+    border-radius: 160px;
+    color: #fff;
+    margin: 12px 10px 10px 40px;
+    background-color: #4997B0;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  
+  @keyframes typing {
+    from {
+      width: 0
+    }
+  }
+      
+  @keyframes blink {
+    50% {
+      border-color: transparent
+    }
+  }
+  
+  
+  .chatgptMenu{
+    
+    display: flex;
+    
+  
+  }
+  
+  .gptMenu select, .gptMenu button{
+    outline: none;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    width: 6rem;
+  }
+  
+  .chat_outer {
+    display:flex;
+  }
+  
+  
+  
+  /*답변이 나올곳*/
+  .create_result{
+    width: 800px;
+    height: 350px;
+    border-radius: 10px;
+    overflow: auto;
+    background-color:#bebec2;
+  }
+  
+  .create_result ul{
+    height: 300px;
+      margin: 0;
+      padding: 2rem; 
+  }
+  
+  .create_result li{
+    position: relative;
+    list-style-type: none;
+    width: max-content;
+    max-width: 70%;
+    min-height: 20px;
+    height: fit-content;
+    margin: 0 0 10px;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #4997B0;
+    color: #fff;
+      
+  }
+  .create_result li ::after{
+    content: "";
+      position: absolute;
+      top: 10px;
+      right: -10px;
+      width: 0;
+      height: 0;
+      border-bottom: 16px solid transparent;
+      border-left: 16px solid #3b82f6;
+  }
+  
+  .create_result .response{
+    margin-right: auto;
+    height: min-content;
+    max-width: 400px;
+    width: max-content;
+    min-width: 250px;
+    margin-top: 10px;
+  }
+  .create_result .quest{
+    margin-top: 20px;
+    margin-left: auto;
+    background-color: #10a37f;
+    max-width: 400px;
+    width: max-content;
+  }
+  
+  .list{
+    width: 200px;
+    padding: .8em .5em;
+    border: 1px solid #999;
+    font-family: inherit;
+    background: url('arrow.jpg') no-repeat 95% 50%;
+    border-radius: 0px;
+    -webkit-appearance: none;
+    -moz-appearance: n  one;
+    appearance: none;
+  }
+  
+  
+    
+    .aiSelect button:hover {
+      background-color: #2980b9;
+    }
+  
+  
+    .optionsContainer {
+      width: 200px;
+      height: 92%;
+      padding: 9px;
+      background-color: rgba(255, 255, 255, 0.8); /* 투명한 흰 배경 */
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+      transition: right 0.3s ease-in-out; /* 좌우 이동에 부드러운 트랜지션 적용 */
+      right:0;
+    }
+    
+    
+    
+    .optionItem {
+      font-size:11px;
+      margin-bottom: 0px;
+    }
+    
+    .optionsContainer label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    
+    .optionsContainer select,
+    .optionsContainer input,
+    .optionsContainer textarea {
+      width: 100%;
+      padding: 0px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 14px;
+      
+    }
+  
+  
+    .deactiveOptionBtn {
+      display: none;
+    }
+    .btndisable{
+      display:none;
+    }
+    .createResultBoxdisable{
+      display:none;
+    }
+    .createResultBox{
+      border:#04364A;
+      border-style: solid;
+       width: 300px;
+       height: 200px;
+       border-radius: 20px ;
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       background-size: cover;
+       
+   }
+   .stableDelete{
+    cursor:pointer;
+    font-size:30px;
+    display:none;
+    border:solid #04364A;
+    border-radius: 20px ; 
+    width:100%;
+    height:100%;
+    align-items: center;
+    justify-content: center;
+    color: #04364A;
+}
+    .createResultBox:hover{
+      display:block;
+      border:#04364A;
+      border-style: solid 0px;
+      width: 300px;
+      height: 200px;
+       border-radius: 20px ;
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       background-image:none !important;
+   }
+  
+.createResultBox:hover .stableDelete{
+  display:flex;
 }

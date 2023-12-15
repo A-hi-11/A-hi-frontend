@@ -86,7 +86,7 @@ Myprompt.propTypes = {
   create_time: PropTypes.string,
   update_time: PropTypes.string,
   description: PropTypes.string,
-  nickname: PropTypes.string,
+
 };
 
 export default Myprompt;
