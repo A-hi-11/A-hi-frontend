@@ -20,7 +20,7 @@ const Login = () => {
   function naver() {
     window.location.href = "https://a-hi-prompt.com/naver-login";
   }
-  
+
   const onClickLogin = async () => {
     try {
       const res = await axios.post("https://a-hi-prompt.com/user/signin", {
@@ -70,7 +70,6 @@ const Login = () => {
               required
             ></input>
             <p>비밀번호</p>
-            <input
               type='password'
               onChange={(e) => setPw(e.target.value)}
               onKeyDown={e=>{onClickLogin()}}

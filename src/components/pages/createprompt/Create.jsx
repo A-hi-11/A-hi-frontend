@@ -4,10 +4,12 @@ import axios from "axios";
 import {BASE_URL} from "../../../assets/Strings";
 import "./Create.css";
 import Navigation from "../../Navigation";
+import Chat from "../chat/Chat";
 import cookie from 'react-cookies';
 import Loading from "../../Loading";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 const Create = () => {
     const ref1=useRef();
 
@@ -22,7 +24,7 @@ const Create = () => {
     const [content,setContent]=useState("")
 
     const [cate,setCate]=useState("etc")
-    const [permission,setPermission]=useState(true)
+    const [permission,setPermission]=useState(true) // useState("yes") -> useState(true) 로 변경함.
     const [useWelcomeM,setUseWelcomeM]=useState("yes")
     const [welcomeM,setWelcomeM]=useState("")
     const [example,setExample]=useState("")
@@ -33,6 +35,7 @@ const Create = () => {
     const [tag5,setTag5]=useState("")
     const storedJwtToken = localStorage.getItem("jwtToken");
     const loginStatus = localStorage.getItem("memberId");
+
     const handleSubmit = async () => {
       setSendResult1([{
         "message": welcomeM!=""?welcomeM:"안녕하세요 ChatGPT 입니다.",

@@ -157,7 +157,7 @@ export default function ChatDetail() {
             {chatList.map((chat, chatIndex) =>
               chat.content != "" ? (
                 <>
-                  {chat.content.startsWith("http") ? (
+                  {chat.image == true ? (
                     <>
                       <img src={chat.content} className='quest' />
                     </>
