@@ -7,6 +7,7 @@ import Navigation from "../../Navigation";
 import "./Signup.css";
 import { Link } from "react-router-dom";
 import axios from 'axios';
+
 const Signup = () => {
   const [email,setEmail]=useState("");
   const [verifyCode,setVerifyCode]=useState("");

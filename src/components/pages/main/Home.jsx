@@ -46,7 +46,7 @@ const Home = () => {
         }))
         setData(res.data)
         console.log(cookie.load("token"))
-        
+        console.log(sortKind,category,search,mainKind)
       }
     catch(error) {
       console.log(error);
@@ -63,6 +63,7 @@ const Home = () => {
         setData(res.data)
         console.log(cookie.load("token"))
         console.log(res.data)
+        console.log(sortKind,category,search,mainKind)
       }
     catch(error) {
       console.log(error);
@@ -105,13 +106,13 @@ const Home = () => {
     <div>
       <Navigation />
       <ul className="mainKindForm">
-            <div className={"mainKind"+(mainKind=="text" ? "active" : "")} onClick={()=>{setMainKind("text");}}>chatGPT</div>
-            <div className={"mainKind"+(mainKind=="image" ? "active" : "")} onClick={()=>{setMainKind("image")}}>Image</div>
+            <div className={"mainKind"+(mainKind=="text" ? "active" : "")} onClick={()=>{setCategory("task");setMainKind("text");}}>chatGPT</div>
+            <div className={"mainKind"+(mainKind=="image" ? "active" : "")} onClick={()=>{setCategory("human");setMainKind("image")}}>Image</div>
             </ul>
       <div className="contContainer">
 
 
-        <div className="logo">
+        <div className="logo" style={{cursor:"pointer"}} onClick={()=>{setSortKind("time");setCategory("task");setSearch("");setMainKind("text");}}>
           <h2>안녕 AI</h2>
           <h3>에이-하이</h3>
       </div>
