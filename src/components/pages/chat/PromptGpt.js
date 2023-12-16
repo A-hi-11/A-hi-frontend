@@ -10,6 +10,7 @@ const storedJwtToken = localStorage.getItem("jwtToken");
 const PromptGpt = ({ width, margin, fontSize, welcomeMsg, prompt_id }) => {
   const [msg, setMsg] = useState("");
   const [result, setResult] = useState();
+
   const [isLoading, setIsLoading] = useState(false);
   const messageEndRef = useRef();
 
@@ -38,6 +39,7 @@ const PromptGpt = ({ width, margin, fontSize, welcomeMsg, prompt_id }) => {
       li.innerText = msg;
       document.getElementById("msgList").appendChild(li);
       scrollToBottom(messageEndRef);
+
       setIsLoading(true);
       await axios
         .post(
@@ -55,13 +57,9 @@ const PromptGpt = ({ width, margin, fontSize, welcomeMsg, prompt_id }) => {
         .then((res) => {
           setMsg("");
           setResult(res.data.answer);
-          console.log(result);
+
           setIsLoading(false);
         });
-
-      // if (response.status !== 200) {
-      //   throw new Error(`Request failed with status ${response.status}`);
-      // }
     } catch (error) {
       // Consider implementing your own error handling logic here
       console.error(error);
@@ -82,14 +80,13 @@ const PromptGpt = ({ width, margin, fontSize, welcomeMsg, prompt_id }) => {
           className={styles.result}
           style={{ width: width, fontSize: fontSize }}
         >
-          <ul id='msgList'>
+          <ul id='msgList' ref={messageEndRef}>
             <li className={styles.response}>{welcomeMsg}</li>
 
             {isLoading ? (
               <Loading color='fff' pos='-15px' rightPos='335px' />
             ) : null}
           </ul>
-          <div ref={messageEndRef}></div>
         </div>
 
         <div className={styles.under} margin-top='200px'>

@@ -19,9 +19,10 @@ const PromptStableDiffusion = ({
   const [result, setResult] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const messageEndRef = useRef();
-  const [chatRoomId, setChatRoomId] = useState(-1);
   const storedJwtToken = localStorage.getItem("jwtToken");
   const storedMemberId = localStorage.getItem("memberId");
+  const [chatRoomId, setChatRoomId] = useState(-1);
+
 
   const scrollToBottom = () => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -40,16 +41,16 @@ const PromptStableDiffusion = ({
     }
   }, [result]);
 
-  useEffect(() => {
-    setIsLoading(true);
-    console.log(JSON.stringify({ prompt: msg }));
-    const getStableImage = async () => {
+  useEffect( () => {
+
+    const fetch = async () => {
+    try {
+      setIsLoading(true);
       await axios
         .post(
           `https://a-hi-prompt.com/diffusion/${prompt_id}`,
           {
-            prompt: content,
-            member_id: storedMemberId,
+            prompt: "",
             model_type: "image",
             chat_room_id: -1,
           },
@@ -62,29 +63,32 @@ const PromptStableDiffusion = ({
         )
         .then((res) => {
           setResult(res.data.response);
-          setChatRoomId(res.chat_room_id);
-          console.log(result);
+          setChatRoomId(res.data.chat_room_id);
+          console.log(res.data);
           setIsLoading(false);
         });
-    };
-
-    const fetchData = async () => {
-      await getStableImage();
-    };
-
-    fetchData();
+    } catch (error) {
+      // Consider implementing your own error handling logic here
+      console.error(error);
+      alert(error.message);
+    }
+  }
   }, []);
 
   const onSendMsg = async (event) => {
     event.preventDefault();
     try {
+      const li = document.createElement("li");
+      li.className = styles.quest;
+      li.innerText = msg;
+      document.getElementById("msgList").appendChild(li);
+      scrollToBottom(messageEndRef);
       setIsLoading(true);
       await axios
         .post(
-          "https://a-hi-prompt.com/diffusion",
+          `https://a-hi-prompt.com/diffusion/${prompt_id}`,
           {
             prompt: msg,
-            member_id: "test@gmail.com",
             model_type: "image",
             chat_room_id: chatRoomId,
           },
@@ -98,6 +102,7 @@ const PromptStableDiffusion = ({
         .then((res) => {
           setResult(res.data.response);
           console.log(result);
+          console.log(chatRoomId);
           setIsLoading(false);
         });
 

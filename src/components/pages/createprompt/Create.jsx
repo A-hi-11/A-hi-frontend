@@ -24,7 +24,7 @@ const Create = () => {
     const [cate,setCate]=useState("etc")
     const [permission,setPermission]=useState(true)
     const [useWelcomeM,setUseWelcomeM]=useState("yes")
-    const [welcomeM,setWelcomeM]=useState("")
+    const [welcomeM,setWelcomeM]=useState("안녕하세요 ChatGPT 입니다.")
     const [example,setExample]=useState("")
     const [tag1,setTag1]=useState("")
     const [tag2,setTag2]=useState("")
@@ -319,11 +319,11 @@ const Create = () => {
             <h4 style={{margin:"10px"}}>프롬프트 설명</h4> <textarea onChange={e=>setDesc(e.target.value)} className="explain"  placeholder="프롬프트에 대한 설명을 적어주세요" required/><br/><br/><br/>
             <h4 style={{margin:"10px"}}>시작 메세지</h4>
             <ul className="kindForm">
-              <div className={"kind"+(useWelcomeM=="yes" ? "active" : "")} onClick={()=>{setUseWelcomeM("yes");}}>사용</div>
-              <div className={"kind"+(useWelcomeM=="no" ? "active" : "")} onClick={()=>{setUseWelcomeM("no")}}>사용 안함</div>
+              <div className={"kind"+(useWelcomeM=="yes" ? "active" : "")} onClick={()=>{setUseWelcomeM("yes");}}>사용자 지정</div>
+              <div className={"kind"+(useWelcomeM=="no" ? "active" : "")} onClick={()=>{setUseWelcomeM("no")}}>기본 메세지</div>
             </ul>
             {useWelcomeM=="yes"?<textarea onChange={e=>setWelcomeM(e.target.value)} className="explain"  placeholder="시작 메세지를 적어주세요" required/>
-              :""}
+              :"안녕하세요 ChatGPT 입니다."}
             <br/><br/><br/>
             <h4 style={{margin:"10px"}}>카테고리 </h4>
             <ul className="kindForm">
@@ -517,7 +517,7 @@ const Create = () => {
               <div className="delete" onClick={()=>{if (exms.length>1) {setSendResult1(sendResult2);setSendResult2([])} else {setSendResult1([])};exms.pop();setExms([...exms])}}>삭제</div>
               </div>
               <div className={"exm"+(exms.length>1&&kind=="text" ? "" : "disable")}>사용예시2
-              <div className="view" ref={ref1} onClick={()=>{setExm2(true)}}>상세보기</div>
+              <div className="view" ref={ref1} onClick={()=>{console.log(sendResult2);setExm2(true)}}>상세보기</div>
               <div className="delete" onClick={()=>{setSendResult2([]);exms.pop();setExms([...exms])}}>삭제</div>
                     </div>
 
@@ -532,6 +532,7 @@ const Create = () => {
       <div className="create_result">
         {isLoading ? <Loading color='white' pos='0px' rightPos='0px' /> : null}
         <ul id='msgList'>
+        <li className="response">안녕하세요 ChatGPT 입니다.</li>
           {sendResult1.map( (i)=>(
             <li className={i.question?"quest":"response"}>{i.message}</li>
           )
@@ -552,6 +553,7 @@ const Create = () => {
       <div className="create_result">
         {isLoading ? <Loading color='white' pos='0px' rightPos='0px' /> : null}
         <ul id='msgList'>
+        <li className="response">안녕하세요 ChatGPT 입니다.</li>
           {sendResult2.map( (i)=>(
             <li className={i.question?"quest":"response"}>{i.message}</li>
           )

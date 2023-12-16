@@ -27,7 +27,6 @@ const PromptDetail = () => {
   const [loading, setLoading] = useState(true); // axios에서 정보를 받아오고 랜더링하기 위한 상태 state
   const [error, setError] = useState(null); // 에러발생시 에러를 저장할 수 있는 state
   const [refresh, setRefresh] = useState(1);
-  const [chatList, setChatList] = useState([]);
 
   const navigate = useNavigate();
   const loginStatus = localStorage.getItem("memberId");
@@ -112,27 +111,6 @@ const PromptDetail = () => {
   }
 
   useEffect(() => {
-    const fetchChatList = async () => {
-      try {
-        setLoading(true);
-        await axios
-          .get(
-            `https://a-hi-prompt.com/my-page/chat/read/${detail.chat_room_id}`,
-            {
-              headers: {
-                Authorization: "Bearer " + storedJwtToken,
-              },
-            },
-          )
-          .then((response) => {
-            setChatList(response.data);
-            console.log(chatList);
-            setLoading(false);
-          });
-      } catch (error) {
-        console.error("Error fetching chat list:", error);
-      }
-    };
     const fetchPromptDetail = async () => {
       setLoading(true);
       const storedMemberId = localStorage.getItem("memberId");
@@ -163,7 +141,6 @@ const PromptDetail = () => {
       }
     };
 
-    fetchChatList();
     fetchPromptDetail();
   }, [refresh, navigate, prompt_id]);
 
@@ -239,7 +216,7 @@ const PromptDetail = () => {
                     marginLeft: "10px",
                   }}
                 >
-                  {detail.nickname}
+                  {detail.nickname ? detail.nickname : "프롬프트전문가"}
                 </p>
               </div>
               <p className='date'>
@@ -320,9 +297,9 @@ const PromptDetail = () => {
                     content={detail.content}
                     welcome_msg={detail.welcome_message}
                     prompt_id={detail.prompt_id}
+                    chat_room_id={detail.chat_room_id}
                   />
                 ) : (
-                  // mediaType이 "image"가 아닌 경우에 대한 컴포넌트 또는 렌더링
                   <PromptGpt
                     width='530px'
                     margin='10px'
@@ -359,9 +336,15 @@ const PromptDetail = () => {
                       filter: "blur(4px)", // 블러 처리 스타일을 추가
                     }}
                   >
-                    조회 권한이 없는 컨텐츠입니다.
+                    {detail.content}
                   </p>
-                  {loginStatus ? <LoginButton /> : null}
+                  {loginStatus ? (
+                    <p style={{ color: "#04364A", marginLeft: "32%" }}>
+                      조회 권한이 없습니다.
+                    </p>
+                  ) : (
+                    <LoginButton />
+                  )}
                 </>
               )}
             </>
