@@ -12,10 +12,10 @@ export default function Chat() {
   const [result, setResult] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
-  const messageEndRef = useRef();
   const storedJwtToken = localStorage.getItem("jwtToken");
   const loginStatus = localStorage.getItem("memberId");
-
+  const [chatId, setChatId] = useState(-1);
+  const messageEndRef = useRef();
   const [options, setOptions] = useState({
     model_name: "gpt-3.5-turbo",
     temperature: 0.7,
@@ -27,9 +27,9 @@ export default function Chat() {
   });
 
   console.log(options);
-  const scrollToBottom = () => {
-    messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  useEffect(() => {
+    messageEndRef.current.scrollIntoView({ behavior: "smooth" });
+  }, [result, msg]);
 
   useEffect(() => {
     if (result != undefined) {
@@ -37,7 +37,6 @@ export default function Chat() {
       li.className = styles.response;
       li.innerText = result;
       document.getElementById("msgList").appendChild(li);
-      scrollToBottom(messageEndRef);
       setMsg("");
     }
   }, [result]);
@@ -49,12 +48,11 @@ export default function Chat() {
     li.innerText = msg;
     const ul = document.getElementById("msgList");
     ul.appendChild(li);
-    scrollToBottom(messageEndRef);
     try {
       setIsLoading(true);
       await axios
         .post(
-          "https://a-hi-prompt.com/gpt/-1",
+          `https://a-hi-prompt.com/gpt/${chatId}`,
           {
             prompt: msg,
             gptConfigInfo: options,
@@ -68,6 +66,7 @@ export default function Chat() {
         )
         .then((res) => {
           setResult(res.data.answer);
+          setChatId(res.data.chat_room_id);
           setIsLoading(false);
         });
     } catch (error) {
@@ -226,8 +225,8 @@ export default function Chat() {
         {isLoading ? <Loading color='white' pos='0px' rightPos='0px' /> : null}
         <ul id='msgList'>
           <li className={styles.response}>안녕하세요 ChatGPT 입니다.</li>
+          <div ref={messageEndRef}></div>
         </ul>
-        <div ref={messageEndRef}></div>
       </div>
 
       <div className={styles.under}>

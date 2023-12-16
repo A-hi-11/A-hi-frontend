@@ -114,6 +114,7 @@ export default function ChatDetail() {
     } catch (error) {
       console.error(error);
       alert(error.message);
+      setIsLoading(false);
     }
   };
 

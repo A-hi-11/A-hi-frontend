@@ -35,6 +35,9 @@ const Create = () => {
     const [tag5,setTag5]=useState("")
     const storedJwtToken = localStorage.getItem("jwtToken");
     const loginStatus = localStorage.getItem("memberId");
+    const [gptChatId, setGptChatId] = useState(-1) 
+    const [imageChatId, setImageChatId] = useState(-1) 
+
 
     const handleSubmit = async () => {
       setSendResult1([{
@@ -118,10 +121,10 @@ const Create = () => {
     model_name: "gpt-3.5-turbo",
     temperature: 0.7,
     maximum_length: 200,
-    stop_sequence: "",
-    top_p: 1,
-    frequency_penalty: 0,
-    presence_penalty: 0,
+    stop_sequence: "\\n",
+    top_p: 0.9,
+    frequency_penalty: 0.2,
+    presence_penalty: 0.6,
   });
 
   console.log(options);
@@ -166,24 +169,31 @@ const Create = () => {
     ul.appendChild(li);
     scrollToBottom(messageEndRef);
     try {
+      console.log({
+        prompt: msg,
+        gptConfigInfo: options,
+      })
       setIsLoading(true);
       await axios
         .post(
-          "https://a-hi-prompt.com/gpt/-1",
+          `https://a-hi-prompt.com/gpt/${gptChatId}`,
           {
             prompt: msg,
-            gptConfigInfo: options,
+            gptConfigInfo:options
           },
           {
             headers: {
               "Content-Type": "application/json",
-              Authorization: "Bearer " + storedJwtToken
+              Authorization: "Bearer " + storedJwtToken,
             },
           },
         )
         .then((res) => {
           setResult(res.data.answer);
+         
+
           if (exms.length<1) {
+            if (gptChatId!=-1){
             setSendResult1([...sendResult1,{
               "message": msg,
               "question": true,
@@ -192,7 +202,13 @@ const Create = () => {
             "message": res.data.answer,
             "question": false,
             "chat_order": 0
-        }])
+        }])}else{
+          setSendResult1([...sendResult1,{
+          "message": res.data.answer,
+          "question": false,
+          "chat_order": 0
+      }])
+        }
           }
           else {
             setSendResult2([...sendResult2,{
@@ -205,11 +221,13 @@ const Create = () => {
               "chat_order": 1
           }])
           }
+          setGptChatId(res.data.chat_room_id);
           setIsLoading(false);
         });
     } catch (error) {
       console.error(error);
       alert(error.message);
+       setIsLoading(false);
     }};
 
     const handleOnKeyPress = (e) => {
@@ -250,7 +268,7 @@ const Create = () => {
         {
           prompt: imageInput,
           model_type: "image",
-          chat_room_id: -1,
+          chat_room_id: gptChatId,
         },
         {
           headers: {
@@ -295,6 +313,7 @@ const Create = () => {
        }
 
        setImageInput("");
+       setGptChatId(data.chat_room_id)
        setIsLoading(false);
      } catch (error) {
        // Consider implementing your own error handling logic here
@@ -480,7 +499,7 @@ const Create = () => {
           <input className="create_input"type='submit' value='전송' onClick={e=>{onSendMsg(e)}}/>
         </div>
         <br/>
-            <button type="button" className="exmBtn" onClick={()=>{console.log(sendResult1);if (exms.length<2) {setExms([...exms,exms.length+1])} else {alert("예시는 최대 2개까지 생성 가능합니다.")}; chatClear()}}>예시 생성</button>
+            <button type="button" className="exmBtn" onClick={()=>{console.log(sendResult1);if (exms.length<2) {setExms([...exms,exms.length+1]); } else {alert("예시는 최대 2개까지 생성 가능합니다.") }; setGptChatId(-1); chatClear()}}>예시 생성</button>
       </div></div> 
       : <div className='imagePromptContainer'>
       <div className='promptbox'>
@@ -494,7 +513,7 @@ const Create = () => {
           value={imageInput}
 
         ></textarea>
-        <button onClick={(e) => {if (stableExms.length<2) {console.log(stableExm1);generateImage(e);setStableExms([...stableExms,stableExms.length+1])} else {alert("예시는 최대 2개까지 생성 가능합니다.")}}} type='button' className='imageBtn'>
+        <button onClick={(e) => {if (stableExms.length<2) {console.log(stableExm1);generateImage(e);setStableExms([...stableExms,stableExms.length+1])} else {alert("예시는 최대 2개까지 생성 가능합니다.")} setGptChatId(-1);} } type='button' className='imageBtn'>
           생성하기{" "}
           <FontAwesomeIcon icon={faPaperPlane} style={{ color: "#04364a" }} />
         </button>
@@ -566,7 +585,7 @@ const Create = () => {
       </div>
     </div></div> : ""}
             <br/><br/>
-            <h4 style={{margin:"10px"}}>비회원 공개여부 </h4>
+            <h4 style={{margin:"10px"}}>프롬프트 내용 공개 여부</h4>
             <ul className="kindForm">
               <div className={"kind"+(permission==true ? "active" : "")} onClick={()=>{setPermission(true);}}>공개</div>
               <div className={"kind"+(permission==false ? "active" : "")} onClick={()=>{setPermission(false)}}>비공개</div>
