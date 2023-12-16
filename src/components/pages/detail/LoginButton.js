@@ -27,9 +27,6 @@ const StyledButton = styled.button`
 const LoginButton = () => {
   return (
     <Link to='/login'>
-      <p style={{ color: "#04364A", marginLeft: "32%" }}>
-        로그인 후 확인 가능합니다.
-      </p>
       <StyledButton>로그인</StyledButton>
     </Link>
   );

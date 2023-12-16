@@ -3,12 +3,10 @@ import {Link, useNavigate,useLocation} from "react-router-dom";
 import axios from "axios";
 import {BASE_URL} from "../../../assets/Strings";
 import Navigation from "../../Navigation";
-import Data from "../../../assets/data";
-import ImageData from "../../../assets/imageData";
-import { BiSolidConversation } from "react-icons/bi";
 import "./Home.css";
 import cookie from 'react-cookies';
 import moment from 'moment';
+import formatDateTime from '../../FormatDateTime';
 
 const Home = () => {
   const [refresh, setRefresh] = useState(1);
@@ -135,8 +133,7 @@ const Home = () => {
               <div className={"sortKindCont"+(sortKind=="likes" ? "active" : "")} onClick={()=>{setSortKind("likes")}}>인기순</div>
             </ul>
           </div>
-          <ul >
-          <div className="contList">
+          <ul className="contList" >
           
           {mainKind=="text" ? data&&data.map((board) => (
               
@@ -146,7 +143,7 @@ const Home = () => {
                 <div className="contTitle">{board.title}</div>
                 <div className="contExplain">{board.description}</div>
                 <div className="contBottom">
-                <div className="contDate">{moment(board.create_time).format('YYYY-MM-DD HH:mm')}&nbsp;&nbsp;|</div>
+                <div className="contDate">{formatDateTime(board.create_time)}&nbsp;&nbsp;|</div>
                 <div className="contDate">&nbsp;&nbsp;♡{board.likes}&nbsp;&nbsp;|</div>
                 <div className="contDate">&nbsp;&nbsp;댓글{board.comments}</div>
                 </div>
@@ -160,7 +157,7 @@ const Home = () => {
               <div className="contTitle">{board.title}</div>
               <div className="contExplain">{board.description}</div>
               <div className="contBottom">
-              <div className="contDate">{moment(board.create_time).format('YYYY-MM-DD HH:mm')}&nbsp;&nbsp;|</div>
+              <div className="contDate">{formatDateTime(board.create_time)}&nbsp;&nbsp;|</div>
               <div className="contDate">&nbsp;&nbsp;♡{board.likes}&nbsp;&nbsp;|</div>
               <div className="contDate">&nbsp;&nbsp;댓글{board.comments}</div>
               </div>
@@ -168,7 +165,6 @@ const Home = () => {
             </Link>
             ))}
             
-            </div>
         </ul>
       </div>
     </div>

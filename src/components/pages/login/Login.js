@@ -34,7 +34,7 @@ const Login = () => {
         // 추출한 값들을 localStorage에 저장
         localStorage.setItem("memberId", res.data.memberId);
         localStorage.setItem("nickname", res.data.nickname);
-        localStorage.setItem("profileImage", res.data.profileImage);
+        localStorage.setItem("profileImage", res.data.profileImg);
         localStorage.setItem("jwtToken", res.data.jwt);
         console.log("memberId", res.data.jwt);
         window.location.replace("/");

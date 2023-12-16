@@ -118,12 +118,16 @@ const PromptDetail = () => {
       try {
         axios
           .get(
-            `https://a-hi-prompt.com/prompt/view/info?prompt_id=${prompt_id}&member_id=${storedMemberId}`,
-            {
-              headers: {
-                Authorization: "Bearer " + storedJwtToken,
-              },
-            },
+            `https://a-hi-prompt.com/prompt/view/info?prompt_id=${prompt_id}&member_id=${
+              storedMemberId ? storedMemberId : ""
+            }`,
+            storedJwtToken
+              ? {
+                  headers: {
+                    Authorization: "Bearer " + storedJwtToken,
+                  },
+                }
+              : null,
           )
           .then((res) => {
             setLoading(false);
@@ -206,7 +210,7 @@ const PromptDetail = () => {
               <div style={{ display: "inline-flex", marginTop: "40px" }}>
                 <img
                   className='profilePic'
-                  src={process.env.PUBLIC_URL + "/img/profile_exm2.jpg"}
+                  src={process.env.PUBLIC_URL + "/img/base_profile.png"}
                   style={{ width: "60px", height: "60px", margin: "0" }}
                 />
                 <p
@@ -279,13 +283,13 @@ const PromptDetail = () => {
                     lineHeight: "28px",
                     wordBreak: "keep-all",
                     fontSize: "16px",
-                    filter: "blur(4px)",
                   }}
                 >
-                  프롬프트 이용하기 기능은 회원 전용입니다. 간편하게 가입하고
-                  에이하이의 회원 전용 기능을 이용하세요!
+                  프롬프트 이용하기 기능은 회원 전용입니다.
+                  <br />
+                  간편하게 가입하고 에이하이의 회원 전용 기능을 이용하세요!
                 </p>
-                {loginStatus ? <LoginButton /> : null}
+                {!loginStatus ? <LoginButton /> : null}
               </>
             ) : (
               <>
@@ -343,7 +347,12 @@ const PromptDetail = () => {
                       조회 권한이 없습니다.
                     </p>
                   ) : (
-                    <LoginButton />
+                    <>
+                      <p style={{ color: "#04364A", marginLeft: "32%" }}>
+                        로그인 후 확인 가능합니다.
+                      </p>
+                      <LoginButton />
+                    </>
                   )}
                 </>
               )}
@@ -363,15 +372,29 @@ const PromptDetail = () => {
                     style={{ width: "530px", fontSize: "14px" }}
                   >
                     <ul id='msgList' style={{ paddingLeft: "18px" }}>
-                      {chatGroup.map((chat, chatIndex) => (
-                        <li
-                          key={`${groupIndex}-${chatIndex}`}
-                          className={chat.question ? "response" : "quest"}
-                          style={{ maxWidth: "400px" }}
-                        >
-                          {chat.message}
-                        </li>
-                      ))}
+                      {chatGroup.map((chat, chatIndex) =>
+                        chat.question == "true" ? (
+                          <li
+                            key={`${groupIndex}-${chatIndex}`}
+                            className={chat.question ? "response" : "quest"}
+                            style={{ maxWidth: "400px" }}
+                          >
+                            {chat.message}
+                          </li>
+                        ) : detail.mediaType == "image" ? (
+                          <>
+                            <img src={chat.message} className='quest' />
+                          </>
+                        ) : (
+                          <li
+                            key={`${groupIndex}-${chatIndex}`}
+                            className={chat.question ? "response" : "quest"}
+                            style={{ maxWidth: "400px" }}
+                          >
+                            {chat.message}
+                          </li>
+                        ),
+                      )}
                     </ul>
                   </div>
                 </div>

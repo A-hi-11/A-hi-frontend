@@ -4,7 +4,7 @@ import React from "react";
 import Modal from "react-modal";
 import axios from "axios";
 import formatDateTime from "../../FormatDateTime";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./Comment.css";
 
 const Comment = ({
@@ -18,13 +18,15 @@ const Comment = ({
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [sendComment, setSendComment] = useState("");
   const [loading, setLoading] = useState(true);
-  const [editing, setEditing] = useState(false);
+  const [editing, setEditing] = useState(-1);
   const [editedComment, setEditedComment] = useState("");
   const storedJwtToken = localStorage.getItem("jwtToken");
 
-  const handleEditClick = () => {
-    setEditing(true);
+  const handleEditClick = (comment_id) => {
+    setEditing(comment_id);
   };
+
+  useEffect(() => {}, [editing]);
 
   const handleSaveClick = async (comment_id, e) => {
     e.preventDefault();
@@ -40,7 +42,7 @@ const Comment = ({
           { headers: { Authorization: "Bearer " + storedJwtToken } },
         )
         .then(() => {
-          setEditing(false);
+          setEditing(-1);
           console.log("Comment successfully edited.");
         });
     } catch {
@@ -111,18 +113,20 @@ const Comment = ({
       <h3 style={{ marginTop: "0px", fontWeight: "400", fontSize: "20px" }}>
         댓글 {comments.length}
       </h3>
-
-      <form className='commentInput'>
-        <textarea onChange={onChange}></textarea>
-        <button
-          onClick={(e) => {
-            onSendComment(prompt_id, e);
-          }}
-        >
-          등록
-        </button>
-      </form>
-
+      {storedJwtToken ? (
+        <>
+          <form className='commentInput'>
+            <textarea onChange={onChange}></textarea>
+            <button
+              onClick={(e) => {
+                onSendComment(prompt_id, e);
+              }}
+            >
+              등록
+            </button>
+          </form>
+        </>
+      ) : null}
       {comments.map((comment) => (
         <div
           style={{
@@ -150,7 +154,10 @@ const Comment = ({
             >
               {comment.permissioned ? (
                 <>
-                  <button className='commentEdit' onClick={handleEditClick}>
+                  <button
+                    className='commentEdit'
+                    onClick={() => handleEditClick(comment.comment_id)}
+                  >
                     수정
                   </button>
                   <button
@@ -191,7 +198,7 @@ const Comment = ({
               ) : null}
             </div>
           </div>
-          {editing ? (
+          {editing == comment.comment_id ? (
             <>
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <textarea

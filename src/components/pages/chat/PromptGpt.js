@@ -12,11 +12,7 @@ const PromptGpt = ({ width, margin, fontSize, welcomeMsg, prompt_id }) => {
   const [result, setResult] = useState();
 
   const [isLoading, setIsLoading] = useState(false);
-  const messageEndRef = useRef();
-
-  const scrollToBottom = () => {
-    messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  const messageListRef = useRef();
 
   useEffect(() => {
     console.log("result:" + result);
@@ -26,7 +22,6 @@ const PromptGpt = ({ width, margin, fontSize, welcomeMsg, prompt_id }) => {
       li.className = styles.res;
       li.innerText = result;
       document.getElementById("msgList").appendChild(li);
-      scrollToBottom(messageEndRef);
       setResult(undefined);
     }
   }, [result]);
@@ -38,7 +33,6 @@ const PromptGpt = ({ width, margin, fontSize, welcomeMsg, prompt_id }) => {
       li.className = styles.quest;
       li.innerText = msg;
       document.getElementById("msgList").appendChild(li);
-      scrollToBottom(messageEndRef);
 
       setIsLoading(true);
       await axios
@@ -80,7 +74,7 @@ const PromptGpt = ({ width, margin, fontSize, welcomeMsg, prompt_id }) => {
           className={styles.result}
           style={{ width: width, fontSize: fontSize }}
         >
-          <ul id='msgList' ref={messageEndRef}>
+          <ul id='msgList'>
             <li className={styles.response}>{welcomeMsg}</li>
 
             {isLoading ? (

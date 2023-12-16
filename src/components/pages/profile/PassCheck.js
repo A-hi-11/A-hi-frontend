@@ -6,12 +6,16 @@ import axios from "axios";
 const PassCheck = ({ setPassCheck }) => {
   const [inputPass, setInputPass] = useState("");
   const storedJwtToken = localStorage.getItem("jwtToken");
+  const storedMemberId = localStorage.getItem("memberId");
 
   const onPassCheck = async (e) => {
     try {
+      console.log({
+        cur_password: inputPass,
+      });
       await axios
-        .put(
-          "https://a-hi-prompt.com/my-page/password/check",
+        .get(
+          "https://a-hi-prompt.com/memberCheck",
           {
             cur_password: inputPass,
           },
@@ -24,9 +28,7 @@ const PassCheck = ({ setPassCheck }) => {
             document.getElementById("passError").innerText =
               "비밀번호를 입력해주세요.";
             document.getElementById("passError").style.display = "";
-          } else if (
-            tempPass == "비밀번호가 일치합니다! 회원정보 수정이 가능합니다."
-          ) {
+          } else if (tempPass == storedJwtToken + "님 안녕하세요") {
             setPassCheck(false);
           } else {
             document.getElementById("passError").innerText =
@@ -35,7 +37,6 @@ const PassCheck = ({ setPassCheck }) => {
           }
         });
     } catch (error) {
-      // Consider implementing your own error handling logic here
       console.error(error);
       alert(error.message);
     }
