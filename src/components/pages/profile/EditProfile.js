@@ -13,7 +13,7 @@ function EditProfile({
   const [newImg, setNewImg] = useState("");
   const [nowImg, setNowImg] = useState(storedProfileImage);
   const [nameEdit, setNameEdit] = useState("");
-  const storedJwtToken = localStorage.getItem("storedJwtToken");
+  const storedJwtToken = localStorage.getItem("jwtToken");
 
   useEffect(() => {
     setNewImg(newImg);
@@ -49,7 +49,8 @@ function EditProfile({
     if (newImg) {
       try {
         const formData = new FormData();
-        await formData.append("profileImage", newImg);
+        formData.append("profileImage", newImg);
+
         console.log(formData);
 
         await axios
