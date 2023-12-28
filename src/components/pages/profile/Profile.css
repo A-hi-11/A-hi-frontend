@@ -103,11 +103,11 @@ flex-shrink: 0;
     font-style: normal;
     font-weight: 400;
     cursor: pointer;
-    transition: background-color 0.3s; /* 변화를 부드럽게 만들기 위한 트랜지션 설정 */
+    transition: background-color 0.3s; 
   }
   
   .editBtn:hover {
-    background-color: #e0e0e0; /* 커서를 올렸을 때의 색상 */
+    background-color: #e0e0e0; 
   }
   
 
@@ -130,7 +130,6 @@ flex-shrink: 0;
 }
 
 @keyframes fadein {
-    /* 효과를 동작시간 동안 0 ~ 1까지 */
         from {
             opacity: 0;
         }
@@ -164,7 +163,7 @@ flex-shrink: 0;
     outline: none;
     border: none;
     cursor: pointer;
-    transition: background-color 0.3s; /* 변화를 부드럽게 만들기 위한 트랜지션 설정 */
+    transition: background-color 0.3s; 
 }
 
 .formBtn {
@@ -179,7 +178,7 @@ flex-shrink: 0;
     }
 
 .formBtn:hover {
-        background-color: #e0e0e0; /* 커서를 올렸을 때의 색상 */
+        background-color: #e0e0e0;
       }
 
 .content{

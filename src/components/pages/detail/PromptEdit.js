@@ -95,7 +95,7 @@ const Create = () => {
     <div>
       <Navigation />
       <div className='submitform'>
-        <form action='BASE_URL' method='POST' onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <br />
           <ul className='kindForm'>
             <div

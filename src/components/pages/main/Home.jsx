@@ -1,11 +1,8 @@
 import React,{useEffect, useState} from 'react';
 import {Link, useNavigate,useLocation} from "react-router-dom";
 import axios from "axios";
-import {BASE_URL} from "../../../assets/Strings";
 import Navigation from "../../Navigation";
 import "./Home.css";
-import cookie from 'react-cookies';
-import moment from 'moment';
 import formatDateTime from '../../FormatDateTime';
 
 const Home = () => {
@@ -22,13 +19,7 @@ const Home = () => {
   const storedJwtToken = localStorage.getItem("jwtToken")
     const [search,setSearch]=useState("")
 
-    /*const getBoardList = async () => {
-        const contents = await (await axios.get(BASE_URL)); // 2) 게시글 목록 데이터에 할당  
-        setBoardList(contents.output); // 3) boardList 변수에 할당
-      }
-    useEffect(() => {
-        getBoardList(); // 1) 게시글 목록 조회 함수 호출
-    }, []);*/
+
     const handleOnKeyPress = (e) => {
       if (e.key === "Enter") {
         reloadList();
@@ -69,7 +60,6 @@ const Home = () => {
 
 
     useEffect(() => {
-      // 현재 페이지의 쿼리 스트링을 가져옴
       const queryString = window.location.search;
   
       if (queryString !== '') {
@@ -82,7 +72,6 @@ const Home = () => {
         const jwtToken = urlParams.get("jwt");
         const isOAuth = urlParams.get("isOAuth")
   
-        // 추출한 값들을 localStorage에 저장
         localStorage.setItem("memberId", memberId);
         localStorage.setItem("nickname", nickname);
         localStorage.setItem("profileImage", profileImage);
@@ -136,7 +125,6 @@ const Home = () => {
               
               <Link to={`/promptdetail/${board.prompt_id}`}>
               <div key={board.create_time} className="contContent">
-              {/*<img className='mainProfilePic' src={"img/"+`${board.profile}`} width='1px' alt='my profile'/>}*/}
                 <div className="contTitle">{board.title}</div>
                 <div className="contExplain">{board.description}</div>
                 <div className="contBottom">

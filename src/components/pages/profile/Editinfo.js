@@ -1,7 +1,6 @@
 /** @format */
-// EditInfo.js는 비밀번호 변경 전용 입니다!
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
 function EditInfo({ setEditingPass, setRefresh }) {
@@ -11,11 +10,10 @@ function EditInfo({ setEditingPass, setRefresh }) {
   const onSubmit = async (event) => {
     event.preventDefault();
 
-    // 비밀번호 변경 API 호출
     if (newPassword) {
       try {
         await axios.put(
-          `http://localhost:8080/my-page/password/update`,
+          `https://a-hi-prompt.com/my-page/password/update`,
           {
             new_password: newPassword,
           },
@@ -31,7 +29,6 @@ function EditInfo({ setEditingPass, setRefresh }) {
       }
     }
 
-    // 상태 초기화
     setEditingPass(false);
 
     setNewPassword("");
@@ -41,7 +38,6 @@ function EditInfo({ setEditingPass, setRefresh }) {
 
   return (
     <div className='editInfo'>
-      {/* 폼 부분 */}
       <form onSubmit={onSubmit}>
         <span className='content' style={{ marginTop: "25%" }}>
           <p>비밀번호</p>

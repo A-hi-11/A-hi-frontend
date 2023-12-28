@@ -1,11 +1,7 @@
 import React,{useEffect, useState, useRef} from 'react';
-import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
-import {BASE_URL} from "../../../assets/Strings";
 import "./Create.css";
 import Navigation from "../../Navigation";
-import Chat from "../chat/Chat";
-import cookie from 'react-cookies';
 import Loading from "../../Loading";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -24,7 +20,7 @@ const Create = () => {
     const [content,setContent]=useState("")
 
     const [cate,setCate]=useState("etc")
-    const [permission,setPermission]=useState(true) // useState("yes") -> useState(true) 로 변경함.
+    const [permission,setPermission]=useState(true) 
     const [useWelcomeM,setUseWelcomeM]=useState("yes")
     const [welcomeM,setWelcomeM]=useState("안녕하세요 ChatGPT 입니다.")
     const [example,setExample]=useState("")
@@ -143,7 +139,6 @@ const Create = () => {
   }, [result]);
   const chatClear = () => {
     const msgList = document.getElementById("msgList");
-    // 모든 li 요소 삭제
     while (msgList.firstChild) {
       msgList.removeChild(msgList.firstChild);
     }
@@ -373,7 +368,6 @@ const Create = () => {
         <ul id='msgList'>
           <li className="response">안녕하세요 ChatGPT 입니다.</li>
         </ul>
-        <div ref={messageEndRef}></div>
       </div>
 
       
