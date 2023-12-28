@@ -37,47 +37,42 @@
   margin: 16px 0 2px;
 }
 
-/* 입력창, 전송 버튼이 있는 하단 부분*/
-
-/* 추가된 CSS */
 .under form {
   display: flex;
-  flex-direction: column; /* 수정: 세로로 배치하도록 변경 */
-  align-items: center; /* 추가: 가운데 정렬 */
+  flex-direction: column; 
+  align-items: center; 
 }
 
 /* 수정된 CSS */
 .under textarea[type="text"] {
   padding: 12px 16px;
-  width: 100%; /* 수정: 가로 전체 너비 사용 */
+  width: 100%;
   resize: none;
   border: 1px solid #4997B0;
   border-radius: 4px;
-  margin-bottom: 16px; /* 수정: 간격 조정 */
+  margin-bottom: 16px;
   height: 80px;
   outline: none;
 }
 
 .under input[type="submit"] {
-  height: 40px; /* 수정: 버튼 높이 줄임 */
-  width: 120px; /* 수정: 버튼 너비 설정 */
-  border-radius: 8px; /* 수정: 덜 둥글게 조정 */
+  height: 40px; 
+  width: 120px; 
+  border-radius: 8px; 
   color: #fff;
-  margin-top: 10px; /* 추가: 상단 여백 추가 */
+  margin-top: 10px; 
   background-color: #4997B0;
   border: none;
   text-align: center;
   cursor: pointer;
 }
 
-/* 추가된 미디어 쿼리 */
+
 @media (max-width: 600px) {
   .under input[type="submit"] {
-    width: 100%; /* 작은 화면에서 버튼을 가로 전체로 설정 */
+    width: 100%; 
   }
 }
-
-
 
 @keyframes typing {
   from {
@@ -107,21 +102,15 @@
 }
 
 
-
-
 /*답변이 나올곳*/
-
-
-
   .aiSelect button:hover {
     background-color: #2980b9;
   }
 
-  /* styles.module.css */
 
   .result {
-    display: flex; /* 부모 컨테이너를 flex로 설정 */
-    flex-direction: column; /* 자식 요소들을 세로로 배치 */
+    display: flex; 
+    flex-direction: column; 
     width: 100%;
     font-size: 16px;
   }
@@ -133,14 +122,14 @@
   }
   
   .response {
-    background-color: #10A37F; /* 메시지 배경 색상 */
+    background-color: #10A37F;
     width: 40%;
-    color: white; /* 텍스트 색상 */
-    padding: 10px; /* 내용 주변 간격 */
-    margin-bottom: 5px; /* 메시지 간의 간격 */
-    border-radius: 8px; /* 둥근 테두리 */
+    color: white; 
+    padding: 10px; 
+    margin-bottom: 5px;
+    border-radius: 8px;
     margin-left: 53%;
-    align-self: flex-end; /* 자기 자신을 오른쪽으로 정렬 */
+    align-self: flex-end; 
   }
   
   .response p {
@@ -164,9 +153,9 @@
 
 
 .quest {
-    width: 300px; /* 이미지의 최대 너비를 부모 요소에 맞춤 */
+    width: 300px; 
     border-radius: 8px;
-    align-self: flex-start; /* 'quest' 클래스에 대한 정렬을 왼쪽으로 설정 */
+    align-self: flex-start; 
     margin-bottom: 5px;
   }
   

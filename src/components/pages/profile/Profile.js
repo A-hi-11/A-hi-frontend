@@ -115,7 +115,7 @@ const Profile = (props) => {
     };
 
     fetchData();
-  }, [refresh]); // Added userId as a dependency
+  }, [refresh]);
   const toggleEditingPass = () => {
     setEditingPass((prev) => !prev);
     if (isEditingProfile == true) {
