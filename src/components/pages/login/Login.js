@@ -1,9 +1,6 @@
 /** @format */
-// Login과 Signup 페이지는 UI가 거의 동일합니다.
+
 import React, { useState, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
-import { useLocation, useNavigate } from "react-router-dom";
 import Navigation from "../../Navigation";
 import "./Login.css";
 import { Link } from "react-router-dom";
@@ -31,12 +28,10 @@ const Login = () => {
         res.data != "존재하지 않는 회원입니다. 로그인에 실패하였습니다." &&
         res.data != "비밀번호가 일치하지 않습니다. 로그인에 실패하였습니다."
       ) {
-        // 추출한 값들을 localStorage에 저장
         localStorage.setItem("memberId", res.data.memberId);
         localStorage.setItem("nickname", res.data.nickname);
         localStorage.setItem("profileImage", res.data.profileImg);
         localStorage.setItem("jwtToken", res.data.jwt);
-        console.log("memberId", res.data.jwt);
         window.location.replace("/");
       }
     } catch (error) {

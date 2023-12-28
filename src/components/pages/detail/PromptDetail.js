@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { useEffect } from "react";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navigation from "../../Navigation";
 import "./PromptDetail.css";
@@ -24,8 +24,8 @@ const PromptDetail = () => {
   const [isUse, setUse] = useState(true);
   const [isPrompt, setPrompt] = useState(false);
   const [isHowto, setHowto] = useState(false);
-  const [loading, setLoading] = useState(true); // axios에서 정보를 받아오고 랜더링하기 위한 상태 state
-  const [error, setError] = useState(null); // 에러발생시 에러를 저장할 수 있는 state
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [refresh, setRefresh] = useState(1);
 
   const navigate = useNavigate();
@@ -33,7 +33,6 @@ const PromptDetail = () => {
 
   const onClickEdit = () => {
     navigate("/prompt_edit", { state: { detail } });
-    console.log("Edit button clicked!");
   };
 
   const onClickDelete = async () => {
@@ -134,10 +133,8 @@ const PromptDetail = () => {
             if (res.data) {
               setDetail(res.data);
             } else {
-              // 데이터가 없을 경우 이전 페이지로 이동
               navigate(-1);
             }
-            console.log(res.data);
           });
       } catch (error) {
         setError(error);

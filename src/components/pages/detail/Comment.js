@@ -7,14 +7,7 @@ import formatDateTime from "../../FormatDateTime";
 import { useState, useEffect } from "react";
 import "./Comment.css";
 
-const Comment = ({
-  comments,
-  refresh,
-  setRefresh,
-  error,
-  setError,
-  prompt_id,
-}) => {
+const Comment = ({ comments, setRefresh, setError, prompt_id }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [sendComment, setSendComment] = useState("");
   const [loading, setLoading] = useState(true);
@@ -30,8 +23,6 @@ const Comment = ({
 
   const handleSaveClick = async (comment_id, e) => {
     e.preventDefault();
-    console.log(editedComment);
-    console.log(comment_id);
     try {
       await axios
         .put(
@@ -74,7 +65,6 @@ const Comment = ({
         )
         .then((res) => {
           if (res.data) {
-            console.log(res.data);
             setRefresh((refresh) => refresh * -1);
           }
         });
@@ -98,7 +88,6 @@ const Comment = ({
           setLoading(false);
           setModalIsOpen(false);
           if (res.data) {
-            console.log(res.data);
             setRefresh((refresh) => refresh * -1);
           }
         });

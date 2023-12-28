@@ -81,7 +81,7 @@
 }
 
 .likes .fa-heart:hover {
-  color: rgb(131, 34, 66); /* 호버 시 아이콘 색상 변경 */
+  color: rgb(131, 34, 66); 
 }
 
 .likes .fa-heart {
@@ -167,11 +167,11 @@ margin-left: 15px;
   font-style: normal;
   font-weight: 400;
   cursor: pointer;
-  transition: background-color 0.3s; /* 변화를 부드럽게 만들기 위한 트랜지션 설정 */
+  transition: background-color 0.3s;
 }
 
 .myBtn:hover {
-  background-color: #e0e0e0; /* 커서를 올렸을 때의 색상 */
+  background-color: #e0e0e0; 
 }
 
 

@@ -18,22 +18,20 @@
 }
 
 .title h3 {
-  font-size: 50px;
-  line-height: 40px;
-  font-weight: bold;
-  color: #04364A;
-  margin: 2px 0 40px;
-}
-
-.title h2 {
   font-size: 20px;
   line-height: 40px;
   font-weight: bold;
   color: #04364A;
-  margin: 16px 0 2px;
+  margin: 0px;
 }
 
-/* 입력창, 전송 버튼이 있는 하단 부분*/
+.title h2 {
+  font-size: 50px;
+  line-height: 40px;
+  font-weight: bold;
+  color: #04364A;
+  margin: 0px;
+}
 
 .under form {
   display: flex;

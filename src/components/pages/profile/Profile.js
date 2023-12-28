@@ -56,7 +56,6 @@ const Profile = (props) => {
           },
         })
         .then((response) => {
-          console.log(response.data);
           setLikedPrompts(response.data);
           setLike(true);
           setHistory(false);
@@ -83,7 +82,6 @@ const Profile = (props) => {
         })
         .then((response) => {
           setChatHistorys(response.data);
-          console.log(response.data);
           setLike(false);
           setHistory(true);
           setMine(false);
@@ -117,7 +115,7 @@ const Profile = (props) => {
     };
 
     fetchData();
-  }, [refresh]); // Added userId as a dependency
+  }, [refresh]);
   const toggleEditingPass = () => {
     setEditingPass((prev) => !prev);
     if (isEditingProfile == true) {

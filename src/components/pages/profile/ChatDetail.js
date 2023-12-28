@@ -47,7 +47,6 @@ export default function ChatDetail() {
           })
           .then((response) => {
             setChatList(response.data);
-            console.log(chatList);
             setIsLoading(false);
           });
       } catch (error) {
@@ -68,7 +67,6 @@ export default function ChatDetail() {
         })
         .then(() => {
           alert("채팅 내역이 삭제 되었습니다.");
-          console.log(" button clicked!");
           navigate(-1);
         });
     } catch {

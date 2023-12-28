@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { useEffect, useState } from "react";
-import axios from "axios"; // axios 라이브러리 추가
+import axios from "axios";
 
 function EditProfile({
   setStoredNickname,
@@ -29,7 +29,6 @@ function EditProfile({
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     setNewImg(selectedFile);
-    // 이미지 미리보기
     const reader = new FileReader();
 
     reader.onload = (event) => {
@@ -43,15 +42,12 @@ function EditProfile({
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    // 이미지 변경 API 호출
-    console.log(newImg);
+
     const urlParams = new URLSearchParams(window.location.search);
     if (newImg) {
       try {
         const formData = new FormData();
         formData.append("profileImage", newImg);
-
-        console.log(formData);
 
         await axios
           .put("https://a-hi-prompt.com/my-page/image", formData, {
@@ -71,7 +67,6 @@ function EditProfile({
       }
     }
 
-    // 닉네임 변경 API 호출
     if (nameEdit) {
       try {
         await axios
@@ -105,7 +100,6 @@ function EditProfile({
   return (
     <div className='editInfo'>
       <form onSubmit={onSubmit} id='editForm'>
-        {/* 이미지 업로드 부분 */}
         <div style={{ display: "inline-flex" }}>
           <img
             className='profilePic'

@@ -1,7 +1,6 @@
 /** @format */
 
-import { React, useParams } from "react";
-import PropTypes from "prop-types";
+import { React } from "react";
 import { Link } from "react-router-dom";
 import "./Myprompt.css";
 import "../../stablediffusion/PromptStableDiffusion.css";

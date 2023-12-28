@@ -15,7 +15,6 @@ function Myprompt(data, key) {
   const title = data.data.title;
   const description = data.data.description;
   const mediaType = data.data.mediaType;
-  const category = data.data.category;
   const create_time = data.data.create_time;
   const update_time = data.data.update_time;
   const likes = data.data.likes;
@@ -52,14 +51,20 @@ function Myprompt(data, key) {
                 : description}
             </p>
           )}
-          <h5 className='myPrompt__date' style={{ marginBottom: "0" }}>
+          <h4 className='myPrompt__date' style={{ marginBottom: "0" }}>
             등록: {nickname}
-          </h5>
+          </h4>
           <p
             className='myPrompt__date'
-            style={{ marginBottom: "0", fontSize: "13px" }}
+            style={{ marginTop: "30px", fontSize: "12px", lineHeight: "8px" }}
           >
             등록일: {formatDateTime(create_time)}
+          </p>
+          <p
+            className='myPrompt__date'
+            style={{ fontSize: "12px", lineHeight: "8px" }}
+          >
+            수정일: {formatDateTime(update_time)}
           </p>
 
           <p style={{ marginLeft: "7px", marginRight: "7px" }}>
@@ -86,7 +91,6 @@ Myprompt.propTypes = {
   create_time: PropTypes.string,
   update_time: PropTypes.string,
   description: PropTypes.string,
-
 };
 
 export default Myprompt;

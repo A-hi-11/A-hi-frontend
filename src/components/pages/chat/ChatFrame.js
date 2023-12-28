@@ -20,7 +20,6 @@ const Chat = ({ width, margin, fontSize, welcomeMsg }) => {
   useEffect(() => {
     console.log("result:" + result);
     if (result != undefined) {
-      // setResult(data.answer);
       const li = document.createElement("li");
       li.className = styles.response;
       li.innerText = result;
@@ -34,7 +33,6 @@ const Chat = ({ width, margin, fontSize, welcomeMsg }) => {
     event.preventDefault();
     try {
       setIsLoading(true);
-      console.log(JSON.stringify({ prompt: msg }));
       await axios
         .post(
           "https://a-hi-prompt.com/gpt",
@@ -50,15 +48,9 @@ const Chat = ({ width, margin, fontSize, welcomeMsg }) => {
         )
         .then((res) => {
           setResult(res.data.answer);
-          console.log(result);
           setIsLoading(false);
         });
-
-      // if (response.status !== 200) {
-      //   throw new Error(`Request failed with status ${response.status}`);
-      // }
     } catch (error) {
-      // Consider implementing your own error handling logic here
       console.error(error);
       alert(error.message);
     }
@@ -66,7 +58,7 @@ const Chat = ({ width, margin, fontSize, welcomeMsg }) => {
 
   const handleOnKeyPress = (e) => {
     if (e.key === "Enter") {
-      onSendMsg(e); // Enter 입력이 되면 클릭 이벤트 실행
+      onSendMsg(e);
     }
   };
 
@@ -88,7 +80,11 @@ const Chat = ({ width, margin, fontSize, welcomeMsg }) => {
         </div>
 
         <div className={styles.under} margin-top='200px'>
-          <form onSubmit={onSendMsg} style={{ width: width }}>
+          <form
+            onSubmit={onSendMsg}
+            style={{ width: width }}
+            onKeyDown={handleOnKeyPress}
+          >
             <textarea
               type='text'
               name='color'

@@ -1,20 +1,18 @@
 /** @format */
 
-import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../createprompt/Create.css";
 import Navigation from "../../Navigation";
 import Chat from "../chat/ChatFrame";
 const Create = () => {
   const location = useLocation().state.detail;
-  console.log(location);
   const [tags, setTags] = useState([]);
-  const [exms, setExms] = useState([]);
   const [kind, setKind] = useState({});
   const [exm1, setExm1] = useState(false);
   const [exm2, setExm2] = useState(false);
-  //post할 원소들
+
   const [title, setTitle] = useState(location.title);
   const [desc, setDesc] = useState(location.description);
   const [content, setContent] = useState(location.content);
@@ -23,7 +21,6 @@ const Create = () => {
   const [permission, setPermission] = useState(location.permission);
   const [useWelcomeM, setUseWelcomeM] = useState("yes");
   const [welcomeM, setWelcomeM] = useState(location.welcome_message);
-  const [example, setExample] = useState(location.example);
   const [tagCont, setTagCont] = useState(location.tags);
   const navigate = useNavigate();
   const storedJwtToken = localStorage.getItem("jwtToken");
@@ -87,7 +84,6 @@ const Create = () => {
           },
         )
         .then((res) => {
-          console.log(res);
           navigate(`/promptdetail/${location.prompt_id}`);
         });
     } catch (error) {
@@ -99,7 +95,7 @@ const Create = () => {
     <div>
       <Navigation />
       <div className='submitform'>
-        <form action='BASE_URL' method='POST' onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <br />
           <ul className='kindForm'>
             <div
@@ -251,7 +247,6 @@ const Create = () => {
                 let newArr = [...tagCont];
                 newArr[tags.length] = e.target.value;
                 setTagCont(newArr);
-                console.log(tagCont);
               }}
               placeholder='태그를 입력하세요(최대 5개)'
             />
@@ -276,7 +271,6 @@ const Create = () => {
                     let newArr = [...tagCont];
                     newArr[tags.length] = e.target.value;
                     setTagCont(newArr);
-                    console.log(tagCont);
                   }}
                   placeholder='태그를 입력하세요(최대 5개)'
                 />
