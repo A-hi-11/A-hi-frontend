@@ -56,7 +56,6 @@ const Profile = (props) => {
           },
         })
         .then((response) => {
-          console.log(response.data);
           setLikedPrompts(response.data);
           setLike(true);
           setHistory(false);
@@ -83,7 +82,6 @@ const Profile = (props) => {
         })
         .then((response) => {
           setChatHistorys(response.data);
-          console.log(response.data);
           setLike(false);
           setHistory(true);
           setMine(false);

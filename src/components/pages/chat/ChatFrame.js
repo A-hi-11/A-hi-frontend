@@ -34,7 +34,6 @@ const Chat = ({ width, margin, fontSize, welcomeMsg }) => {
     event.preventDefault();
     try {
       setIsLoading(true);
-      console.log(JSON.stringify({ prompt: msg }));
       await axios
         .post(
           "https://a-hi-prompt.com/gpt",
@@ -50,7 +49,6 @@ const Chat = ({ width, margin, fontSize, welcomeMsg }) => {
         )
         .then((res) => {
           setResult(res.data.answer);
-          console.log(result);
           setIsLoading(false);
         });
 

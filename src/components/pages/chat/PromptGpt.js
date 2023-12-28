@@ -14,7 +14,6 @@ const PromptGpt = ({ width, margin, fontSize, welcomeMsg, prompt_id }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    console.log("result:" + result);
     if (result != undefined) {
       const li = document.createElement("li");
       li.className = styles.res;

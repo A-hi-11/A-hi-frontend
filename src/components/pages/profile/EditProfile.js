@@ -43,15 +43,12 @@ function EditProfile({
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    // 이미지 변경 API 호출
-    console.log(newImg);
+
     const urlParams = new URLSearchParams(window.location.search);
     if (newImg) {
       try {
         const formData = new FormData();
         formData.append("profileImage", newImg);
-
-        console.log(formData);
 
         await axios
           .put("https://a-hi-prompt.com/my-page/image", formData, {

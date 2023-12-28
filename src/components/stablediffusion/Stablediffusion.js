@@ -22,11 +22,7 @@ export default function Stablediffusion() {
     event.preventDefault();
     try {
       setIsLoading(true);
-      console.log({
-        prompt: imageInput,
-        member_id: storedMemberId !== null ? storedMemberId : "test@gmail.com",
-        chat_room_id: -1,
-      });
+
       const response = await axios.post(
         "https://a-hi-prompt.com/diffusion",
 
@@ -55,11 +51,9 @@ export default function Stablediffusion() {
       }
 
       setResult(data);
-      console.log(result);
       setImageInput("");
       setIsLoading(false);
     } catch (error) {
-      // Consider implementing your own error handling logic here
       console.error(error);
       alert(error.message);
     }

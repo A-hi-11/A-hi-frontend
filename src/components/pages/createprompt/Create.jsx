@@ -88,7 +88,6 @@ const Create = () => {
     
   }
       try {
-        console.log(storedJwtToken)
         const res = await (axios.post("https://a-hi-prompt.com/prompt/create",kind=="text"?body:imgBody
         ,
         {
@@ -169,10 +168,7 @@ const Create = () => {
     ul.appendChild(li);
     scrollToBottom(messageEndRef);
     try {
-      console.log({
-        prompt: msg,
-        gptConfigInfo: options,
-      })
+    
       setIsLoading(true);
       await axios
         .post(

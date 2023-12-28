@@ -9,9 +9,6 @@ const PassCheck = ({ setPassCheck }) => {
 
   const onPassCheck = async (e) => {
     try {
-      console.log({
-        cur_password: inputPass,
-      });
       await axios
         .put(
           "https://a-hi-prompt.com/my-page/password/check",

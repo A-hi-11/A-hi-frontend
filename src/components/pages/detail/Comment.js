@@ -23,8 +23,6 @@ const Comment = ({ comments, setRefresh, setError, prompt_id }) => {
 
   const handleSaveClick = async (comment_id, e) => {
     e.preventDefault();
-    console.log(editedComment);
-    console.log(comment_id);
     try {
       await axios
         .put(
@@ -67,7 +65,6 @@ const Comment = ({ comments, setRefresh, setError, prompt_id }) => {
         )
         .then((res) => {
           if (res.data) {
-            console.log(res.data);
             setRefresh((refresh) => refresh * -1);
           }
         });
@@ -91,7 +88,6 @@ const Comment = ({ comments, setRefresh, setError, prompt_id }) => {
           setLoading(false);
           setModalIsOpen(false);
           if (res.data) {
-            console.log(res.data);
             setRefresh((refresh) => refresh * -1);
           }
         });

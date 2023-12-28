@@ -19,13 +19,10 @@ const PromptStableDiffusion = ({
   const [result, setResult] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const storedJwtToken = localStorage.getItem("jwtToken");
-  const storedMemberId = localStorage.getItem("memberId");
   const [chatRoomId, setChatRoomId] = useState(-1);
 
   useEffect(() => {
-    console.log("result:" + result);
     if (result != undefined) {
-      // setResult(data.answer);
       const img = document.createElement("img");
       img.className = "quest";
       img.src = result;
@@ -94,16 +91,9 @@ const PromptStableDiffusion = ({
         )
         .then((res) => {
           setResult(res.data.response);
-          console.log(result);
-          console.log(chatRoomId);
           setIsLoading(false);
         });
-
-      // if (response.status !== 200) {
-      //   throw new Error(`Request failed with status ${response.status}`);
-      // }
     } catch (error) {
-      // Consider implementing your own error handling logic here
       console.error(error);
       alert(error.message);
     }
@@ -111,7 +101,7 @@ const PromptStableDiffusion = ({
 
   const handleOnKeyPress = (e) => {
     if (e.key === "Enter") {
-      onSendMsg(e); // Enter 입력이 되면 클릭 이벤트 실행
+      onSendMsg(e);
     }
   };
 

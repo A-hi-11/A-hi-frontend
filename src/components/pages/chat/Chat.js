@@ -25,7 +25,6 @@ export default function Chat() {
     presence_penalty: 0,
   });
 
-  console.log(options);
   useEffect(() => {
     messageEndRef.current.scrollIntoView({ behavior: "smooth" });
   }, [result, msg]);

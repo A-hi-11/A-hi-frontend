@@ -43,8 +43,6 @@ const Home = () => {
           "mediaType": mainKind
         }))
         setData(res.data)
-        console.log(cookie.load("token"))
-        console.log(sortKind,category,search,mainKind)
       }
     catch(error) {
       console.log(error);
@@ -59,9 +57,7 @@ const Home = () => {
           "mediaType": mainKind
         }))
         setData(res.data)
-        console.log(cookie.load("token"))
-        console.log(res.data)
-        console.log(sortKind,category,search,mainKind)
+
       }
     catch(error) {
       console.log(error);
