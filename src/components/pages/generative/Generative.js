@@ -1,7 +1,6 @@
 /** @format */
 
 import { useState } from "react";
-import { BiSolidConversation } from "react-icons/bi";
 import Navigation from "../../Navigation";
 import Chat from "../chat/Chat";
 import styles from "../chat/Chat.module.css";

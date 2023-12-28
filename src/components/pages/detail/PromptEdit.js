@@ -1,7 +1,7 @@
 /** @format */
 
-import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../createprompt/Create.css";
 import Navigation from "../../Navigation";
@@ -10,7 +10,6 @@ const Create = () => {
   const location = useLocation().state.detail;
   console.log(location);
   const [tags, setTags] = useState([]);
-  const [exms, setExms] = useState([]);
   const [kind, setKind] = useState({});
   const [exm1, setExm1] = useState(false);
   const [exm2, setExm2] = useState(false);
@@ -23,7 +22,6 @@ const Create = () => {
   const [permission, setPermission] = useState(location.permission);
   const [useWelcomeM, setUseWelcomeM] = useState("yes");
   const [welcomeM, setWelcomeM] = useState(location.welcome_message);
-  const [example, setExample] = useState(location.example);
   const [tagCont, setTagCont] = useState(location.tags);
   const navigate = useNavigate();
   const storedJwtToken = localStorage.getItem("jwtToken");

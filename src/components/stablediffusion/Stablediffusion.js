@@ -73,6 +73,13 @@ export default function Stablediffusion() {
 
   return (
     <div className='imagePromptContainer'>
+      <img
+        src='logo.png'
+        width={"70px"}
+        style={{ margin: "0px", marginTop: "30px" }}
+      />
+      <h3>안녕 AI</h3>
+      <h2>에이-하이</h2>
       <div className='promptbox'>
         <p style={{ margin: "0" }}>프롬프트</p>
       </div>

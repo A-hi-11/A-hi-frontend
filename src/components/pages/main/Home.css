@@ -41,7 +41,7 @@
     justify-content: center;
 
     width:80vw;
-    height:10vh;
+    height:20vh;
     margin-top:0vh;
     margin-left : -6vw;
     margin-bottom:9vh;
@@ -59,7 +59,7 @@
     line-height: 40px;
     font-weight: bold;
     color: #04364A;
-    margin: 16px 0 20px;
+    margin: 10px 0 16px;
   }
 
 .search{

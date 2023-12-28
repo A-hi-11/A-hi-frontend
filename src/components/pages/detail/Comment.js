@@ -7,14 +7,7 @@ import formatDateTime from "../../FormatDateTime";
 import { useState, useEffect } from "react";
 import "./Comment.css";
 
-const Comment = ({
-  comments,
-  refresh,
-  setRefresh,
-  error,
-  setError,
-  prompt_id,
-}) => {
+const Comment = ({ comments, setRefresh, setError, prompt_id }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [sendComment, setSendComment] = useState("");
   const [loading, setLoading] = useState(true);

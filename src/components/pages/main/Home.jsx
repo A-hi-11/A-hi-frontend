@@ -109,8 +109,9 @@ const Home = () => {
             </ul>
       <div className="contContainer">
 
-
         <div className="logo" style={{cursor:"pointer"}} onClick={()=>{setSortKind("time");setCategory("task");setSearch("");setMainKind("text");}}>
+          
+      <img src='logo.png' width={"80px"} style={{margin:"0px"}}/>
           <h2>안녕 AI</h2>
           <h3>에이-하이</h3>
       </div>

@@ -12,12 +12,10 @@ const PromptGpt = ({ width, margin, fontSize, welcomeMsg, prompt_id }) => {
   const [result, setResult] = useState();
 
   const [isLoading, setIsLoading] = useState(false);
-  const messageListRef = useRef();
 
   useEffect(() => {
     console.log("result:" + result);
     if (result != undefined) {
-      // setResult(data.answer);
       const li = document.createElement("li");
       li.className = styles.res;
       li.innerText = result;
@@ -55,7 +53,6 @@ const PromptGpt = ({ width, margin, fontSize, welcomeMsg, prompt_id }) => {
           setIsLoading(false);
         });
     } catch (error) {
-      // Consider implementing your own error handling logic here
       console.error(error);
       alert(error.message);
     }

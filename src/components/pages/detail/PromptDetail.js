@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { useEffect } from "react";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navigation from "../../Navigation";
 import "./PromptDetail.css";
