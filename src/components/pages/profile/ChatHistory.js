@@ -2,10 +2,11 @@
 
 import { React } from "react";
 import { Link } from "react-router-dom";
-import "./Myprompt.css";
-import "../../stablediffusion/PromptStableDiffusion.css";
 
 import formatDateTime from "../../FormatDateTime";
+
+import "./Myprompt.css";
+import "../../stablediffusion/PromptStableDiffusion.css";
 
 function ChatHistory({ data, key }) {
   return (
@@ -33,7 +34,7 @@ function ChatHistory({ data, key }) {
             </p>
           </div>
           <h2>{data.chat_room_name}</h2>
-          {data.last_message !== null && data.model_type != "image" && (
+          {!data.last_message && data.model_type != "image" && (
             <p className='myPrompts_des'>{data.last_message.slice(0, 97)}...</p>
           )}
           <h5 className='myPrompt__date' style={{ marginBottom: "0" }}>

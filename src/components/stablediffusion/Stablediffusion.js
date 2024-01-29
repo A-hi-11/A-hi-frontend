@@ -7,7 +7,7 @@ import "./Stablediffusion.css";
 import axios from "axios";
 import Loading from "../Loading";
 
-export default function Stablediffusion() {
+const Stablediffusion = () => {
   const [result, setResult] = useState();
   const [imageInput, setImageInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -97,4 +97,6 @@ export default function Stablediffusion() {
       </div>
     </div>
   );
-}
+};
+
+export default Stablediffusion;

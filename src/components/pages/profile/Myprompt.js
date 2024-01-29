@@ -1,25 +1,29 @@
 /** @format */
 
-// 전체 리스트 페이지에서 재활용해도 될 듯함
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faComment } from "@fortawesome/free-solid-svg-icons";
-import "./Myprompt.css";
 import formatDateTime from "../../FormatDateTime";
+import "./Myprompt.css";
 
-function Myprompt(data, key) {
-  const prompt_id = data.data.prompt_id;
-  const nickname = data.data.nickname;
-  const title = data.data.title;
-  const description = data.data.description;
-  const mediaType = data.data.mediaType;
-  const create_time = data.data.create_time;
-  const update_time = data.data.update_time;
-  const likes = data.data.likes;
-  const comments = data.data.comments;
-
+function Myprompt(
+  {
+    data: {
+      prompt_id,
+      nickname,
+      title,
+      description,
+      mediaType,
+      create_time,
+      update_time,
+      likes,
+      comments,
+    },
+  },
+  key,
+) {
   return (
     <div className='myprompt'>
       <Link

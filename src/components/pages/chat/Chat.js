@@ -6,7 +6,7 @@ import { useRef } from "react";
 import axios from "axios";
 import Loading from "../../Loading";
 
-export default function Chat() {
+const Chat = () => {
   const [msg, setMsg] = useState("");
   const [result, setResult] = useState();
   const [isLoading, setIsLoading] = useState(false);
@@ -242,4 +242,6 @@ export default function Chat() {
       </div>
     </div>
   );
-}
+};
+
+export default Chat;

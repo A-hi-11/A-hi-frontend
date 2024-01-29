@@ -8,16 +8,19 @@ import { faHeart, faComment } from "@fortawesome/free-solid-svg-icons";
 import "./Myprompt.css";
 import formatDateTime from "../../FormatDateTime";
 
-function LikedPrompt(data, key) {
-  const prompt_id = data.data.prompt_id;
-  const nickname = data.data.nickname;
-  const title = data.data.title;
-  const description = data.data.description;
-  const mediaType = data.data.mediaType;
-  const create_time = data.data.create_time;
-  const update_time = data.data.update_time;
-  const likes = data.data.likes;
-  const comments = data.data.comments;
+function LikedPrompt({
+  data: {
+    prompt_id,
+    nickname,
+    title,
+    description,
+    mediaType,
+    create_time,
+    update_time,
+    likes,
+    comments,
+  },
+}) {
   return (
     <div className='myprompt'>
       <Link

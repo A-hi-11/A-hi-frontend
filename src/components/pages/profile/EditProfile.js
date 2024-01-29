@@ -3,13 +3,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-function EditProfile({
+const EditProfile = ({
   setStoredNickname,
   setEditingProfile,
   storedProfileImage,
   setStoredProfileImage,
   setRefresh,
-}) {
+}) => {
   const [newImg, setNewImg] = useState("");
   const [nowImg, setNowImg] = useState(storedProfileImage);
   const [nameEdit, setNameEdit] = useState("");
@@ -43,7 +43,6 @@ function EditProfile({
   const onSubmit = async (event) => {
     event.preventDefault();
 
-    const urlParams = new URLSearchParams(window.location.search);
     if (newImg) {
       try {
         const formData = new FormData();
@@ -92,7 +91,6 @@ function EditProfile({
       }
     }
 
-    // 상태 초기화
     setEditingProfile(false);
     setRefresh((refresh) => refresh * -1);
   };
@@ -141,6 +139,6 @@ function EditProfile({
       </form>
     </div>
   );
-}
+};
 
 export default EditProfile;
