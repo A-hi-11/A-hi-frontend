@@ -7,11 +7,11 @@
   border-radius: 1rem;
   border: 1px solid #04364A;
   background: #FFF;
-  overflow: hidden; /* 추가: 내용이 넘칠 경우를 대비하여 오버플로우를 감춤 */
+  overflow: hidden; 
 }
 
 .myprompt:hover {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 추가: 마우스 호버 시 그림자 효과 */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .myPrompts__data h2 {

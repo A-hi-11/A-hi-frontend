@@ -6,16 +6,12 @@ import axios from "axios";
 const PassCheck = ({ setPassCheck }) => {
   const [inputPass, setInputPass] = useState("");
   const storedJwtToken = localStorage.getItem("jwtToken");
-  const storedMemberId = localStorage.getItem("memberId");
 
   const onPassCheck = async (e) => {
     try {
-      console.log({
-        cur_password: inputPass,
-      });
       await axios
-        .get(
-          "https://a-hi-prompt.com/memberCheck",
+        .put(
+          "https://a-hi-prompt.com/my-page/password/check",
           {
             cur_password: inputPass,
           },

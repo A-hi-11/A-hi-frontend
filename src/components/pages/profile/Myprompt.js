@@ -1,26 +1,29 @@
 /** @format */
 
-// 전체 리스트 페이지에서 재활용해도 될 듯함
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faComment } from "@fortawesome/free-solid-svg-icons";
-import "./Myprompt.css";
 import formatDateTime from "../../FormatDateTime";
+import "./Myprompt.css";
 
-function Myprompt(data, key) {
-  const prompt_id = data.data.prompt_id;
-  const nickname = data.data.nickname;
-  const title = data.data.title;
-  const description = data.data.description;
-  const mediaType = data.data.mediaType;
-  const category = data.data.category;
-  const create_time = data.data.create_time;
-  const update_time = data.data.update_time;
-  const likes = data.data.likes;
-  const comments = data.data.comments;
-
+function Myprompt(
+  {
+    data: {
+      prompt_id,
+      nickname,
+      title,
+      description,
+      mediaType,
+      create_time,
+      update_time,
+      likes,
+      comments,
+    },
+  },
+  key,
+) {
   return (
     <div className='myprompt'>
       <Link
@@ -52,14 +55,20 @@ function Myprompt(data, key) {
                 : description}
             </p>
           )}
-          <h5 className='myPrompt__date' style={{ marginBottom: "0" }}>
+          <h4 className='myPrompt__date' style={{ marginBottom: "0" }}>
             등록: {nickname}
-          </h5>
+          </h4>
           <p
             className='myPrompt__date'
-            style={{ marginBottom: "0", fontSize: "13px" }}
+            style={{ marginTop: "30px", fontSize: "12px", lineHeight: "8px" }}
           >
             등록일: {formatDateTime(create_time)}
+          </p>
+          <p
+            className='myPrompt__date'
+            style={{ fontSize: "12px", lineHeight: "8px" }}
+          >
+            수정일: {formatDateTime(update_time)}
           </p>
 
           <p style={{ marginLeft: "7px", marginRight: "7px" }}>
@@ -86,7 +95,6 @@ Myprompt.propTypes = {
   create_time: PropTypes.string,
   update_time: PropTypes.string,
   description: PropTypes.string,
-
 };
 
 export default Myprompt;

@@ -1,11 +1,10 @@
 /** @format */
 
 import { useState } from "react";
-import { BiSolidConversation } from "react-icons/bi";
 import Navigation from "../../Navigation";
 import Chat from "../chat/Chat";
-import styles from "../chat/Chat.module.css";
 import Stablediffusion from "../../stablediffusion/Stablediffusion";
+import styles from "../chat/Chat.module.css";
 
 export default function Generative(props) {
   const [isChat, setIsChat] = useState(true);

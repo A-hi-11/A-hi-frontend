@@ -2,12 +2,11 @@
 
 import { useEffect, useState } from "react";
 import styles from "./Chat.module.css";
-import { BiSolidConversation } from "react-icons/bi";
 import { useRef } from "react";
 import axios from "axios";
 import Loading from "../../Loading";
 
-export default function Chat() {
+const Chat = () => {
   const [msg, setMsg] = useState("");
   const [result, setResult] = useState();
   const [isLoading, setIsLoading] = useState(false);
@@ -26,7 +25,6 @@ export default function Chat() {
     presence_penalty: 0,
   });
 
-  console.log(options);
   useEffect(() => {
     messageEndRef.current.scrollIntoView({ behavior: "smooth" });
   }, [result, msg]);
@@ -83,6 +81,7 @@ export default function Chat() {
 
   const handleOptionChange = (e) => {
     const { name, value } = e.target;
+    setOptions((prevOptions) => ({ ...prevOptions, [name]: value }));
     if (value == "gpt-4" && !loginStatus) {
       alert("GPT-4는 회원만 이용할 수 있습니다.");
       setOptions((prevOptions) => ({
@@ -90,7 +89,6 @@ export default function Chat() {
         model_name: "gpt-3.5 Turbo",
       }));
     }
-    setOptions((prevOptions) => ({ ...prevOptions, [name]: value }));
   };
   const toggleOptions = () => {
     setShowOptions((prevShowOptions) => !prevShowOptions);
@@ -108,9 +106,9 @@ export default function Chat() {
       style={{ marginLeft: "0", height: "max-content" }}
     >
       <div className={styles.title}>
-        <BiSolidConversation size='40px' color='#4997B0' />
-        <h2>안녕 AI</h2>
-        <h3>에이-하이</h3>
+        <img src='logo.png' width={"70px"} style={{ margin: "0px" }} />
+        <h3>안녕 AI</h3>
+        <h2>에이-하이</h2>
       </div>
       <div className={styles.gptMenu}>
         <button
@@ -244,4 +242,6 @@ export default function Chat() {
       </div>
     </div>
   );
-}
+};
+
+export default Chat;

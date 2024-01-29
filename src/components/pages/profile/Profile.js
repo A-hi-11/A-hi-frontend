@@ -2,15 +2,15 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Navigation from "../../Navigation";
+import Loading from "../../Loading";
+import PassCheck from "./PassCheck";
+import EditProfile from "./EditProfile";
+import EditInfo from "./Editinfo";
+import LikedPrompt from "./LikedPrompt";
 import Myprompt from "./Myprompt";
 import ChatHistory from "./ChatHistory";
-import EditInfo from "./Editinfo";
 import "./Profile.css";
-import Navigation from "../../Navigation";
-import PassCheck from "./PassCheck";
-import Loading from "../../Loading";
-import LikedPrompt from "./LikedPrompt";
-import EditProfile from "./EditProfile";
 
 const Profile = (props) => {
   const storedMemberId = localStorage.getItem("memberId");
@@ -25,7 +25,6 @@ const Profile = (props) => {
   );
 
   const [myPrompts, setMyprompts] = useState([]);
-
   const [isEditingPass, setEditingPass] = useState(false);
   const [nameEdit, setNameEdit] = useState("");
   const [likedPrompts, setLikedPrompts] = useState([]);
@@ -56,7 +55,6 @@ const Profile = (props) => {
           },
         })
         .then((response) => {
-          console.log(response.data);
           setLikedPrompts(response.data);
           setLike(true);
           setHistory(false);
@@ -83,7 +81,6 @@ const Profile = (props) => {
         })
         .then((response) => {
           setChatHistorys(response.data);
-          console.log(response.data);
           setLike(false);
           setHistory(true);
           setMine(false);
@@ -117,13 +114,14 @@ const Profile = (props) => {
     };
 
     fetchData();
-  }, [refresh]); // Added userId as a dependency
+  }, [refresh]);
   const toggleEditingPass = () => {
     setEditingPass((prev) => !prev);
     if (isEditingProfile == true) {
       setEditingProfile((prev) => !prev);
     }
   };
+
   const toggleEditingProfile = () => {
     setEditingProfile((prev) => !prev);
     if (isEditingPass == true) {
@@ -165,9 +163,9 @@ const Profile = (props) => {
             )}
           </div>
         </div>
-        {isEditingPass ? (
-          isPassCheck ? (
-            <PassCheck setPassCheck={setPassCheck} /> // 확인용 임시 부여 비밀번호
+        {isEditingPass &&
+          (isPassCheck ? (
+            <PassCheck setPassCheck={setPassCheck} />
           ) : (
             <>
               <EditInfo
@@ -176,22 +174,19 @@ const Profile = (props) => {
                 setRefresh={setRefresh}
               />
             </>
-          )
-        ) : null}
-        {isEditingProfile ? (
-          <>
-            <EditProfile
-              setEditingProfile={setEditingProfile}
-              setNameEdit={setNameEdit}
-              setStoredNickname={setStoredNickname}
-              nameEdit={nameEdit}
-              userId={storedMemberId}
-              storedProfileImage={storedProfileImage}
-              setStoredProfileImage={setStoredProfileImage}
-              setRefresh={setRefresh}
-            />
-          </>
-        ) : null}
+          ))}
+        {isEditingProfile && (
+          <EditProfile
+            setEditingProfile={setEditingProfile}
+            setNameEdit={setNameEdit}
+            setStoredNickname={setStoredNickname}
+            nameEdit={nameEdit}
+            userId={storedMemberId}
+            storedProfileImage={storedProfileImage}
+            setStoredProfileImage={setStoredProfileImage}
+            setRefresh={setRefresh}
+          />
+        )}
       </div>
       <div className='rightSide'>
         <span className='menu'>
@@ -211,36 +206,22 @@ const Profile = (props) => {
         </span>
 
         <div className='prompts'>
-          {isMine ? (
-            <>
-              {myPrompts
-                ? myPrompts.map((myPrompt) => (
-                    <Myprompt data={myPrompt} key={myPrompt.prompt_id} />
-                  ))
-                : null}
-            </>
-          ) : null}
-          {isLike ? (
-            <>
-              {likedPrompts
-                ? likedPrompts.map((likedPrompt) => (
-                    <LikedPrompt
-                      data={likedPrompt}
-                      key={likedPrompt.prompt_id}
-                    />
-                  ))
-                : null}
-            </>
-          ) : null}
-          {isHistory ? (
-            <>
-              {chatHistorys
-                ? chatHistorys.map((chatHistory) => (
-                    <ChatHistory data={chatHistory} />
-                  ))
-                : null}
-            </>
-          ) : null}
+          {isMine &&
+            myPrompts &&
+            myPrompts.map((myPrompt) => (
+              <Myprompt data={myPrompt} key={myPrompt.prompt_id} />
+            ))}
+
+          {isLike &&
+            likedPrompts &&
+            likedPrompts.map((likedPrompt) => (
+              <LikedPrompt data={likedPrompt} key={likedPrompt.prompt_id} />
+            ))}
+          {isHistory &&
+            chatHistorys &&
+            chatHistorys.map((chatHistory) => (
+              <ChatHistory data={chatHistory} />
+            ))}
         </div>
       </div>
     </div>

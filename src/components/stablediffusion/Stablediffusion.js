@@ -7,7 +7,7 @@ import "./Stablediffusion.css";
 import axios from "axios";
 import Loading from "../Loading";
 
-export default function Stablediffusion() {
+const Stablediffusion = () => {
   const [result, setResult] = useState();
   const [imageInput, setImageInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -22,11 +22,7 @@ export default function Stablediffusion() {
     event.preventDefault();
     try {
       setIsLoading(true);
-      console.log({
-        prompt: imageInput,
-        member_id: storedMemberId !== null ? storedMemberId : "test@gmail.com",
-        chat_room_id: -1,
-      });
+
       const response = await axios.post(
         "https://a-hi-prompt.com/diffusion",
 
@@ -55,11 +51,9 @@ export default function Stablediffusion() {
       }
 
       setResult(data);
-      console.log(result);
       setImageInput("");
       setIsLoading(false);
     } catch (error) {
-      // Consider implementing your own error handling logic here
       console.error(error);
       alert(error.message);
     }
@@ -73,6 +67,13 @@ export default function Stablediffusion() {
 
   return (
     <div className='imagePromptContainer'>
+      <img
+        src='logo.png'
+        width={"70px"}
+        style={{ margin: "0px", marginTop: "30px" }}
+      />
+      <h3>안녕 AI</h3>
+      <h2>에이-하이</h2>
       <div className='promptbox'>
         <p style={{ margin: "0" }}>프롬프트</p>
       </div>
@@ -96,4 +97,6 @@ export default function Stablediffusion() {
       </div>
     </div>
   );
-}
+};
+
+export default Stablediffusion;
