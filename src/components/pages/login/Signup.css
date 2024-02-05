@@ -82,3 +82,57 @@
   margin-top: 20px;
   margin-bottom: 50px;
 }
+
+@media screen and (max-width: 768px) {
+    .Signup h2 {
+        margin-top: 8vh;
+        font-size: 3.5vh;
+    }
+
+    .Signup h1 {
+        margin-bottom: 5vh;
+        font-size: 2vh;
+    }
+
+    .Signup .link {
+        font-size: 3vh;
+    }
+
+    .Signup p {
+        font-size: 2vh;
+        
+    }
+
+    .Signup input {
+        height: 4vh;
+        width: 100%;
+        
+    }
+
+    .Signup button {
+        width: 4rem;
+        height: 2rem;
+        font-size: 1.5vh;
+        
+    }
+    .Signup button:disabled {
+        width: 4rem;
+        height: 2rem;
+        font-size: 1.5vh;
+    }
+    .Signup .inputForm {
+        grid-template-columns: 1fr;
+        width: 80%;
+        margin-bottom: 20px;
+    }
+
+    .Signup .this {
+        left: 0;
+        right: 0;
+        margin-left: -20%;
+    }
+    .cont {
+        display: block !important;
+        margin-left:-4px !important;
+    }
+}

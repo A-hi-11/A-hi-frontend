@@ -1,3 +1,4 @@
+
 .navContainer{
     width: 8.625rem;
     height: 100%;
@@ -35,4 +36,13 @@
     text-decoration-line: none;
     transition: transform 0.3s ease;
 
+  }
+  @media(max-width:768px) {
+    .navContainer {
+      width: 20vw;
+      
+    }
+    .navContainer a {
+      font-size:5vw;
+    }
   }

@@ -10,6 +10,7 @@ import axios from "axios";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
+  const [isValidEmail, setIsValidEmail] = useState(true);
   const [verifyCode, setVerifyCode] = useState("");
   const [sendBtnDisabled, setSendBtnDisabled] = useState(false);
   const [verifyBtnDisabled, setVerifyBtnDisabled] = useState(true);
@@ -24,6 +25,10 @@ const Signup = () => {
     if (s.length === 1) s = `0${s}`;
     return `${m}:${s}`;
   };
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  useEffect(() => {
+    setIsValidEmail(emailRegex.test(email));
+  }, [email]);
 
   useEffect(() => {
     if (time > 0) {
@@ -73,23 +78,7 @@ const Signup = () => {
   const onClickCont = (e) => {
     if (submitBtnDisabled == true) e.preventDefault();
   };
-  const google = async () => {
-    try {
-      await axios.get("/auth/kakao", {
-        headers: {
-          "Access-Code":
-            "L8ZHluIb_u5XKuEHa3GrJQMBxeJuWZ5cnRUb5TgYtXFcnLkcdYoGsuI1AXwKKiWRAAABi-alyAbOkqTnJF629A",
-        },
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const naver = () => {
-    axios.get("/auth/naver", {
-      headers: { "Access-Code": "O1HrSzrucATjL7qh05" },
-    });
-  };
+ 
   return (
     <div className='Signup'>
       <Navigation />
@@ -110,7 +99,7 @@ const Signup = () => {
         <p style={{ marginTop: "30px" }}>이메일로 가입하기</p>
         <form>
           <div className='inputForm'>
-            <div style={{ display: "flex", marginLeft: "-70px" }}>
+            <div className="cont" style={{ display: "flex", marginLeft: "-70px" }}>
               <p style={{ width: "150px" }}>이메일 주소</p>
               <input
                 type='text'
@@ -123,14 +112,21 @@ const Signup = () => {
                 disabled={sendBtnDisabled}
                 style={{ margin: "3px" }}
                 onClick={() => {
-                  OnClickSend();
+
+                  if (isValidEmail) {
+                    OnClickSend();
+                  }
+                  else {
+                    alert("올바른 이메일 형식이 아닙니다.")
+
+                  }
                 }}
               >
                 {timeFormat(time)}
               </button>
             </div>
             <br />
-            <div style={{ display: "flex", marginLeft: "-70px" }}>
+            <div className="cont" style={{ display: "flex", marginLeft: "-70px" }}>
               <p style={{ width: "150px" }}>인증 코드</p>
               <input
                 type='text'

@@ -91,15 +91,16 @@ const Home = () => {
       <ul className="mainKindForm">
             <div className={"mainKind"+(mainKind=="text" ? "active" : "")} onClick={()=>{setCategory("task");setMainKind("text");}}>chatGPT</div>
             <div className={"mainKind"+(mainKind=="image" ? "active" : "")} onClick={()=>{setCategory("human");setMainKind("image")}}>Image</div>
-            </ul>
+      </ul>
+            
       <div className="contContainer">
-
+      <div className="share" >공유</div>
         <div className="logo" style={{cursor:"pointer"}} onClick={()=>{setSortKind("time");setCategory("task");setSearch("");setMainKind("text");}}>
           
-      <img src='logo.png' width={"80px"} style={{margin:"0px"}}/>
-          <h2>안녕 AI</h2>
-          <h3>에이-하이</h3>
-      </div>
+            <img src='logo.png' width={"80px"} style={{margin:"0px"}}/>
+            <h2>안녕 AI</h2>
+            <h3>에이-하이</h3>
+        </div>
       <input className="search" onChange={e=>{setSearch(e.target.value)}} onKeyDown={handleOnKeyPress} placeholder="원하는 프롬프트를 검색하세요." />
         <div>
           <ul className="mainCategory">

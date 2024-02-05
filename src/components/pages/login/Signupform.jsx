@@ -101,7 +101,7 @@ catch(error) {
  return (
   
     <div>
-    <Navigation />
+
     <div className="outer">
    <div className="outerCont">
      <h3 >Sign Up</h3>
@@ -109,10 +109,8 @@ catch(error) {
         <div className="form-el">
          <label htmlFor="email">Email</label> <br />
          <input id="email" name="email" value={email} disabled={true} />
-        
        </div>
-       <br/>
-
+        <p></p>
        <div className="form-el">
          <label htmlFor="nickName">Nick Name</label> <br />
          <input id="nickName" name="nickName" value={nickName} onChange={onChangeNickName} />
