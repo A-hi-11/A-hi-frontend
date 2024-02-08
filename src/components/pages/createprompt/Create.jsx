@@ -84,7 +84,7 @@ const Create = () => {
     
   }
       try {
-        const res = await (axios.post("https://a-hi-prompt.com/prompt/create",kind=="text"?body:imgBody
+        const res = await (axios.post("http://api.a-hi.kro.kr:8080/prompt/create",kind=="text"?body:imgBody
         ,
         {
           headers : {
@@ -162,7 +162,7 @@ const Create = () => {
       setIsLoading(true);
       await axios
         .post(
-          `https://a-hi-prompt.com/gpt/${gptChatId}`,
+          `http://api.a-hi.kro.kr:8080/gpt/${gptChatId}`,
           {
             prompt: msg,
             gptConfigInfo:options
@@ -250,7 +250,7 @@ const Create = () => {
      try {
        setIsLoading(true);
        const response = await axios.post(
-        "https://a-hi-prompt.com/diffusion",
+        "http://api.a-hi.kro.kr:8080/diffusion",
         {
           prompt: imageInput,
           model_type: "image",

@@ -31,7 +31,7 @@ const Home = () => {
     };
     const reloadList = async () => {
       try {
-        const res = await (axios.post("https://a-hi-prompt.com/prompt/view",{
+        const res = await (axios.post("http://api.a-hi.kro.kr:8080/prompt/view",{
           "sort": sortKind,
           "category": category, //수정필요
           "search": search,
@@ -45,7 +45,7 @@ const Home = () => {
   useEffect( ()=>{
     const getList = async () => {
       try {
-        const res = await (axios.post("https://a-hi-prompt.com/prompt/view",{
+        const res = await (axios.post("http://api.a-hi.kro.kr:8080/prompt/view",{
           "sort": sortKind,
           "category": category, //수정필요
           "search": search,

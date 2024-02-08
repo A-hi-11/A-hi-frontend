@@ -46,12 +46,13 @@ const Signup = () => {
   const OnClickSend = async () => {
     //"@"형식 검증 먼저 하기
     // axios로 email 값 보내서 인증 코드 발송시키기
+
     setSendBtnDisabled(true);
     setVerifyBtnDisabled(false);
     setExpireTime(new Date().getTime() + 180000);
     setTime(179);
     try {
-      const res = await axios.post("https://a-hi-prompt.com/user/mail", {
+      const res = await axios.post("http://api.a-hi.kro.kr:8080/user/mail", {
         email,
       });
     } catch (error) {
@@ -64,7 +65,7 @@ const Signup = () => {
     //백엔드에서 일치한다고 답이 오면 계속하기 버튼 활성화
     //인증 된 경우
     try {
-      const res = await axios.post("https://a-hi-prompt.com/user/mail/check", {
+      const res = await axios.post("http://api.a-hi.kro.kr:8080/user/mail/check", {
         email: email,
         code: verifyCode,
       });

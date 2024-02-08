@@ -358,21 +358,21 @@ input {
  
     }
     .mainCategoryCont{
-        width:5vh;
+        width:4vh;
         margin:0.3vw;
         padding:0.5vw;
-        font-size : 1.8vh;
-        height:5vh;
+        font-size : 1.4vh;
+        height:4vh;
         display:flex;
         align-items: center;
     justify-content: center;
     }
     .mainCategoryContactive{
-        width:5vh;
+        width:4vh;
         margin:0.3vw;
         padding:0.5vw;
-        font-size : 1.8vh;
-        height:5vh;
+        font-size : 1.4vh;
+        height:4vh;
         display:flex;
         align-items: center;
     justify-content: center;
@@ -400,5 +400,33 @@ input {
             align-items: center;
         justify-content: center;
     }
-    
+    .contTitle{
+        font-size:2.3vh;
+        margin-top:-1vh;
+        margin-left:-1vh;
+    }
+    .contExplain{
+        font-size:1.8vh;
+        margin-bottom:-2vh;
+        margin-left:-1vh;
+    }
+    .contDate{
+        font-size:0.975vh;
+        margin-left:-1vh;
+    }
+    .contContent{
+        display:inline-block;
+        width:12vh;
+        height:8vh;
+        padding:8px;
+    }
+    .contContent:hover{
+        display:inline-block;
+        width:12vh;
+        height:8vh;
+        padding:8px;
+    }
+    .contList{
+        margin-left:1vh;
+    }
 }

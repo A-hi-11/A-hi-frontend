@@ -12,15 +12,15 @@ const Login = () => {
   const expires = new Date();
   expires.setMinutes(expires.getMinutes() + 180);
   function login() {
-    window.location.href = "https://a-hi-prompt.com/google-login";
+    window.location.href = "http://api.a-hi.kro.kr:8080/google-login";
   }
   function naver() {
-    window.location.href = "https://a-hi-prompt.com/naver-login";
+    window.location.href = "http://api.a-hi.kro.kr:8080/naver-login";
   }
 
   const onClickLogin = async () => {
     try {
-      const res = await axios.post("https://a-hi-prompt.com/user/signin", {
+      const res = await axios.post("http://api.a-hi.kro.kr:8080/user/signin", {
         userId: id,
         userPassword: pw,
       });
