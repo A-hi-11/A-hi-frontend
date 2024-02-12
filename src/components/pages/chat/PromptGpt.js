@@ -34,7 +34,7 @@ const PromptGpt = ({ width, margin, fontSize, welcomeMsg, prompt_id }) => {
       setIsLoading(true);
       await axios
         .post(
-          `https://a-hi-prompt.com/gpt/use/${prompt_id}`,
+          `/gpt/use/${prompt_id}`,
           {
             prompt: msg,
           },

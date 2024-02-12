@@ -40,7 +40,7 @@ export default function ChatDetail() {
       try {
         setIsLoading(true);
         await axios
-          .get(`https://a-hi-prompt.com/my-page/chat/read/${chat_room_id}`, {
+          .get(`/my-page/chat/read/${chat_room_id}`, {
             headers: {
               Authorization: "Bearer " + storedJwtToken,
             },
@@ -60,7 +60,7 @@ export default function ChatDetail() {
   const onClickDelete = async () => {
     try {
       await axios
-        .delete(`https://a-hi-prompt.com/my-page/chat/${chat_room_id}`, {
+        .delete(`/my-page/chat/${chat_room_id}`, {
           headers: {
             Authorization: "Bearer " + storedJwtToken,
           },
@@ -85,7 +85,7 @@ export default function ChatDetail() {
       setIsLoading(true);
       await axios
         .post(
-          `https://a-hi-prompt.com/gpt/${chat_room_id}`,
+          `/gpt/${chat_room_id}`,
           {
             prompt: msg,
             gptConfigInfo: {

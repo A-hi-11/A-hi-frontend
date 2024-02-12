@@ -83,7 +83,7 @@ const Signupform = () => {
 
  const onClickSignup = async () => {
   try {
-    const res = await (axios.post("https://a-hi-prompt.com/user/signup",{
+    const res = await (axios.post("/user/signup",{
         "member_id": email,
         "password": password,
         "nickname": nickName,

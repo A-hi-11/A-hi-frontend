@@ -24,7 +24,7 @@ const Stablediffusion = () => {
       setIsLoading(true);
 
       const response = await axios.post(
-        "https://a-hi-prompt.com/diffusion",
+        "/diffusion",
 
         {
           prompt: imageInput,

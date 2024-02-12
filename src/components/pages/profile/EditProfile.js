@@ -49,7 +49,7 @@ const EditProfile = ({
         formData.append("profileImage", newImg);
 
         await axios
-          .put("https://a-hi-prompt.com/my-page/image", formData, {
+          .put("/my-page/image", formData, {
             headers: {
               "Content-Type": "multipart/form-data",
               Authorization: "Bearer " + storedJwtToken,
@@ -70,7 +70,7 @@ const EditProfile = ({
       try {
         await axios
           .put(
-            `https://a-hi-prompt.com/my-page/nickname`,
+            `/my-page/nickname`,
             {
               new_nickname: nameEdit,
             },

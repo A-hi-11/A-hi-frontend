@@ -53,7 +53,7 @@ const Create = () => {
     try {
       await axios
         .put(
-          `https://a-hi-prompt.com/prompt/my-page/${location.prompt_id}`,
+          `/prompt/my-page/${location.prompt_id}`,
           {
             member_id: location.member_id,
             title: title ? title : location.title,

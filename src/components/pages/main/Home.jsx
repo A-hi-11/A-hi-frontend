@@ -27,7 +27,7 @@ const Home = () => {
     };
     const reloadList = async () => {
       try {
-        const res = await (axios.post("https://a-hi-prompt.com/prompt/view",{
+        const res = await (axios.post("/prompt/view",{
           "sort": sortKind,
           "category": category, //수정필요
           "search": search,
@@ -41,7 +41,7 @@ const Home = () => {
   useEffect( ()=>{
     const getList = async () => {
       try {
-        const res = await (axios.post("https://a-hi-prompt.com/prompt/view",{
+        const res = await (axios.post("/prompt/view",{
           "sort": sortKind,
           "category": category, //수정필요
           "search": search,
@@ -97,8 +97,10 @@ const Home = () => {
         <div className="logo" style={{cursor:"pointer"}} onClick={()=>{setSortKind("time");setCategory("task");setSearch("");setMainKind("text");}}>
           
       <img src='logo.png' width={"80px"} style={{margin:"0px"}}/>
+        <div>
           <h2>안녕 AI</h2>
           <h3>에이-하이</h3>
+          </div>
       </div>
       <input className="search" onChange={e=>{setSearch(e.target.value)}} onKeyDown={handleOnKeyPress} placeholder="원하는 프롬프트를 검색하세요." />
         <div>

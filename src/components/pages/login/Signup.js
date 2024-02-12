@@ -46,7 +46,7 @@ const Signup = () => {
     setExpireTime(new Date().getTime() + 180000);
     setTime(179);
     try {
-      const res = await axios.post("https://a-hi-prompt.com/user/mail", {
+      const res = await axios.post("/user/mail", {
         email,
       });
     } catch (error) {
@@ -59,7 +59,7 @@ const Signup = () => {
     //백엔드에서 일치한다고 답이 오면 계속하기 버튼 활성화
     //인증 된 경우
     try {
-      const res = await axios.post("https://a-hi-prompt.com/user/mail/check", {
+      const res = await axios.post("/user/mail/check", {
         email: email,
         code: verifyCode,
       });

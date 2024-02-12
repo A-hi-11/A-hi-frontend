@@ -49,7 +49,7 @@ const Profile = (props) => {
   async function onClickLike(e) {
     try {
       await axios
-        .get(`https://a-hi-prompt.com/my-page/likes`, {
+        .get(`/my-page/likes`, {
           headers: {
             Authorization: "Bearer " + storedJwtToken,
           },
@@ -74,7 +74,7 @@ const Profile = (props) => {
   async function onClickHistory(e) {
     try {
       await axios
-        .get("https://a-hi-prompt.com/my-page/chat", {
+        .get("/my-page/chat", {
           headers: {
             Authorization: "Bearer " + storedJwtToken,
           },
@@ -99,7 +99,7 @@ const Profile = (props) => {
   useEffect(() => {
     const getMyPrompts = async () => {
       return await axios
-        .get(`https://a-hi-prompt.com/prompt/my-page`, {
+        .get(`/prompt/my-page`, {
           headers: {
             Authorization: "Bearer " + storedJwtToken,
           },

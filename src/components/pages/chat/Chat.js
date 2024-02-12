@@ -50,7 +50,7 @@ const Chat = () => {
       setIsLoading(true);
       await axios
         .post(
-          `https://a-hi-prompt.com/gpt/${chatId}`,
+          `/gpt/${chatId}`,
           {
             prompt: msg,
             gptConfigInfo: options,
@@ -107,8 +107,10 @@ const Chat = () => {
     >
       <div className={styles.title}>
         <img src='logo.png' width={"70px"} style={{ margin: "0px" }} />
-        <h3>안녕 AI</h3>
-        <h2>에이-하이</h2>
+        <div style={{ justifyContent: "center" }}>
+          <h3>안녕 AI</h3>
+          <h2>에이-하이</h2>
+        </div>
       </div>
       <div className={styles.gptMenu}>
         <button
