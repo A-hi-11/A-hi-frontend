@@ -17,9 +17,9 @@ export function SuccessPage() {
     };
 
     async function confirm() {
-      const response = await axios.post("/payment/confirm",{
-        requestData
-      },{
+      const response = await axios.post("/payment/confirm",
+      requestData
+      ,{
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + storedJwtToken,
@@ -27,7 +27,7 @@ export function SuccessPage() {
       })
 
 
-      const json = await response.json();
+      const json = response;
 
       if (!response.ok) {
         // TODO: 결제 실패 비즈니스 로직을 구현하세요.

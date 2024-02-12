@@ -6,9 +6,8 @@ import axios from "axios";
 
 const selector = "#payment-widget";
 
-const widgetClientKey = "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm";
+const widgetClientKey = process.env.REACT_APP_TOSS_CLIENT_KEY;
 const customerKey = nanoid();
-axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 export function CheckoutPage() {
   const [paymentWidget, setPaymentWidget] = useState(null);
