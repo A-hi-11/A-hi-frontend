@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faComment } from "@fortawesome/free-solid-svg-icons";
 import formatDateTime from "../../FormatDateTime";
 import "./Myprompt.css";
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 function Myprompt(
   {

@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Stablediffusion.css";
 import axios from "axios";
 import Loading from "../Loading";
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 const Stablediffusion = () => {
   const [result, setResult] = useState();

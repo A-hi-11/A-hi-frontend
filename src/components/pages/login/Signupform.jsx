@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom';
 import "./Signupform.css";
 import Navigation from "../../Navigation";
 import axios from 'axios';
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+
 const Signupform = () => {
  const params = useParams();
  // 초기값 세팅 - 아이디, 닉네임, 비밀번호, 비밀번호확인, 이메일, 전화번호, 생년월일

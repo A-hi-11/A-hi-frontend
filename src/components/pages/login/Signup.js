@@ -7,6 +7,7 @@ import Navigation from "../../Navigation";
 import "./Signup.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 const Signup = () => {
   const [email, setEmail] = useState("");

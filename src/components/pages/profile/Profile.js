@@ -11,6 +11,7 @@ import LikedPrompt from "./LikedPrompt";
 import Myprompt from "./Myprompt";
 import ChatHistory from "./ChatHistory";
 import "./Profile.css";
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 const Profile = (props) => {
   const storedMemberId = localStorage.getItem("memberId");

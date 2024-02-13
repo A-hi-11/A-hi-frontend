@@ -9,6 +9,7 @@ import axios from "axios";
 import Loading from "../../Loading";
 import Navigation from "../../Navigation";
 import "../../stablediffusion/PromptStableDiffusion.css";
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 export default function ChatDetail() {
   const [msg, setMsg] = useState("");

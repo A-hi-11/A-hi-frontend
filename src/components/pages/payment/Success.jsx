@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 export function SuccessPage() {
   const navigate = useNavigate();

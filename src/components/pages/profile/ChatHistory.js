@@ -7,6 +7,7 @@ import formatDateTime from "../../FormatDateTime";
 
 import "./Myprompt.css";
 import "../../stablediffusion/PromptStableDiffusion.css";
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 function ChatHistory({ data, key }) {
   return (

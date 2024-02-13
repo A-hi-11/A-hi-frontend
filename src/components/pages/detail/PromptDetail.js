@@ -17,6 +17,7 @@ import PromptStableDiffusion from "../../stablediffusion/PromptStableDiffusion";
 import PromptGpt from "../chat/PromptGpt";
 import { BuyButton, LoginButton } from "./Button";
 import { purchasedCheck } from "./purchasedCheck";
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 const storedJwtToken = localStorage.getItem("jwtToken");
 

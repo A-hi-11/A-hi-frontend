@@ -5,6 +5,7 @@ import Navigation from "../../Navigation";
 import "./Login.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 const Login = () => {
   const [id, setId] = useState("");

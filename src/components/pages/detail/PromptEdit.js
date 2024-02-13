@@ -6,6 +6,8 @@ import axios from "axios";
 import "../createprompt/Create.css";
 import Navigation from "../../Navigation";
 import Chat from "../chat/ChatFrame";
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+
 const Create = () => {
   const location = useLocation().state.detail;
   const [tags, setTags] = useState([]);

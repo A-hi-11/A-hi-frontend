@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { loadPaymentWidget, ANONYMOUS } from "@tosspayments/payment-widget-sdk";
 import { nanoid } from "nanoid";
 import axios from "axios";
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 const selector = "#payment-widget";
 

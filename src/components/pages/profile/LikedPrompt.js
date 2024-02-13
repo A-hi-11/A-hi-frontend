@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faComment } from "@fortawesome/free-solid-svg-icons";
 import "./Myprompt.css";
 import formatDateTime from "../../FormatDateTime";
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 function LikedPrompt({
   data: {
