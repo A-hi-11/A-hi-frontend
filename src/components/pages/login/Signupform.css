@@ -17,3 +17,21 @@
     width:230px;
 
 }
+@media screen and (max-width: 768px) {
+    .outerCont {
+        width: 60vw;
+        height: 80vh;
+        padding: 20px;
+    }
+    .outer p {
+        font-size:1.5vh !important;
+    }
+    .outerCont input {
+        width: 100%;
+        font-size:2vh;
+        
+    }
+    .outerCont label {
+        font-size:2vh;
+    }
+}

@@ -85,6 +85,7 @@ const Create = () => {
   }
       try {
         const res = await (axios.post("/prompt/create",kind=="text"?body:imgBody
+
         ,
         {
           headers : {
@@ -147,12 +148,7 @@ const Create = () => {
       li.innerText = "안녕하세요 ChatGPT 입니다."
     msgList.appendChild(li)
   }
-  const delExm1 = () => {
 
-  }
-  const delExm2 = () => {
-
-  }
   const onSendMsg = async (event) => {
     event.preventDefault();
     //사용예시 1이 안 만들어진 경우 사용예시1을 만들기 아닌경우 사용예시2를 만들기
@@ -168,6 +164,7 @@ const Create = () => {
       await axios
         .post(
           `/gpt/${gptChatId}`,
+
           {
             prompt: msg,
             gptConfigInfo:options
@@ -321,7 +318,7 @@ const Create = () => {
           <ul className="kindForm">
             <div className={"kind"+(kind=="text" ? "active" : "")} onClick={()=>{setKind("text");}}>chatGPT</div>
             <div className={"kind"+(kind=="image" ? "active" : "")} onClick={()=>{setKind("image")}}>Image</div>
-            </ul>
+          </ul>
             <br/>
             <h4 style={{margin:"10px"}}>프롬프트 제목</h4> <input onChange={e=>setTitle(e.target.value)} className="name" required/><br/><br/><br/>
             <h4 style={{margin:"10px"}}>프롬프트 내용</h4> <textarea onChange={e=>setContent(e.target.value)} className="contents"  placeholder="프롬프트 내용(명령어)을 적어주세요" required/><br/><br/><br/>

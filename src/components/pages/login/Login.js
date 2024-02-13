@@ -52,7 +52,7 @@ const Login = () => {
       >
         <h2>안녕 AI</h2>
         <h1>에이 하이</h1>
-        <Link to='/signup' style={{ color: "inherit" }}>
+        <Link to='/signup' style={{ color: "inherit" }} className="link">
           회원이 아니신가요?
         </Link>
         <p style={{ marginTop: "30px" }}>이메일로 로그인하기</p>
@@ -88,11 +88,13 @@ const Login = () => {
               style={{ display: "block", width: "300px", marginBottom: "8px" }}
               src='img/google_login.png'
               onClick={login}
+              className="oauth"
             />
             <img
               style={{ display: "block", width: "300px", height: "75px" }}
               src='img/naver_login.png'
               onClick={naver}
+              className="oauth"
             />
           </div>
         </form>

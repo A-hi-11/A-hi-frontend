@@ -61,3 +61,48 @@
   margin-top: 20px;
   margin-bottom: 50px;
 }
+
+@media screen and (max-width: 768px) {
+    .Login h2 {
+        margin-top:8vh;
+        font-size: 3.5vh;
+    }
+    
+    .Login h1 {
+        margin-bottom:5vh;
+        font-size: 2vh;
+    }
+    .link {
+        font-size: 3vh;
+    }
+    .Login p {
+        font-size: 2vh;
+    }
+    
+    .Login input {
+        height: 4vh;
+        width: 100%;
+    }
+    
+    .Login button {
+        width: 4rem;
+        height: 2rem;
+    }
+    
+    .Login .inputForm {
+      grid-template-columns: 1fr;
+      width: 80%;
+      margin-bottom: 20px;
+    }
+    .Login .this {
+        left: 0;
+        right: 0;
+        margin-left:-20%;
+
+    }
+    .oauth {
+        width: 120px !important;
+        height: 30px !important;
+        margin-left : -20px;
+    }
+}
