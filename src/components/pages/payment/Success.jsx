@@ -32,12 +32,14 @@ export function SuccessPage() {
       if (!response.ok) {
         // TODO: 결제 실패 비즈니스 로직을 구현하세요.
         console.log(json);
-        navigate(`/fail?message=${json.message}&code=${json.code}`);
+        navigate(`${window.location.origin}/success`);
         return;
       }
 
       // TODO: 결제 성공 비즈니스 로직을 구현하세요.
       console.log(json);
+      navigate(`${window.location.origin}/success`);
+
     }
     confirm();
   }, []);
