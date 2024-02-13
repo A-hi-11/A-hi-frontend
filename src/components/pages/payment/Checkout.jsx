@@ -78,8 +78,8 @@ export function CheckoutPage() {
         orderName: prompt_id,
         customerName: storedNickname,
         customerEmail: storedMemberId,
-        successUrl: `${window.location.origin}/success`,
-        failUrl: `${window.location.origin}/fail`,
+        successUrl: `${window.location.origin}/promptdetail/${prompt_id}`,
+        failUrl: `${window.location.origin}/promptdetail/${prompt_id}`,
       });
     } catch (error) {
       console.error("Error requesting payment:", error);
