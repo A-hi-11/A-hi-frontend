@@ -8,13 +8,15 @@ import Loading from "../../Loading";
 
 const Chat = () => {
   const [msg, setMsg] = useState("");
-  const [result, setResult] = useState();
+  const [result, setResult] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
   const storedJwtToken = localStorage.getItem("jwtToken");
   const loginStatus = localStorage.getItem("memberId");
   const [chatId, setChatId] = useState(-1);
   const messageEndRef = useRef();
+  const [existLi, setExistLi] = useState(null);
+
   const [options, setOptions] = useState({
     model_name: "gpt-3.5-turbo",
     temperature: 0.7,
@@ -26,16 +28,8 @@ const Chat = () => {
   });
 
   useEffect(() => {
-    messageEndRef.current.scrollIntoView({ behavior: "smooth" });
-  }, [result, msg]);
-
-  useEffect(() => {
-    if (result != undefined) {
-      const li = document.createElement("li");
-      li.className = styles.response;
-      li.innerText = result;
-      document.getElementById("msgList").appendChild(li);
-      setMsg("");
+    if (existLi != null) {
+      existLi.innerText = result;
     }
   }, [result]);
 
@@ -46,38 +40,73 @@ const Chat = () => {
     li.innerText = msg;
     const ul = document.getElementById("msgList");
     ul.appendChild(li);
-    try {
-      setIsLoading(true);
-      await axios
-        .post(
-          `/gpt/${chatId}`,
-          {
-            prompt: msg,
-            gptConfigInfo: options,
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + storedJwtToken,
-            },
-          },
-        )
-        .then((res) => {
-          setResult(res.data.answer);
-          setChatId(res.data.chat_room_id);
+
+    await fetch(process.env.REACT_APP_API_URL + `/gpt/${chatId}`, {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + storedJwtToken,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        prompt: msg,
+        gptConfigInfo: options,
+      }),
+    }).then(async (response) => {
+      setMsg("");
+
+      console.log("response body", response.body);
+
+      const reader = response.body
+        .pipeThrough(new TextDecoderStream())
+        .getReader();
+
+      const li = document.createElement("li");
+      li.className = styles.response;
+
+      setExistLi(li);
+
+      document.getElementById("msgList").appendChild(li);
+      setMsg("");
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+
+        let str = JSON.stringify(value);
+        str = str.replace(/\n/gi, "\\r\\n");
+        let json = JSON.parse(str);
+
+        const cleanedStr = json.replace(/data:|\n/g, "").trim();
+
+        let chatRoomId;
+        const matchResult = cleanedStr.match(/\d+/);
+        if (matchResult) {
+          chatRoomId = matchResult[0];
+        }
+
+        let simpleText;
+        simpleText = cleanedStr.replace(/\\r\\n/g, "").trim();
+        const cleanedText = simpleText.replace(/chat_room_id:.*/, "");
+
+        console.log("Chat Room ID:", chatRoomId);
+        console.log("Simple Text:", cleanedText);
+
+        setResult((prev) => prev + cleanedText);
+
+        if (chatRoomId) {
+          setChatId(chatRoomId);
           setIsLoading(false);
-        });
-    } catch (error) {
-      console.error(error);
-      alert(error.message);
-    }
+        }
+      }
+      setResult("");
+      setExistLi(null);
+    });
   };
 
-  const handleOnKeyPress = (e) => {
-    if (e.key === "Enter") {
-      onSendMsg(e);
-    }
-  };
+  // const handleOnKeyPress = (e) => {
+  //   if (e.key === "Enter") {
+  //     onSendMsg(e);
+  //   }
+  // };
 
   const handleOptionChange = (e) => {
     const { name, value } = e.target;
@@ -230,7 +259,7 @@ const Chat = () => {
       </div>
 
       <div className={styles.under}>
-        <form onSubmit={onSendMsg} onKeyDown={handleOnKeyPress}>
+        <form onSubmit={onSendMsg}>
           <textarea
             type='text'
             name='color'

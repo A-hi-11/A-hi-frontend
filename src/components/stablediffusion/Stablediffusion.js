@@ -10,6 +10,7 @@ import Loading from "../Loading";
 const Stablediffusion = () => {
   const [result, setResult] = useState();
   const [imageInput, setImageInput] = useState("");
+  const [negativeInput, setNegativeInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const storedJwtToken = localStorage.getItem("jwtToken");
   const storedMemberId = localStorage.getItem("memberId");
@@ -18,18 +19,28 @@ const Stablediffusion = () => {
     setImageInput(e.target.value);
   }
 
+  function onChangeNegative(e) {
+    setNegativeInput(e.target.value);
+  }
+
   async function generateImage(event) {
     event.preventDefault();
     try {
       setIsLoading(true);
-
+      console.log({
+        prompt: imageInput,
+        negative: negativeInput,
+        member_id: storedMemberId,
+        model_type: "image",
+        chat_room_id: -1,
+      });
       const response = await axios.post(
         "/diffusion",
 
         {
           prompt: imageInput,
-          member_id:
-            storedMemberId !== null ? storedMemberId : "test@gmail.com",
+          negative: negativeInput,
+          member_id: storedMemberId,
           model_type: "image",
           chat_room_id: -1,
         },
@@ -55,15 +66,10 @@ const Stablediffusion = () => {
       setIsLoading(false);
     } catch (error) {
       console.error(error);
+      setIsLoading(false);
       alert(error.message);
     }
   }
-
-  const handleOnKeyPress = (e) => {
-    if (e.key === "Enter") {
-      generateImage(e);
-    }
-  };
 
   return (
     <div className='imagePromptContainer'>
@@ -79,9 +85,16 @@ const Stablediffusion = () => {
       </div>
       <form style={{ display: "flex", flexDirection: "column" }}>
         <textarea
+          required
           className='ImagePrompt'
           onChange={onChange}
-          onKeyDown={handleOnKeyPress}
+        ></textarea>
+        <div className='promptbox'>
+          <p style={{ margin: "0" }}>부정 프롬프트</p>
+        </div>
+        <textarea
+          className='ImagePrompt'
+          onChange={onChangeNegative}
         ></textarea>
         <button onClick={generateImage} type='button' className='imageBtn'>
           생성하기{" "}

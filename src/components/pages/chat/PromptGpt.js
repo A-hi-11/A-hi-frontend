@@ -6,60 +6,79 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Loading from "../../Loading";
 const storedJwtToken = localStorage.getItem("jwtToken");
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 const PromptGpt = ({ width, margin, fontSize, welcomeMsg, prompt_id }) => {
   const [msg, setMsg] = useState("");
-  const [result, setResult] = useState();
-
+  const [result, setResult] = useState("");
+  const [existLi, setExistLi] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (result != undefined) {
-      const li = document.createElement("li");
-      li.className = styles.res;
-      li.innerText = result;
-      document.getElementById("msgList").appendChild(li);
-      setResult(undefined);
+    if (existLi != null) {
+      existLi.innerText = result;
     }
   }, [result]);
 
   const onSendMsg = async (event) => {
     event.preventDefault();
-    try {
+    const li = document.createElement("li");
+    li.className = styles.quest;
+    li.innerText = msg;
+    const ul = document.getElementById("msgList");
+    ul.appendChild(li);
+
+    await fetch(process.env.REACT_APP_API_URL + `/gpt/use/${prompt_id}`, {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + storedJwtToken,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        prompt: msg,
+      }),
+    }).then(async (response) => {
+      setMsg("");
+
+      console.log("response body", response.body);
+
+      const reader = response.body
+        .pipeThrough(new TextDecoderStream())
+        .getReader();
+
       const li = document.createElement("li");
-      li.className = styles.quest;
-      li.innerText = msg;
+      li.className = styles.response;
+
+      setExistLi(li);
+
       document.getElementById("msgList").appendChild(li);
+      setMsg("");
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
 
-      setIsLoading(true);
-      await axios
-        .post(
-          `/gpt/use/${prompt_id}`,
-          {
-            prompt: msg,
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + storedJwtToken,
-            },
-          },
-        )
-        .then((res) => {
-          setMsg("");
-          setResult(res.data.answer);
+        let str = JSON.stringify(value);
+        str = str.replace(/\n/gi, "\\r\\n");
+        let json = JSON.parse(str);
 
-          setIsLoading(false);
-        });
-    } catch (error) {
-      console.error(error);
-      alert(error.message);
-    }
+        const cleanedStr = json.replace(/data:|\n/g, "").trim();
+
+        let simpleText;
+        simpleText = cleanedStr.replace(/\\r\\n/g, "").trim();
+        const cleanedText = simpleText.replace(/chat_room_id:.*/, "");
+
+        console.log("Simple Text:", cleanedText);
+
+        setResult((prev) => prev + cleanedText);
+      }
+      setResult("");
+      setExistLi(null);
+    });
   };
 
   const handleOnKeyPress = (e) => {
     if (e.key === "Enter") {
-      onSendMsg(e); // Enter 입력이 되면 클릭 이벤트 실행
+      onSendMsg(e);
     }
   };
 

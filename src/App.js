@@ -1,6 +1,5 @@
 /** @format */
 
-import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Home from "./components/pages/main/Home";
 import Create from "./components/pages/createprompt/Create";

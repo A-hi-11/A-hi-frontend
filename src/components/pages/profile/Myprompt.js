@@ -91,7 +91,7 @@ function Myprompt(
 
 Myprompt.propTypes = {
   prompt_id: PropTypes.number,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   create_time: PropTypes.string,
   update_time: PropTypes.string,
   description: PropTypes.string,

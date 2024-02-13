@@ -111,8 +111,13 @@ const PromptDetail = () => {
     document.getElementById("use").style.borderBottom = "none";
   }
 
+  const checkPurchased = async () => {
+    const status = await purchasedCheck(prompt_id);
+    setPurchased(status);
+  };
+
   useEffect(() => {
-    setPurchased(purchasedCheck(prompt_id));
+    checkPurchased();
   }, []);
 
   useEffect(() => {

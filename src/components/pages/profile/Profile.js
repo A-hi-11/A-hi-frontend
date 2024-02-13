@@ -137,18 +137,24 @@ const Profile = (props) => {
       <div className='leftSide'>
         <div className='info'>
           <span className='innerInfo'>
-            <img
-              className='profilePic'
-              src={storedProfileImage}
-              width='100px'
-              alt='my profile'
-            />
+            {storedProfileImage != "http://image.png" ? (
+              <img
+                className='profilePic'
+                src={storedProfileImage}
+                width='100px'
+                alt='my profile'
+              />
+            ) : (
+              <img
+                className='profilePic'
+                src='/img/base_profile.png'
+                width='100px'
+                alt='my profile'
+              />
+            )}
+
             <span className='nameEmail'>
-              <h2>
-                {storedNickname != undefined
-                  ? storedNickname
-                  : "프롬프트 제작소"}
-              </h2>
+              <h2>{storedNickname}</h2>
               <h4>{storedMemberId}</h4>
             </span>
           </span>

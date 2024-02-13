@@ -14,8 +14,8 @@ export const purchasedCheck = async (promptId) => {
 
   for (let i = 0; i < response.data.length; i++) {
     const element = response.data[i];
-
     if (element.orderName == promptId && element.status == "DONE") {
+      console.log(element.orderName);
       return true;
     }
   }
