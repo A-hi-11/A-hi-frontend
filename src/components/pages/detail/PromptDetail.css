@@ -174,5 +174,13 @@ margin-left: 15px;
   background-color: #e0e0e0; 
 }
 
+.purchased {
+  background-color:#10a37f;
+  padding: 10px;
+  border-radius: 20px;
+  margin-top: 10px;
+  font-weight: 400;
+}
+
 
 

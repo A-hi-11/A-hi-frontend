@@ -1962,6 +1962,46 @@
   resolved "https://registry.npmjs.org/@tootallnate/once/-/once-1.1.2.tgz"
   integrity sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==
 
+"@tosspayments/brandpay-types@^0.2.6":
+  version "0.2.6"
+  resolved "https://registry.npmjs.org/@tosspayments/brandpay-types/-/brandpay-types-0.2.6.tgz"
+  integrity sha512-FY8aOm/2rqtXjYux9ZdNTL6GC5+VNIw8eOQ7TP01dS2uGWSzAtR6uuw9HVsgkmJtSyJgmo97tjmbio5oyeyFlg==
+
+"@tosspayments/payment__types@^1.66.3":
+  version "1.67.0"
+  resolved "https://registry.npmjs.org/@tosspayments/payment__types/-/payment__types-1.67.0.tgz"
+  integrity sha512-e2W5AolyED1AA3uUaq27a8YQhrL7ZPNffIOF5qN2uP6RXIk6w1dtAFpY5tXBgLcyntYFMSKPCYevutUy8Ggc0g==
+  dependencies:
+    "@tosspayments/sdk-constants" "^0.2.2"
+
+"@tosspayments/payment-widget__types@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/@tosspayments/payment-widget__types/-/payment-widget__types-1.0.1.tgz"
+  integrity sha512-p2l6ni4ZAH0Jh7Yo4hwwDAECN0rz6Io9R19oBJ5ZkL0H1upMhGzT6xrdymIYQwcUSzIcwHwI2u03eeAX19hmug==
+  dependencies:
+    "@tosspayments/brandpay-types" "^0.2.6"
+    "@tosspayments/payment__types" "^1.66.3"
+    "@tosspayments/payment-widget-types" "^0.0.5"
+
+"@tosspayments/payment-widget-sdk@^0.10.2":
+  version "0.10.2"
+  resolved "https://registry.npmjs.org/@tosspayments/payment-widget-sdk/-/payment-widget-sdk-0.10.2.tgz"
+  integrity sha512-0dpkEbnDXmvIwpHYm+YODpMhh/gAtvJRYOU5uikFQpM/XCkyZDXAP9C6pc+GhiT6NsWIKKFILwaSgAeL/UT3ow==
+  dependencies:
+    "@tosspayments/payment-widget__types" "1.0.1"
+
+"@tosspayments/payment-widget-types@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.npmjs.org/@tosspayments/payment-widget-types/-/payment-widget-types-0.0.5.tgz"
+  integrity sha512-Daaui9u7aRPzJhw4omJIUAbYBSmNAFNjWWkuUnX9uHxzE3gtjcJHIpGrjlzmCFm+j3ZH4rgyrgv4pkazVYH3OQ==
+
+"@tosspayments/sdk-constants@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.npmjs.org/@tosspayments/sdk-constants/-/sdk-constants-0.2.2.tgz"
+  integrity sha512-qTIcD9JnVtN65/yiW5sPAlvK5fpQtDluv4IEyslubncbQLQKE+ePSnGZU1fLNPxcchv6QTnwmgj9Ndm6EN/Ymg==
+  dependencies:
+    type-fest "^2.11.2"
+
 "@trysound/sax@0.2.0":
   version "0.2.0"
   resolved "https://registry.npmjs.org/@trysound/sax/-/sax-0.2.0.tgz"
@@ -3506,11 +3546,6 @@ cookie-signature@1.0.6:
   resolved "https://registry.npmjs.org/cookie-signature/-/cookie-signature-1.0.6.tgz"
   integrity sha512-QADzlaHc8icV8I7vbaJXJwod9HWYp8uCqf1xa4OfNu1T7JVxQIrUgOWtHdNDtPiywmFbiS12VjotIXLrKM3orQ==
 
-cookie@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.npmjs.org/cookie/-/cookie-0.3.1.tgz"
-  integrity sha512-+IJOX0OqlHCszo2mBUq+SrEbCj6w7Kpffqx60zYbPTFaO4+yYgRjHwcZNpWvaTylDHaV7PPmBHzSecZiMhtPgw==
-
 cookie@0.5.0:
   version "0.5.0"
   resolved "https://registry.npmjs.org/cookie/-/cookie-0.5.0.tgz"
@@ -3537,14 +3572,6 @@ core-util-is@~1.0.0:
   version "1.0.3"
   resolved "https://registry.npmjs.org/core-util-is/-/core-util-is-1.0.3.tgz"
   integrity sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==
-
-cors@^2.8.5:
-  version "2.8.5"
-  resolved "https://registry.npmjs.org/cors/-/cors-2.8.5.tgz"
-  integrity sha512-KIHbLJqu73RGr/hnbrO9uBeixNGuvSQjul/jdFvS/KFSIH1hWVd1ng7zOHx+YrEfInLG7q4n6GHQ9cDtxv/P6g==
-  dependencies:
-    object-assign "^4"
-    vary "^1"
 
 cosmiconfig@^6.0.0:
   version "6.0.0"
@@ -6917,7 +6944,7 @@ nwsapi@^2.2.0:
   resolved "https://registry.npmjs.org/nwsapi/-/nwsapi-2.2.7.tgz"
   integrity sha512-ub5E4+FBPKwAZx0UwIQOjYWGHTEq5sPqHQNRN8Z9e4A7u3Tj1weLJsL59yH9vmvqEtBHaOmT6cYQKIZOxp35FQ==
 
-object-assign@^4, object-assign@^4.0.1, object-assign@^4.1.1:
+object-assign@^4.0.1, object-assign@^4.1.1:
   version "4.1.1"
   resolved "https://registry.npmjs.org/object-assign/-/object-assign-4.1.1.tgz"
   integrity sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==
@@ -7970,14 +7997,6 @@ react-app-polyfill@^3.0.0:
     regenerator-runtime "^0.13.9"
     whatwg-fetch "^3.6.2"
 
-react-cookies@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.npmjs.org/react-cookies/-/react-cookies-0.1.1.tgz"
-  integrity sha512-PP75kJ4vtoHuuTdq0TAD3RmlAv7vuDQh9fkC4oDlhntgs9vX1DmREomO0Y1mcQKR9nMZ6/zxoflaMJ3MAmF5KQ==
-  dependencies:
-    cookie "^0.3.1"
-    object-assign "^4.1.1"
-
 react-dev-utils@^12.0.1:
   version "12.0.1"
   resolved "https://registry.npmjs.org/react-dev-utils/-/react-dev-utils-12.0.1.tgz"
@@ -8020,21 +8039,6 @@ react-error-overlay@^6.0.11:
   version "6.0.11"
   resolved "https://registry.npmjs.org/react-error-overlay/-/react-error-overlay-6.0.11.tgz"
   integrity sha512-/6UZ2qgEyH2aqzYZgQPxEnz33NJ2gNsnHA2o5+o4wW9bLM/JYQitNP9xPhsXwC08hMMovfGe/8retsdDsczPRg==
-
-react-fast-compare@^3.1.1:
-  version "3.2.2"
-  resolved "https://registry.npmjs.org/react-fast-compare/-/react-fast-compare-3.2.2.tgz"
-  integrity sha512-nsO+KSNgo1SbJqJEYRE9ERzo7YtYbou/OqjSQKxV7jcKox7+usiUVZOAC+XnDOABXggQTno0Y1CpVnuWEc1boQ==
-
-react-helmet@^6.1.0:
-  version "6.1.0"
-  resolved "https://registry.npmjs.org/react-helmet/-/react-helmet-6.1.0.tgz"
-  integrity sha512-4uMzEY9nlDlgxr61NL3XbKRy1hEkXmKNXhjbAIOVw5vcFrsdYbH2FEwcNyWvWinl103nXgzYNlns9ca+8kFiWw==
-  dependencies:
-    object-assign "^4.1.1"
-    prop-types "^15.7.2"
-    react-fast-compare "^3.1.1"
-    react-side-effect "^2.1.0"
 
 react-icons@^4.11.0:
   version "4.11.0"
@@ -8165,11 +8169,6 @@ react-scripts@5.0.1:
   optionalDependencies:
     fsevents "^2.3.2"
 
-react-side-effect@^2.1.0:
-  version "2.1.2"
-  resolved "https://registry.npmjs.org/react-side-effect/-/react-side-effect-2.1.2.tgz"
-  integrity sha512-PVjOcvVOyIILrYoyGEpDN3vmYNLdy1CajSFNt4TDsVQC5KpTijDvWVoR+/7Rz2xT978D8/ZtFceXxzsPwZEDvw==
-
 react-textarea-autosize@^8.5.3:
   version "8.5.3"
   resolved "https://registry.npmjs.org/react-textarea-autosize/-/react-textarea-autosize-8.5.3.tgz"
@@ -8179,7 +8178,7 @@ react-textarea-autosize@^8.5.3:
     use-composed-ref "^1.3.0"
     use-latest "^1.2.1"
 
-react@*, "react@^0.14.0 || ^15.0.0 || ^16 || ^17 || ^18", "react@^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.3.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", react@^18.0.0, react@^18.2.0, "react@>= 16", "react@>= 16.8.0", react@>=16.3, react@>=16.3.0, react@>=16.8:
+react@*, "react@^0.14.0 || ^15.0.0 || ^16 || ^17 || ^18", "react@^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", react@^18.0.0, react@^18.2.0, "react@>= 16", "react@>= 16.8.0", react@>=16.3, react@>=16.8:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
@@ -9352,6 +9351,11 @@ type-fest@^0.21.3, "type-fest@>=0.17.0 <5.0.0":
   resolved "https://registry.npmjs.org/type-fest/-/type-fest-0.21.3.tgz"
   integrity sha512-t0rzBq87m3fVcduHDUFhKmyyX+9eo6WQjZvf51Ea/M0Q7+T374Jp1aUiyUl0GKxp8M/OETVHSDvmkyPgvX+X2w==
 
+type-fest@^2.11.2:
+  version "2.19.0"
+  resolved "https://registry.npmjs.org/type-fest/-/type-fest-2.19.0.tgz"
+  integrity sha512-RAH822pAdBgcNMAfWnCBU3CFZcfZ/i1eZjwFU/dsLKumyuuP3niueg2UAukXYF0E2AAoc82ZSSf9J0WQBinzHA==
+
 type-is@~1.6.18:
   version "1.6.18"
   resolved "https://registry.npmjs.org/type-is/-/type-is-1.6.18.tgz"
@@ -9406,7 +9410,7 @@ typedarray-to-buffer@^3.1.5:
   dependencies:
     is-typedarray "^1.0.0"
 
-"typescript@^3.2.1 || ^4", "typescript@>= 2.7", "typescript@>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta":
+"typescript@^3.2.1 || ^4", typescript@^4.1.0, typescript@^4.7.4, "typescript@>= 2.7", "typescript@>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta":
   version "4.9.5"
   resolved "https://registry.npmjs.org/typescript/-/typescript-4.9.5.tgz"
   integrity sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==
@@ -9560,7 +9564,7 @@ v8-to-istanbul@^8.1.0:
     convert-source-map "^1.6.0"
     source-map "^0.7.3"
 
-vary@^1, vary@~1.1.2:
+vary@~1.1.2:
   version "1.1.2"
   resolved "https://registry.npmjs.org/vary/-/vary-1.1.2.tgz"
   integrity sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==

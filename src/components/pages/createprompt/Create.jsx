@@ -84,7 +84,7 @@ const Create = () => {
     
   }
       try {
-        const res = await (axios.post("http://api.a-hi.kro.kr:8080/prompt/create",kind=="text"?body:imgBody
+        const res = await (axios.post("/prompt/create",kind=="text"?body:imgBody
         ,
         {
           headers : {
@@ -162,7 +162,7 @@ const Create = () => {
       setIsLoading(true);
       await axios
         .post(
-          `http://api.a-hi.kro.kr:8080/gpt/${gptChatId}`,
+          `/gpt/${gptChatId}`,
           {
             prompt: msg,
             gptConfigInfo:options
@@ -244,13 +244,12 @@ const Create = () => {
   const [stableExm2,setStableExm2]=useState([]);
    const [stableExms,setStableExms] = useState([]);
    const [imageInput, setImageInput] = useState("");
-   const storedMemberId = localStorage.getItem("memberId");
    async function generateImage(event) {
      event.preventDefault();
      try {
        setIsLoading(true);
        const response = await axios.post(
-        "http://api.a-hi.kro.kr:8080/diffusion",
+        "/diffusion",
         {
           prompt: imageInput,
           model_type: "image",

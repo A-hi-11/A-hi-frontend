@@ -49,7 +49,7 @@ const Profile = (props) => {
   async function onClickLike(e) {
     try {
       await axios
-        .get(`https://a-hi-prompt.com/my-page/likes`, {
+        .get(`/my-page/likes`, {
           headers: {
             Authorization: "Bearer " + storedJwtToken,
           },
@@ -74,7 +74,7 @@ const Profile = (props) => {
   async function onClickHistory(e) {
     try {
       await axios
-        .get("https://a-hi-prompt.com/my-page/chat", {
+        .get("/my-page/chat", {
           headers: {
             Authorization: "Bearer " + storedJwtToken,
           },
@@ -99,7 +99,7 @@ const Profile = (props) => {
   useEffect(() => {
     const getMyPrompts = async () => {
       return await axios
-        .get(`https://a-hi-prompt.com/prompt/my-page`, {
+        .get(`/prompt/my-page`, {
           headers: {
             Authorization: "Bearer " + storedJwtToken,
           },
@@ -137,18 +137,24 @@ const Profile = (props) => {
       <div className='leftSide'>
         <div className='info'>
           <span className='innerInfo'>
-            <img
-              className='profilePic'
-              src={storedProfileImage}
-              width='100px'
-              alt='my profile'
-            />
+            {storedProfileImage != "http://image.png" ? (
+              <img
+                className='profilePic'
+                src={storedProfileImage}
+                width='100px'
+                alt='my profile'
+              />
+            ) : (
+              <img
+                className='profilePic'
+                src='/img/base_profile.png'
+                width='100px'
+                alt='my profile'
+              />
+            )}
+
             <span className='nameEmail'>
-              <h2>
-                {storedNickname != undefined
-                  ? storedNickname
-                  : "프롬프트 제작소"}
-              </h2>
+              <h2>{storedNickname}</h2>
               <h4>{storedMemberId}</h4>
             </span>
           </span>

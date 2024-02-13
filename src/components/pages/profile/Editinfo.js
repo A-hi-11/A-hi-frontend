@@ -13,7 +13,7 @@ function EditInfo({ setEditingPass, setRefresh }) {
     if (newPassword) {
       try {
         await axios.put(
-          `https://a-hi-prompt.com/my-page/password/update`,
+          `/my-page/password/update`,
           {
             new_password: newPassword,
           },

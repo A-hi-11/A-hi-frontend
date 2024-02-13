@@ -35,7 +35,7 @@ const Chat = ({ width, margin, fontSize, welcomeMsg }) => {
       setIsLoading(true);
       await axios
         .post(
-          "https://a-hi-prompt.com/gpt",
+          "/gpt",
           {
             prompt: msg,
           },

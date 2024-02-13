@@ -11,7 +11,7 @@ const PassCheck = ({ setPassCheck }) => {
     try {
       await axios
         .put(
-          "https://a-hi-prompt.com/my-page/password/check",
+          "/my-page/password/check",
           {
             cur_password: inputPass,
           },
