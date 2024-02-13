@@ -346,7 +346,6 @@
     height: min-content;
     max-width: 400px;
     width: max-content;
-    min-width: 250px;
     margin-top: 10px;
   }
   .create_result .quest{
@@ -460,4 +459,73 @@
   
 .createResultBox:hover .stableDelete{
   display:flex;
+}
+@media screen and (max-width: 768px) {
+  .submitform {
+      margin-left: 20vw; 
+  }
+  .kindForm {
+      margin-left: -18vw; 
+  }
+  .kind, .kindactive {
+      width: 70px;
+      height: 20px; 
+      margin: 0vw; 
+      padding: 0.4vw; 
+      font-size:8px;
+      margin-top:-5vh;
+      margin-bottom:-5vh;
+      display:flex;
+      align-items: center;
+      justify-content: center;
+  }
+  .name {
+      font-size:10px;
+      width: 80%; 
+      height:80%;
+  }
+  .contents, .explain {
+    font-size:10px;
+      width: 80%; 
+      height:50vh;
+  }
+  .exmBtn, .subBtn {
+      width: 15vh; 
+  }
+  .exm {
+      width: 80%; 
+      height: 40px; 
+  }
+  .exm:hover {
+      width: 80%; 
+      height: 40px; 
+  }
+  .exm .view, .exm .delete {
+      font-size: 10px; 
+      height: 20px; 
+  }
+
+  .create_result {
+    width:44vh;
+  }
+  .create_result li {
+      font-size:9px;
+  }
+
+  .create_result .response{
+    height: 5vh;
+    width: 35vh;
+  }
+  .create_result .quest{
+    height: 5vh;
+    width: 35vh;
+  }
+  h4 {
+    font-size:10px;
+  }
+  .btn {
+    font-size:20px;
+    width:25px;
+    height:25px;
+  }
 }

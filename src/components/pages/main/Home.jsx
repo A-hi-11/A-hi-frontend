@@ -9,16 +9,20 @@ const Home = () => {
   const [refresh, setRefresh] = useState(1);
   const location = useLocation();
   const navigate = useNavigate();
-
-    const [category,setCategory] = useState("task");
-    const [boardList, setBoardList] = useState([]);
-    const [mainKind,setMainKind]=useState("text")
-    const [sortKind,setSortKind]=useState("time")
-    const [data,setData]=useState()
-    const [imgData,setImgData]=useState()
+  const [modal, setModal] = useState(false);
+  const [category,setCategory] = useState("task");
+  const [boardList, setBoardList] = useState([]);
+  const [mainKind,setMainKind]=useState("text")
+  const [sortKind,setSortKind]=useState("time")
+  const [data,setData]=useState()
+  const [imgData,setImgData]=useState()
   const storedJwtToken = localStorage.getItem("jwtToken")
-    const [search,setSearch]=useState("")
+  const [search,setSearch]=useState("")
 
+  const handleModal = () => {
+    setModal(!modal);
+    console.log(modal)
+  }
 
     const handleOnKeyPress = (e) => {
       if (e.key === "Enter") {
@@ -82,8 +86,25 @@ const Home = () => {
   
       }
     }, []);
-
-
+  function shareFacebook() {
+    var sendUrl = "http://api.a-hi-prompt.com"; 
+    window.open("http://www.facebook.com/sharer/sharer.php?u=" + sendUrl);
+}
+  function shareKakao() {
+    window.Kakao.cleanup();
+    window.Kakao.init('18b23c64b26852d69d084523fc8ce9f3');
+      window.Kakao.Link.sendDefault({
+        objectType: 'feed',
+        content: {
+          title: '카카오톡 공유하기 예제',
+          imageUrl: 'http://localhost:3000',
+          link: {
+            mobileWebUrl: 'http://localhost:3000',
+            webUrl: 'http://localhost:3000',
+          },
+        },
+      });
+  }
 
   return (
     <div>
@@ -91,9 +112,22 @@ const Home = () => {
       <ul className="mainKindForm">
             <div className={"mainKind"+(mainKind=="text" ? "active" : "")} onClick={()=>{setCategory("task");setMainKind("text");}}>chatGPT</div>
             <div className={"mainKind"+(mainKind=="image" ? "active" : "")} onClick={()=>{setCategory("human");setMainKind("image")}}>Image</div>
-            </ul>
+      </ul>
+      <div className="share" onClick={()=>{handleModal()}}>공유</div>      
       <div className="contContainer">
-
+      
+      {modal?<div className="modalBack" onClick={handleModal}>
+          <div className="modalBox" onClick={(e) => e.stopPropagation()}>
+            <div className="modalFont">프롬프트 공유 플랫폼 에이하이</div>
+            <span className="closeBtn" onClick={handleModal}>
+              &times;
+            </span>
+            <div className="iconContainer">
+            <img className="icon" src='img/icon-facebook.png' onClick={shareFacebook}/>
+            <img className="icon" src='img/icon-kakao.png' onClick={shareKakao}/>
+            </div>
+          </div>
+        </div>:""}
         <div className="logo" style={{cursor:"pointer"}} onClick={()=>{setSortKind("time");setCategory("task");setSearch("");setMainKind("text");}}>
           
       <img src='logo.png' width={"80px"} style={{margin:"0px"}}/>

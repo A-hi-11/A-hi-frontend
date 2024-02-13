@@ -253,3 +253,186 @@ a {
 input {
     padding:3px;
 }
+.share {
+    position: absolute;
+    top: 50px;
+    right: 10px;
+    cursor : pointer;
+    display:inline-block;
+    width:30px;
+    text-align:center;
+    margin:0.3vw;
+    padding:0.5vw;
+    border:solid 1px #04364A;
+    border-radius: 5px 5px 5px 5px;
+}
+.share:hover {
+    cursor : pointer;
+    display:inline-block;
+    width:30px;
+    text-align:center;
+    margin:0.3vw;
+    padding:0.5vw;
+    border:solid 1px #04364A;
+    border-radius: 5px 5px 5px 5px;
+    background-color:#04364A;
+    color:white;
+}
+
+.modalBack {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 9999;
+}
+.modalBox {
+    
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width:70%;
+    height:20%;
+    background: #fff;
+    padding: 20px;
+    z-index: 10000;
+    
+}
+.modalFont {
+    margin:10px;
+    font-size:1.8vh;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+.closeBtn {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 20px;
+}
+.iconContainer {
+    margin-top:2vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.icon {
+    margin:10px;
+}
+@media(max-width:768px) {
+    .contContainer {
+        margin-left: 0; /* 왼쪽 마진 제거 */
+    }
+    .mainKindForm {
+        margin-left: 4vh; /* 왼쪽 마진 제거 */
+    }
+    .mainKind {
+        width:14vh;
+        
+    }
+    .mainKindactive {
+        width:14vh;
+        
+    }
+    .logo {
+       margin : -2vh;
+       margin-left:8vh;
+    }
+    .logo h2 {
+        font-size:10px;
+        margin:-3vh;
+    }
+    .logo h3 {
+        margin-top:-5vh;
+        font-size:20px;
+    }
+    .search {
+        margin-left:10vh;
+        margin-top:9vh;
+        width:70%;
+        height:3vh;
+        font-size:2vh;
+    }
+    .mainCategory{
+        width : 80vh; 
+        margin-left:0.7vh;
+ 
+    }
+    .mainCategoryCont{
+        width:4vh;
+        margin:0.3vw;
+        padding:0.5vw;
+        font-size : 1.4vh;
+        height:4vh;
+        display:flex;
+        align-items: center;
+    justify-content: center;
+    }
+    .mainCategoryContactive{
+        width:4vh;
+        margin:0.3vw;
+        padding:0.5vw;
+        font-size : 1.4vh;
+        height:4vh;
+        display:flex;
+        align-items: center;
+    justify-content: center;
+    }
+    .sortKind{
+        margin-top:-1vh;
+    }
+    .sortKindCont{
+        width:5vh;
+            margin:0.3vw;
+            padding:0.5vw;
+            font-size : 1.8vh;
+            height:3vh;
+            display:flex;
+            align-items: center;
+        justify-content: center;
+    }
+    .sortKindContactive{
+        width:5vh;
+            margin:0.3vw;
+            padding:0.5vw;
+            font-size : 1.8vh;
+            height:3vh;
+            display:flex;
+            align-items: center;
+        justify-content: center;
+    }
+    .contTitle{
+        font-size:2.3vh;
+        margin-top:-1vh;
+        margin-left:-1vh;
+    }
+    .contExplain{
+        font-size:1.8vh;
+        margin-bottom:-2vh;
+        margin-left:-1vh;
+    }
+    .contDate{
+        font-size:0.975vh;
+        margin-left:-1vh;
+    }
+    .contContent{
+        display:inline-block;
+        width:12vh;
+        height:8vh;
+        padding:8px;
+    }
+    .contContent:hover{
+        display:inline-block;
+        width:12vh;
+        height:8vh;
+        padding:8px;
+    }
+    .contList{
+        margin-left:1vh;
+    }
+}
