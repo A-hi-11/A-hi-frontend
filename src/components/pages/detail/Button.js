@@ -32,4 +32,12 @@ const LoginButton = () => {
   );
 };
 
-export default LoginButton;
+const BuyButton = ({ promptId }) => {
+  return (
+    <Link to={{ pathname: `/payment/${promptId}` }}>
+      <StyledButton>구매하기</StyledButton>
+    </Link>
+  );
+};
+
+export { LoginButton, BuyButton };

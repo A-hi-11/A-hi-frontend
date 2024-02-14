@@ -15,7 +15,9 @@ import Comment from "./Comment";
 import formatDateTime from "../../FormatDateTime";
 import PromptStableDiffusion from "../../stablediffusion/PromptStableDiffusion";
 import PromptGpt from "../chat/PromptGpt";
-import LoginButton from "./LoginButton";
+import { BuyButton, LoginButton } from "./Button";
+import { purchasedCheck } from "./purchasedCheck";
+
 const storedJwtToken = localStorage.getItem("jwtToken");
 
 const PromptDetail = () => {
@@ -27,10 +29,10 @@ const PromptDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [refresh, setRefresh] = useState(1);
+  const [purchased, setPurchased] = useState(false);
 
   const navigate = useNavigate();
-  const loginStatus = localStorage.getItem("memberId");
-
+  const loginStatus = localStorage.getItem("jwtToken");
   const onClickEdit = () => {
     navigate("/prompt_edit", { state: { detail } });
   };
@@ -39,7 +41,7 @@ const PromptDetail = () => {
     try {
       await axios
         .delete(
-          `https://a-hi-prompt.com/prompt/my-page/${prompt_id}`,
+          `/prompt/my-page/${prompt_id}`,
 
           {
             headers: {
@@ -62,7 +64,7 @@ const PromptDetail = () => {
       setLoading(true);
       axios
         .post(
-          `https://a-hi-prompt.com/prompt/like`,
+          `/prompt/like`,
           { prompt_id: detail.prompt_id, status: "like" },
           {
             headers: {
@@ -109,6 +111,15 @@ const PromptDetail = () => {
     document.getElementById("use").style.borderBottom = "none";
   }
 
+  const checkPurchased = async () => {
+    const status = await purchasedCheck(prompt_id);
+    setPurchased(status);
+  };
+
+  useEffect(() => {
+    checkPurchased();
+  }, []);
+
   useEffect(() => {
     const fetchPromptDetail = async () => {
       setLoading(true);
@@ -117,7 +128,7 @@ const PromptDetail = () => {
       try {
         axios
           .get(
-            `https://a-hi-prompt.com/prompt/view/info?prompt_id=${prompt_id}&member_id=${
+            `/prompt/view/info?prompt_id=${prompt_id}&member_id=${
               storedMemberId ? storedMemberId : ""
             }`,
             storedJwtToken
@@ -164,7 +175,10 @@ const PromptDetail = () => {
             <Loading color='white' pos='0px' rightPos='0px' />
           ) : (
             <>
-              <h2 color='FFF'>{detail.title}</h2>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <h2 color='FFF'>{detail.title}</h2>
+                {purchased ? <h4 className='purchased'>구매 완료</h4> : null}
+              </div>
               <h4 style={{ marginTop: "60px", fontWeight: "400" }}>
                 프롬프트 설명
               </h4>
@@ -191,9 +205,9 @@ const PromptDetail = () => {
                 </>
               )}
               <div className='tagsContainer' style={{ display: "flex" }}>
-                {detail.tags &&
+                {detail.tags.length > 1 &&
                   detail.tags.map((tag) => <p className='tag'>#{tag}</p>)}
-                {detail.myPrompt && ( // detail.myPrompt 값이 true일 때만 버튼을 표시
+                {detail.myPrompt && (
                   <>
                     <button className='myBtn' onClick={onClickEdit}>
                       수정
@@ -217,7 +231,7 @@ const PromptDetail = () => {
                     marginLeft: "10px",
                   }}
                 >
-                  {detail.nickname ? detail.nickname : "프롬프트전문가"}
+                  {detail.nickname}
                 </p>
               </div>
               <p className='date'>
@@ -315,7 +329,7 @@ const PromptDetail = () => {
 
           {isPrompt ? (
             <>
-              {detail.permission ? (
+              {detail.permission || purchased ? (
                 <p
                   style={{
                     marginLeft: "13px",
@@ -340,9 +354,12 @@ const PromptDetail = () => {
                     {detail.content}
                   </p>
                   {loginStatus ? (
-                    <p style={{ color: "#04364A", marginLeft: "32%" }}>
-                      조회 권한이 없습니다.
-                    </p>
+                    <>
+                      <p style={{ color: "#04364A", marginLeft: "38%" }}>
+                        구매하여 확인하기
+                      </p>
+                      <BuyButton promptId={detail.prompt_id} />
+                    </>
                   ) : (
                     <>
                       <p style={{ color: "#04364A", marginLeft: "32%" }}>

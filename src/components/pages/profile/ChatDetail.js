@@ -40,7 +40,7 @@ export default function ChatDetail() {
       try {
         setIsLoading(true);
         await axios
-          .get(`https://a-hi-prompt.com/my-page/chat/read/${chat_room_id}`, {
+          .get(`/my-page/chat/read/${chat_room_id}`, {
             headers: {
               Authorization: "Bearer " + storedJwtToken,
             },
@@ -60,7 +60,7 @@ export default function ChatDetail() {
   const onClickDelete = async () => {
     try {
       await axios
-        .delete(`https://a-hi-prompt.com/my-page/chat/${chat_room_id}`, {
+        .delete(`/my-page/chat/${chat_room_id}`, {
           headers: {
             Authorization: "Bearer " + storedJwtToken,
           },
@@ -85,7 +85,7 @@ export default function ChatDetail() {
       setIsLoading(true);
       await axios
         .post(
-          `https://a-hi-prompt.com/gpt/${chat_room_id}`,
+          `/gpt/${chat_room_id}`,
           {
             prompt: msg,
             gptConfigInfo: {
@@ -132,10 +132,18 @@ export default function ChatDetail() {
     >
       <Navigation />
       <div className={styles.main}>
-        <div className={styles.title}>
-          <BiSolidConversation size='40px' color='#4997B0' />
-          <h2>안녕 AI</h2>
-          <h3>에이-하이</h3>
+        <div style={{ display: "flex", marginTop: "35px" }}>
+          <img
+            src='../logo.png'
+            width={"100px"}
+            height={"100px"}
+            style={{ marginRight: "10px", alignSelf: "center" }}
+          />
+
+          <div style={{ flexDirection: "column" }}>
+            <h2 style={{ marginBottom: "0px" }}>안녕 AI</h2>
+            <h1 style={{ marginTop: "0px" }}>에이-하이</h1>
+          </div>
         </div>
         <div className={styles.gptMenu}></div>
         <button

@@ -83,7 +83,7 @@ const Signupform = () => {
 
  const onClickSignup = async () => {
   try {
-    const res = await (axios.post("http://api.a-hi.kro.kr:8080/user/signup",{
+    const res = await (axios.post("/user/signup",{
         "member_id": email,
         "password": password,
         "nickname": nickName,

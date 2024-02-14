@@ -26,7 +26,7 @@ const Comment = ({ comments, setRefresh, setError, prompt_id }) => {
     try {
       await axios
         .put(
-          `https://a-hi-prompt.com/prompt/comment/update/${comment_id}`,
+          `/prompt/comment/update/${comment_id}`,
           {
             context: editedComment,
           },
@@ -54,7 +54,7 @@ const Comment = ({ comments, setRefresh, setError, prompt_id }) => {
       setLoading(true);
       axios
         .post(
-          `https://a-hi-prompt.com/prompt/comment/${prompt_id}`,
+          `/prompt/comment/${prompt_id}`,
           { comment: sendComment },
           {
             headers: {
@@ -79,7 +79,7 @@ const Comment = ({ comments, setRefresh, setError, prompt_id }) => {
     try {
       setLoading(true);
       axios
-        .get(`https://a-hi-prompt.com/prompt/comment/delete/${comment_id}`, {
+        .get(`/prompt/comment/delete/${comment_id}`, {
           headers: {
             Authorization: "Bearer " + storedJwtToken,
           },

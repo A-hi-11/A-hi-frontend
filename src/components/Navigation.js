@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Navigation.css";
 
 const Navigation = () => {
-  const loginStatus = localStorage.getItem("memberId");
+  const loginStatus = localStorage.getItem("jwtToken");
   const navigate = useNavigate();
   const onClickLogout = () => {
     localStorage.clear();

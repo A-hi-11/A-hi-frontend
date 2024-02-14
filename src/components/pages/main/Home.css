@@ -39,7 +39,7 @@
     color:white;
 }
 .logo{
-    display:inline-block;
+    display:flex;
     text-align: center;
     justify-content: center;
 
@@ -48,6 +48,12 @@
     margin-top:0vh;
     margin-left : -6vw;
     margin-bottom:9vh;
+}
+.logo img {
+    width: 95px;
+    height: 95px;
+    align-self: center;
+    padding-right: 10px;
 }
 .logo h3 {
     font-size: 70px;

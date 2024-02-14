@@ -37,7 +37,7 @@ const PromptStableDiffusion = ({
         setIsLoading(true);
         await axios
           .post(
-            `https://a-hi-prompt.com/diffusion/${prompt_id}`,
+            `/diffusion/${prompt_id}`,
             {
               prompt: "",
               model_type: "image",
@@ -76,7 +76,7 @@ const PromptStableDiffusion = ({
       setIsLoading(true);
       await axios
         .post(
-          `https://a-hi-prompt.com/diffusion/${prompt_id}`,
+          `/diffusion/${prompt_id}`,
           {
             prompt: msg,
             model_type: "image",
