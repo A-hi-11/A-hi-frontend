@@ -465,16 +465,17 @@
       margin-left: 20vw; 
   }
   .kindForm {
-      margin-left: -18vw; 
+      margin-left: -10vw; 
   }
   .kind, .kindactive {
-      width: 70px;
+      width: 48px;
       height: 20px; 
       margin: 0vw; 
       padding: 0.4vw; 
-      font-size:8px;
+      font-size:7px;
       margin-top:-5vh;
       margin-bottom:-5vh;
+
       display:flex;
       align-items: center;
       justify-content: center;

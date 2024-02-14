@@ -1,4 +1,7 @@
-
+.home {
+    max-width: 100%;
+    overflow-x: hidden;
+    }
 .contContainer{
     margin-left:8.625rem;
     justify-content: center;
@@ -323,7 +326,7 @@ input {
         margin-left: 0; /* 왼쪽 마진 제거 */
     }
     .mainKindForm {
-        margin-left: 4vh; /* 왼쪽 마진 제거 */
+        margin-left: 10vh; /* 왼쪽 마진 제거 */
     }
     .mainKind {
         width:14vh;
@@ -334,27 +337,28 @@ input {
         
     }
     .logo {
-       margin : -2vh;
+       margin : -1vh;
        margin-left:8vh;
     }
     .logo h2 {
         font-size:10px;
-        margin:-3vh;
+        margin:-1.5vh;
     }
     .logo h3 {
-        margin-top:-5vh;
+        margin-top:-3vh;
         font-size:20px;
+
     }
     .search {
         margin-left:10vh;
-        margin-top:9vh;
+        margin-top:-3vh;
         width:70%;
         height:3vh;
         font-size:2vh;
     }
     .mainCategory{
         width : 80vh; 
-        margin-left:0.7vh;
+        margin-left:6vh;
  
     }
     .mainCategoryCont{
@@ -365,7 +369,7 @@ input {
         height:4vh;
         display:flex;
         align-items: center;
-    justify-content: center;
+        justify-content: center;
     }
     .mainCategoryContactive{
         width:4vh;
@@ -379,6 +383,7 @@ input {
     }
     .sortKind{
         margin-top:-1vh;
+        margin-left:6vh;
     }
     .sortKindCont{
         width:5vh;
@@ -401,24 +406,24 @@ input {
         justify-content: center;
     }
     .contTitle{
-        font-size:2.3vh;
-        margin-top:-1vh;
-        margin-left:-1vh;
+        font-size:1.5vh;
+        margin-top:-0.2vh;
+        margin-left:-0.3vh;
     }
     .contExplain{
-        font-size:1.8vh;
-        margin-bottom:-2vh;
-        margin-left:-1vh;
+        font-size:1.2vh;
+        margin-bottom:0vh;
+        margin-left:-0.3vh;
     }
     .contDate{
-        font-size:0.975vh;
-        margin-left:-1vh;
+        font-size:0.7vh;
+        margin-left:-0.3vh;
     }
     .contContent{
         display:inline-block;
         width:12vh;
         height:8vh;
-        padding:8px;
+        padding:15px;
     }
     .contContent:hover{
         display:inline-block;
@@ -427,6 +432,6 @@ input {
         padding:8px;
     }
     .contList{
-        margin-left:1vh;
+        margin-left:10vh;
     }
 }

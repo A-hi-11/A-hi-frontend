@@ -103,6 +103,6 @@
     .oauth {
         width: 120px !important;
         height: 30px !important;
-        margin-left : -20px;
+        margin-left : 20%;
     }
 }

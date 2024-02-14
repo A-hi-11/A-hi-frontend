@@ -96,18 +96,18 @@ const Home = () => {
       window.Kakao.Link.sendDefault({
         objectType: 'feed',
         content: {
-          title: '카카오톡 공유하기 예제',
-          imageUrl: 'http://localhost:3000',
+          title: '프롬프트 공유 플랫폼 에이하이',
+          imageUrl: 'http://a-hi.kro.kr:3000/',
           link: {
-            mobileWebUrl: 'http://localhost:3000',
-            webUrl: 'http://localhost:3000',
+            mobileWebUrl: 'http://a-hi.kro.kr:3000/',
+            webUrl: 'http://a-hi.kro.kr:3000/',
           },
         },
       });
   }
 
   return (
-    <div>
+    <div className="home">
       <Navigation />
       <ul className="mainKindForm">
             <div className={"mainKind"+(mainKind=="text" ? "active" : "")} onClick={()=>{setCategory("task");setMainKind("text");}}>chatGPT</div>
